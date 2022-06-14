@@ -98,13 +98,19 @@ export default function Navbar({}: Props) {
             >
               {pages.map((page) => (
                 <MenuItem key={page} onClick={handleCloseNavMenu}>
-                  <Typography textAlign="center">{page}</Typography>
+                  {/* <Typography textAlign="center">{page}</Typography> */}
+                  <Link
+                    to={pagesLinks[pages.indexOf(page)]}
+                    onClick={handleCloseNavMenu}
+                    style={{ color: 'black', display: 'block', marginRight: '15px', textDecoration: "none"} }>
+                      {page}
+                  </Link>
                 </MenuItem>
               ))}
             </Menu>
           </Box>
-          <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
-          <Typography
+          {/* <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} /> */}
+          {/* <Typography
             variant="h5"
             noWrap
             component="a"
@@ -119,9 +125,7 @@ export default function Navbar({}: Props) {
               color: 'inherit',
               textDecoration: 'none',
             }}
-          >
-            LOGO
-          </Typography>
+          ></Typography> */}
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             {pages.map((page) => (
               // <Button
@@ -139,7 +143,7 @@ export default function Navbar({}: Props) {
             ))}
           </Box>
 
-          <Box sx={{ flexGrow: 0 }}>
+          <Box sx={{ flexGrow: 0, display: { xs: 'none', md: 'flex' } }}>
             <Button variant="contained" startIcon={<AddIcon />} >
               User
             </Button>
