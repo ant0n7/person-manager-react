@@ -1,12 +1,11 @@
 package com.example.demo.domain.appuser;
 
-import com.example.demo.DtoConverter;
-import com.example.demo.domain.appuser.dto.UserSmallDetailsDTO;
-import com.example.demo.domain.group.GroupRepository;
+import com.example.demo.domain.appuser.dto.CreateUserDTO;
+import com.example.demo.domain.exceptions.InvalidEmailException;
 import com.example.demo.domain.role.Role;
 import com.example.demo.domain.role.RoleRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Pageable;
+import org.apache.commons.validator.routines.EmailValidator;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -26,10 +25,10 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
-    private final GroupRepository groupRepository;
-    private final DtoConverter dtoConverter;
+    private final UserMapper userMapper;
     private final PasswordEncoder passwordEncoder;
-
+    private final String[] errorMessages = new String[]
+            {"User not found", "Email is not valid", "Username already exists", "Email already exists"};
 
     @Override
 //    This method is used for security authentication, use caution when changing this
@@ -66,17 +65,22 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
-    public User saveUser(User user) throws InstanceAlreadyExistsException {
-        if (userRepository.findByUsername(user.getUsername()) != null || userRepository.findByEmail(user.getEmail()) != null){
-            throw new InstanceAlreadyExistsException("Username or Email already exists");
+    public User createUser(CreateUserDTO userDto) throws InstanceAlreadyExistsException, InvalidEmailException {
+        if (!EmailValidator.getInstance().isValid(userDto.getEmail())) {
+            throw new InvalidEmailException(errorMessages[1]);
         }
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        return userRepository.save(user);
-    }
+        if (userRepository.findByUsername(userDto.getUsername()) != null) {
+            throw new InstanceAlreadyExistsException(errorMessages[2]);
+        }
+        if (userRepository.findByEmail(userDto.getEmail()) != null) {
+            throw new InstanceAlreadyExistsException(errorMessages[3]);
+        }
+        userDto.setPassword(passwordEncoder.encode(userDto.getPassword()));
 
-    @Override
-    public Role saveRole(Role role) {
-        return roleRepository.save(role);
+        //Set default role of every new user to USER
+        User user = userMapper.userDTOCreateToUser(userDto);
+        user.setRoles(List.of(roleRepository.findByName("STUDENT")));
+        return userRepository.saveAndFlush(user);
     }
 
     @Override
@@ -100,19 +104,6 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         }
     }
 
-    @Override
-    public List<UserSmallDetailsDTO> getUsersOfGroup(String groupname, Pageable pageable) throws InstanceNotFoundException {
-        Set<User> userSet = userRepository.findUsersByGroupname(groupname, pageable).toSet();
-
-        if (!userSet.isEmpty()) {
-            List<UserSmallDetailsDTO> users = new ArrayList<>();
-            Set<UserSmallDetailsDTO> userSmallSet = dtoConverter.convertUserToMembers(userSet);
-            users.addAll(userSmallSet);
-            return users;
-        } else {
-            throw new InstanceNotFoundException("Group {" + groupname + "} does not exist");
-        }
-    }
 
     @Override
     public List<User> findAll() {
@@ -120,11 +111,30 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
-    public User updateUser(UUID id, User user) throws InstanceNotFoundException {
+    public User updateUser(UUID id, User user) throws InstanceNotFoundException, InvalidEmailException, InstanceAlreadyExistsException {
         if (!userRepository.existsById(id)) throw new InstanceNotFoundException("User does not exist.");
 
-        user.setId(id);
-        return userRepository.save(user);
+        if (!EmailValidator.getInstance().isValid(user.getEmail())) {
+            throw new InvalidEmailException(errorMessages[1]);
+        }
+        //When updating a user he needs the possibility to keep his username, but in case he changes it we need to
+        // check if it's already in use
+        if (userRepository.findByUsername(user.getUsername()) != null &&  /* true = username may be updated*/
+                /*true = username does not belong to updated profile */
+                !user.getUsername().equals(userRepository.findById(user.getId()).get().getUsername())) {
+            throw new InstanceAlreadyExistsException(errorMessages[2]);
+        }
+        if (userRepository.findByEmail(user.getEmail()) != null &&  /* true = email maybe updated*/
+                /*true = email does not belong to updated profile */
+                !user.getEmail().equals(userRepository.findById(user.getId()).get().getEmail())) {
+            throw new InstanceAlreadyExistsException(errorMessages[3]);
+        }
+        // If password is updated -> encrypt, else -> do nothing
+        if (!(passwordEncoder.matches(/* Maybe updated password */ user.getPassword(),
+                /* Old password */ userRepository.findById(user.getId()).get().getPassword()))) {
+            user.setPassword(passwordEncoder.encode(user.getPassword()));
+        }
+        return userRepository.saveAndFlush(user);
     }
 
     @Override

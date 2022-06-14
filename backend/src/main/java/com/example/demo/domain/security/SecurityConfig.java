@@ -13,16 +13,17 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 
- @EnableWebSecurity @RequiredArgsConstructor @EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true, jsr250Enabled = true)
+ @EnableWebSecurity
+ @RequiredArgsConstructor
+ @EnableGlobalMethodSecurity(prePostEnabled = true)
  public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
      private final UserDetailsService userDetailsService;
      private final PasswordEncoder passwordEncoder;
-     private final DaoAuthenticationProvider authProvider;
 
      @Override
-     protected void configure(AuthenticationManagerBuilder auth) {
-         auth.authenticationProvider(authProvider);
+     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+         auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder);
      }
 
      @Autowired
@@ -33,17 +34,14 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-         http.csrf().disable();
-
-         http.httpBasic().and()
+        http.csrf().disable().httpBasic().and()
                 .authorizeRequests()
-                .antMatchers("/swagger-ui/**").permitAll()
-                 .antMatchers("/api/groups/**").permitAll()
-                 .antMatchers("/api/users/**").permitAll()
-                .antMatchers("/**").hasRole("ADMIN")
+                // swagger
+                .antMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
+                .antMatchers("/api/user/**").permitAll()
+                .antMatchers("/api/**").hasRole("TEACHER")
                 .and()
                 // some more method calls
-                .formLogin()
-                 .and().csrf().disable();
+                .formLogin();
     }
  }

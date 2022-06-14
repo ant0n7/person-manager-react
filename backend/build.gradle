@@ -25,6 +25,8 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.springdoc:springdoc-openapi-ui:1.6.6'
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
+	implementation 'commons-validator:commons-validator:1.7'
+
 	compileOnly 'org.projectlombok:lombok'
 	runtimeOnly 'org.postgresql:postgresql'
 	annotationProcessor 'org.projectlombok:lombok'
@@ -32,6 +34,11 @@ dependencies {
 	compileOnly("org.springframework.boot:spring-boot-devtools")
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.springframework.security:spring-security-test'
+
+	// MapStruct
+	implementation "org.mapstruct:mapstruct:1.4.2.Final"
+	compileOnly "org.mapstruct:mapstruct-processor:1.4.2.Final"
+	annotationProcessor "org.mapstruct:mapstruct-processor:1.4.2.Final"
 }
 
 test {
