@@ -4,6 +4,6 @@ type Props = {}
 
 export default function NotFound({}: Props) {
   return (
-    <div>NotFound: 404</div>
+    <div>Not Found: 404</div>
   )
 }
