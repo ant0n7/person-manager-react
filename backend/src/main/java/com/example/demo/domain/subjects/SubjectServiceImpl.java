@@ -22,7 +22,7 @@ public class SubjectServiceImpl implements SubjectService {
     @Override
     public Subject saveSubject(Subject subject) throws InstanceAlreadyExistsException {
         if (subjectRepository.findBySubjectname(subject.getSubjectname()) != null){
-            throw new InstanceAlreadyExistsException("Username or Email already exists");
+            throw new InstanceAlreadyExistsException("Subject already exists");
         }
         return subjectRepository.save(subject);
     }

@@ -1,13 +1,18 @@
 package com.example.demo.domain.appuser;
 
 import com.example.demo.domain.appuser.dto.CreateUserDTO;
+import com.example.demo.domain.appuser.dto.SubjectUserDTO;
 import com.example.demo.domain.exceptions.InvalidEmailException;
 import com.example.demo.domain.role.Role;
 import com.example.demo.domain.role.RoleRepository;
+import com.example.demo.domain.subjects.Subject;
+import com.example.demo.domain.subjects.SubjectRepository;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.validator.routines.EmailValidator;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -25,6 +30,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
+    private final SubjectRepository subjectRepository;
     private final UserMapper userMapper;
     private final PasswordEncoder passwordEncoder;
     private final String[] errorMessages = new String[]
@@ -78,7 +84,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         userDto.setPassword(passwordEncoder.encode(userDto.getPassword()));
 
         //Set default role of every new user to USER
-        User user = userMapper.userDTOCreateToUser(userDto);
+        User user = userMapper.createUserDTOToUser(userDto);
         user.setRoles(List.of(roleRepository.findByName("STUDENT")));
         return userRepository.saveAndFlush(user);
     }
@@ -141,5 +147,58 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     public void deleteUser(UUID id) throws InstanceNotFoundException {
         if (!userRepository.existsById(id)) throw new InstanceNotFoundException("User does not exist.");
         userRepository.deleteById(id);
+    }
+
+    @Override
+    public void addSubjectToUser(UUID userID, UUID subjectID) throws InstanceNotFoundException {
+        User user;
+        Subject subject;
+        try {
+            user = userRepository.findById(userID).get();
+            subject = subjectRepository.findById(subjectID).get();
+        } catch (Exception e){
+            throw new InstanceNotFoundException();
+        }
+        user.getSubjects().add(subject);
+    }
+    @Override
+    public void deleteSubjectFromUser(UUID userID, UUID subjectID) throws InstanceNotFoundException {
+        User user;
+        Subject subject;
+        try {
+            user = userRepository.findById(userID).get();
+            subject = subjectRepository.findById(subjectID).get();
+        } catch (Exception e){
+            throw new InstanceNotFoundException();
+        }
+
+        user.getSubjects().remove(subject);
+    }
+
+    @Override
+    public SubjectUserDTO findSubjectsById(UUID id) {
+        if (id == null){
+            id = getID();
+        }
+        User user = userRepository.findById(id).get();
+        return userMapper.userToSubjectUserDTO(user);
+    }
+
+    private UUID getID(){
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        return userRepository.findByUsername(auth.getName()).getId();
+    }
+
+    private boolean hasAccess(UUID id) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        try {
+            // if user is requesting his own profile return true
+            return id.equals(userRepository.findByUsername(auth.getName()).getId()) ||
+                    auth.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_ADMIN"));
+        } catch (Exception e) {
+            // do not grant access if user couldn't be found/verified to prevent giving a potential attacker
+            // information
+            return false;
+        }
     }
 }

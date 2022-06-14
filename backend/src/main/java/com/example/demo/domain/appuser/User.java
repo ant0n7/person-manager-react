@@ -46,7 +46,4 @@ public class User {
                     name = "subject_id", referencedColumnName = "id"))
     private List<Subject> subjects;
 
-    @OneToMany
-    @JoinColumn(name = "grades_id", referencedColumnName = "id")
-    private List<Grade> grades;
 }
