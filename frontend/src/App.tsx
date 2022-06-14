@@ -2,18 +2,23 @@ import React from 'react';
 import logo from './logo.svg';
 import './App.css';
 import Home from './ui/pages/Home'
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import Layout from './ui/pages/Layout';
+import NotFound from './ui/pages/NotFound';
+// import * as Bootstrap from "bootstrap";
+
+
 
 function App() {
   return (
-    <>
-      <link
-        rel="stylesheet"
-        href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
-      />
-      <div className="app">
-        <Home />
-      </div>
-    </>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Layout />} >
+          <Route index element={<Home />} />
+          <Route path="*" element={<NotFound />} />
+        </Route>
+      </Routes>
+    </BrowserRouter>
     // <div className="App">
     //   <header className="App-header">
     //     <img src={logo} className="App-logo" alt="logo" />
