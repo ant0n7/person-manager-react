@@ -26,7 +26,4 @@ public class Subject {
     @Size(min = 3, max = 255)
     private String subjectname;
 
-    @OneToMany
-    @JoinColumn(name = "grades", referencedColumnName = "id")
-    private List<Grade> grade;
 }

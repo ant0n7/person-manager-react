@@ -19,4 +19,17 @@ insert into tbl_user (id, username, email, password) values ('9da0c2ba-98c5-4504
 
 insert into tbl_user_role (user_id, role_id) values ('e74d2176-e7d7-4003-8543-369057a4279e', '0629910c-f847-4672-a11c-a80718f18026');
 insert into tbl_user_role (user_id, role_id) values ('2c61dac7-29fa-4baa-95e5-9053c7879d41', '2f1e573f-6290-4581-b54b-7e3ba2c98832');
+insert into tbl_user_role (user_id, role_id) values ('9da0c2ba-98c5-4504-821a-259942a298b2', '2f1e573f-6290-4581-b54b-7e3ba2c98832');
 
+INSERT INTO tbl_subject (id, subjectname) VALUES('7915ef79-e6ab-41d8-a510-2a7e75e503cf', 'Math');
+INSERT INTO tbl_subject (id, subjectname) VALUES('aa000dde-d9c8-40a1-b0c7-d62ab5a480d4', 'English');
+INSERT INTO tbl_subject (id, subjectname) VALUES('95e9feb9-f320-45c6-8b92-f69115f18186', 'French');
+INSERT INTO tbl_subject (id, subjectname) VALUES('17981505-b651-4172-8b24-90914a76d57c', 'German');
+INSERT INTO tbl_subject (id, subjectname) VALUES('e3a37a26-ac91-4377-bcae-d7edd8bc34d8', 'Economy');
+INSERT INTO tbl_subject (id, subjectname) VALUES('51aea86c-239b-4b27-982e-816127be5b0b', 'History');
+
+INSERT INTO tbl_user_subject (user_id, subject_id) VALUES('2c61dac7-29fa-4baa-95e5-9053c7879d41', '7915ef79-e6ab-41d8-a510-2a7e75e503cf');
+INSERT INTO tbl_user_subject (user_id, subject_id) VALUES('2c61dac7-29fa-4baa-95e5-9053c7879d41', 'aa000dde-d9c8-40a1-b0c7-d62ab5a480d4');
+INSERT INTO tbl_user_subject (user_id, subject_id) VALUES('9da0c2ba-98c5-4504-821a-259942a298b2', '7915ef79-e6ab-41d8-a510-2a7e75e503cf');
+INSERT INTO tbl_user_subject (user_id, subject_id) VALUES('9da0c2ba-98c5-4504-821a-259942a298b2', 'aa000dde-d9c8-40a1-b0c7-d62ab5a480d4');
+INSERT INTO tbl_user_subject (user_id, subject_id) VALUES('9da0c2ba-98c5-4504-821a-259942a298b2', '51aea86c-239b-4b27-982e-816127be5b0b');

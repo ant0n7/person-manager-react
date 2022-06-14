@@ -3,7 +3,9 @@ package com.example.demo.domain.appuser;
 
 
 import com.example.demo.domain.appuser.dto.CreateUserDTO;
+import com.example.demo.domain.appuser.dto.SubjectUserDTO;
 import com.example.demo.domain.exceptions.InvalidEmailException;
+import com.example.demo.domain.subjects.Subject;
 
 import javax.management.InstanceAlreadyExistsException;
 import javax.management.InstanceNotFoundException;
@@ -19,4 +21,10 @@ public interface UserService {
     List<User> findAll();
     User updateUser(UUID id, User user) throws InstanceNotFoundException, InvalidEmailException, InstanceAlreadyExistsException;
     void deleteUser(UUID id) throws InstanceNotFoundException;
+
+    void addSubjectToUser(UUID userID, UUID subjectID) throws InstanceNotFoundException;
+
+    void deleteSubjectFromUser(UUID userID, UUID subjectID) throws InstanceNotFoundException;
+
+    SubjectUserDTO findSubjectsById(UUID id);
 }

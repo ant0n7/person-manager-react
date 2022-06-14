@@ -2,6 +2,7 @@ package com.example.demo.domain.appuser;
 
 
 import com.example.demo.domain.appuser.dto.CreateUserDTO;
+import com.example.demo.domain.appuser.dto.SubjectUserDTO;
 import com.example.demo.domain.exceptions.InvalidEmailException;
 import io.swagger.v3.oas.annotations.Parameter;
 import lombok.RequiredArgsConstructor;
@@ -53,6 +54,26 @@ public class UserController {
     }
 
     @PreAuthorize("hasRole('TEACHER')")
+    @GetMapping("/subjects/{id}")
+    public ResponseEntity<SubjectUserDTO> getSubjectsFromUser(@PathVariable UUID id) throws InstanceNotFoundException {
+        return new ResponseEntity<>(userService.findSubjectsById(id), HttpStatus.OK);
+    }
+
+    @PreAuthorize("hasRole('TEACHER')")
+    @PostMapping("/{subjectID}/{userID}")
+    public ResponseEntity<String> addSubjectToUser( @PathVariable("userID") UUID userID, @PathVariable("subjectID") UUID subjectID) throws InstanceNotFoundException {
+        userService.addSubjectToUser(userID, subjectID);
+        return new ResponseEntity<>( HttpStatus.OK);
+    }
+
+    @PreAuthorize("hasRole('TEACHER')")
+    @DeleteMapping("/{subjectID}/{userID}")
+    public ResponseEntity<String> deleteSubjectFromUser( @PathVariable("userID") UUID userID, @PathVariable("subjectID") UUID subjectID) throws InstanceNotFoundException {
+        userService.deleteSubjectFromUser(userID, subjectID);
+        return new ResponseEntity<>( HttpStatus.NO_CONTENT);
+    }
+
+    @PreAuthorize("hasRole('TEACHER')")
     @Operation(summary = "Add a role to a user.", description = "Add a single role to a single user. There won't be any " +
             "loss of roles as it just adds a role and replaces any roles.")
     @PostMapping("/{username}/role/{rolename}")
@@ -65,6 +86,7 @@ public class UserController {
         }
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
 
     @PreAuthorize("hasRole('TEACHER')")
     @Operation(summary = "Update a user by ID.", description = "Update a single user by its ID. Pass the whole new user in the " +
