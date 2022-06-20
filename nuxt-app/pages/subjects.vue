@@ -32,13 +32,12 @@ const { data: subjects } = await useFetch("http://localhost:8080/api/subject/", 
 
     <div class="row" v-if="subjects">
       <div
-        class="col-md-3 col-12"
+        class="col-md-3 col-12 p-2"
         v-for="subject in subjects"
         :key="subject.id"
       >
         <Card
-          :title="subject.username"
-          :subtitle="subject.email"
+          :title="subject.subjectname"
           :link="`/subjects/${subject.id}`"
           />
       </div>

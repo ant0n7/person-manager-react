@@ -32,7 +32,7 @@ const { data: students } = await useFetch("http://localhost:8080/api/user/", {
 
     <div class="row" v-if="students">
       <div
-        class="col-md-3 col-12"
+        class="col-md-3 col-12 p-2"
         v-for="student in students"
         :key="student.id"
       >
@@ -46,7 +46,7 @@ const { data: students } = await useFetch("http://localhost:8080/api/user/", {
 
     <div class="row" v-else>
       <div class="col-12">
-        <Alert type="warning">
+        <Alert type="warning" warning-icon>
           No students found.
         </Alert>
       </div>
