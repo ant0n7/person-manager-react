@@ -1,3 +1,8 @@
 a.router-link-exact-active {
   color: #757575 !important;
 }
+
+.link-unstyled, .link-unstyled:link, .link-unstyled:hover {
+  color: inherit;
+  text-decoration: inherit;
+}
