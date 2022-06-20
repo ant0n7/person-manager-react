@@ -34,7 +34,12 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.csrf().disable().httpBasic().and()
+        http.csrf().disable().httpBasic().and().logout(logout -> logout
+                        .logoutUrl("/logout")
+                        .logoutSuccessUrl("/login")
+                        .invalidateHttpSession(true)
+                        .deleteCookies("JSESSIONID")
+                )
                 .authorizeRequests()
                 // swagger
                 .antMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
