@@ -9,6 +9,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import io.swagger.v3.oas.annotations.Operation;
 
@@ -23,7 +25,7 @@ import java.util.UUID;
 public class UserController {
     private final UserService userService;
 
-
+    @PreAuthorize("hasRole('TEACHER')")
     @Operation(summary = "List of all users.", description = "Get a list of all users with all their information.")
     @GetMapping("/")
     public ResponseEntity<Collection<User>> findAll() {
@@ -41,14 +43,14 @@ public class UserController {
 
     @PreAuthorize("#username == authentication.principal.username || hasRole('TEACHER')")
     @Operation(summary = "Get an user by username.", description = "Receive a single user with all available Information by its username.")
-    @GetMapping("/{username}")
+    @GetMapping("/uname/{username}")
     public ResponseEntity<User> getByUsername(@Parameter(name = "Username", description = "Unique username of the user requested") @PathVariable String username) {
         return new ResponseEntity<>(userService.getUser(username), HttpStatus.OK);
     }
 
     @PreAuthorize("hasRole('TEACHER')")
     @Operation(summary = "Get an user by ID.", description = "Receive a single user with all available Information by its UUID.")
-    @GetMapping("/byId/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<User> getById(@Parameter(description = "UUID of the user requested") @PathVariable UUID id) throws InstanceNotFoundException {
         return new ResponseEntity<>(userService.findById(id).orElse(null), HttpStatus.OK);
     }
@@ -58,6 +60,13 @@ public class UserController {
     public ResponseEntity<SubjectUserDTO> getSubjectsFromUser(@PathVariable UUID id) throws InstanceNotFoundException {
         return new ResponseEntity<>(userService.findSubjectsById(id), HttpStatus.OK);
     }
+
+    @PreAuthorize("#username == authentication.principal.username || hasRole('TEACHER')")
+    @GetMapping("/subjects/uname/{username}")
+    public ResponseEntity<SubjectUserDTO> getSubjectsFromUsername(@PathVariable String username) throws InstanceNotFoundException {
+        return new ResponseEntity<>(userService.findSubjectsByUsername(username), HttpStatus.OK);
+    }
+
 
     @PreAuthorize("hasRole('TEACHER')")
     @PostMapping("/{subjectID}/{userID}")
@@ -77,8 +86,7 @@ public class UserController {
     @Operation(summary = "Add a role to a user.", description = "Add a single role to a single user. There won't be any " +
             "loss of roles as it just adds a role and replaces any roles.")
     @PostMapping("/{username}/role/{rolename}")
-    public ResponseEntity<String> addRoleToUser(@Parameter(description = "Username of the user") @PathVariable("username") String username,
-                                                @Parameter(description = "Name of the role which will be added to the user") @PathVariable("rolename") String rolename) {
+    public ResponseEntity<String> addRoleToUser(@PathVariable("username") String username, @PathVariable("rolename") String rolename) {
         try {
             userService.addRoleToUser(username, rolename);
         } catch (Exception e) {

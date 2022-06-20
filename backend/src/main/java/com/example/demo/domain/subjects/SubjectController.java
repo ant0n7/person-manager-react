@@ -21,6 +21,7 @@ import java.util.UUID;
 public class SubjectController {
     private final SubjectService subjectService;
 
+    @PreAuthorize("hasRole('TEACHER')")
     @GetMapping("/")
     public ResponseEntity<Collection<Subject>> findAllSubjects() {
         return new ResponseEntity<>(subjectService.findAll(), HttpStatus.OK);
@@ -38,7 +39,7 @@ public class SubjectController {
 
     @PreAuthorize("hasRole('TEACHER')")
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> deleteGrade(@Parameter @PathVariable UUID id) throws InstanceNotFoundException {
+    public ResponseEntity<String> deleteSubject(@Parameter @PathVariable UUID id) throws InstanceNotFoundException {
         subjectService.deleteSubject(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
