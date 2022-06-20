@@ -12,10 +12,17 @@ export default defineNuxtConfig({
       ],
       link: [
         { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
+      ],
+      script: [
+        { 
+          src: 'https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js',
+          body: true 
+        },
       ]
     }
   },
   css: [
-    '@/assets/css/main.scss'
+    'bootstrap/dist/css/bootstrap.min.css',
+    '@/assets/css/main.scss',
   ]
 })
