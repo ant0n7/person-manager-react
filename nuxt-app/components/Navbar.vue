@@ -17,8 +17,8 @@
 
     <div class="col-md-4 text-end">
       <button type="button" class="btn btn-outline-primary me-2">Login</button>
-      <button type="button" class="btn btn-primary me-2">Create Student</button>
-      <button type="button" class="btn btn-primary me-2">Create Subject</button>
+      <!-- <button type="button" class="btn btn-primary me-2">Create Student</button>
+      <button type="button" class="btn btn-primary me-2">Create Subject</button> -->
     </div>
   </header>
 </template>
