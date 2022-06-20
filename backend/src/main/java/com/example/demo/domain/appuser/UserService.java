@@ -26,5 +26,8 @@ public interface UserService {
 
     void deleteSubjectFromUser(UUID userID, UUID subjectID) throws InstanceNotFoundException;
 
-    SubjectUserDTO findSubjectsById(UUID id);
+    SubjectUserDTO findSubjectsById(UUID id) throws InstanceNotFoundException;
+
+    SubjectUserDTO findSubjectsByUsername(String username) throws InstanceNotFoundException;
 }
+

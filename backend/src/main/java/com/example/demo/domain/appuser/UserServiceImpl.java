@@ -176,29 +176,22 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
-    public SubjectUserDTO findSubjectsById(UUID id) {
-        if (id == null){
-            id = getID();
-        }
-        User user = userRepository.findById(id).get();
-        return userMapper.userToSubjectUserDTO(user);
-    }
-
-    private UUID getID(){
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        return userRepository.findByUsername(auth.getName()).getId();
-    }
-
-    private boolean hasAccess(UUID id) {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+    public SubjectUserDTO findSubjectsById(UUID id) throws InstanceNotFoundException {
         try {
-            // if user is requesting his own profile return true
-            return id.equals(userRepository.findByUsername(auth.getName()).getId()) ||
-                    auth.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_ADMIN"));
-        } catch (Exception e) {
-            // do not grant access if user couldn't be found/verified to prevent giving a potential attacker
-            // information
-            return false;
+            User user = userRepository.findById(id).get();
+            return userMapper.userToSubjectUserDTO(user);
+        } catch (Exception e){
+            throw new InstanceNotFoundException("No user found with the given ID");
+        }
+    }
+    @Override
+    public SubjectUserDTO findSubjectsByUsername(String username) throws InstanceNotFoundException{
+        try {
+            User user = userRepository.findByUsername(username);
+            user.getId();
+            return userMapper.userToSubjectUserDTO(user);
+        } catch (Exception e){
+            throw new InstanceNotFoundException("No user found with the given username");
         }
     }
 }
