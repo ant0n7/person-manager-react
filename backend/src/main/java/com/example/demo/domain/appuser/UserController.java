@@ -25,6 +25,11 @@ import java.util.UUID;
 public class UserController {
     private final UserService userService;
 
+    @GetMapping("/test/")
+    public ResponseEntity<Collection<User>> test() {
+        return new ResponseEntity<>(userService.findAll(), HttpStatus.OK);
+    }
+
     @PreAuthorize("hasRole('TEACHER')")
     @Operation(summary = "List of all users.", description = "Get a list of all users with all their information.")
     @GetMapping("/")
