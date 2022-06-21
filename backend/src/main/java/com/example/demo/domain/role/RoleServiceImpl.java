@@ -2,6 +2,7 @@ package com.example.demo.domain.role;
 
 import com.example.demo.domain.authority.Authority;
 import com.example.demo.domain.authority.AuthorityRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,11 +14,10 @@ import java.util.UUID;
 
 @Transactional
 @Service
+@RequiredArgsConstructor
 public class RoleServiceImpl implements RoleService{
-    @Autowired
-    private RoleRepository roleRepository;
-    @Autowired
-    private AuthorityRepository authorityRepository;
+    private final RoleRepository roleRepository;
+    private final AuthorityRepository authorityRepository;
 
     @Override
     public List<Role> findAll() {
@@ -26,8 +26,8 @@ public class RoleServiceImpl implements RoleService{
 
     @Override
     public Role saveRole(Role role) throws InstanceAlreadyExistsException {
-        if (roleRepository.findByName(role.getName()) != null) {
-            throw new InstanceAlreadyExistsException("Role with name \"" + role.getName() + "\" already exists.");
+        if (roleRepository.findByRolename(role.getRolename()) != null) {
+            throw new InstanceAlreadyExistsException("Role with name \"" + role.getRolename() + "\" already exists.");
         }
         return roleRepository.save(role);
     }
@@ -40,7 +40,7 @@ public class RoleServiceImpl implements RoleService{
     @Override
     public void addAuthorityToRole( String rolename, String authorityname) {
         Authority authority = authorityRepository.findByName(authorityname);
-        Role role = roleRepository.findByName(rolename);
+        Role role = roleRepository.findByRolename(rolename);
         role.getAuthorities().add(authority);
     }
 

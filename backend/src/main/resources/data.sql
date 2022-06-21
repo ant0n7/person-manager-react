@@ -1,6 +1,6 @@
-insert into tbl_role (id, name) values ('2895695a-f130-11ec-8ea0-0242ac120002', 'ADMIN');
-insert into tbl_role (id, name) values ('2f1e573f-6290-4581-b54b-7e3ba2c98832', 'STUDENT');
-insert into tbl_role (id, name) values ('0629910c-f847-4672-a11c-a80718f18026', 'TEACHER');
+insert into tbl_role (id, rolename) values ('2895695a-f130-11ec-8ea0-0242ac120002', 'ADMIN');
+insert into tbl_role (id, rolename) values ('2f1e573f-6290-4581-b54b-7e3ba2c98832', 'STUDENT');
+insert into tbl_role (id, rolename) values ('0629910c-f847-4672-a11c-a80718f18026', 'TEACHER');
 
 insert into tbl_authority (id, name) values ('aebe836e-83a6-4be7-84c5-1eda33a933fe', 'READ');
 insert into tbl_authority (id, name) values ('dc1cb5ac-e142-4b6a-aa87-ce509cc7b5f0', 'CREATE');

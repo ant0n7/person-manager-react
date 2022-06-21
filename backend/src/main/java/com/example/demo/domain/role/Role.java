@@ -22,7 +22,7 @@ public class Role {
     @Size(min = 3, max = 16)
     @NotNull
     @Column(nullable = false)
-    private String name;
+    private String rolename;
 
     @JsonBackReference
     @ManyToMany(fetch = FetchType.EAGER)
@@ -36,7 +36,7 @@ public class Role {
 
 
     public String toString() {
-        return getName();
+        return getRolename();
     }
 
 

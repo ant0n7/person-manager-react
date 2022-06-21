@@ -29,5 +29,7 @@ public interface UserService {
     SubjectUserDTO findSubjectsById(UUID id) throws InstanceNotFoundException;
 
     SubjectUserDTO findSubjectsByUsername(String username) throws InstanceNotFoundException;
+
+    List<User> findUsersBySubject(UUID id) throws InstanceNotFoundException;
 }
 

@@ -49,7 +49,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 //          Construct a valid set of Authorities (needs to implement Granted Authorities)
             Collection<SimpleGrantedAuthority> authorities = new ArrayList<>();
             user.getRoles().forEach(role -> {
-                authorities.add(new SimpleGrantedAuthority("ROLE_"+role.getName()));
+                authorities.add(new SimpleGrantedAuthority("ROLE_"+role.getRolename()));
                 role.getAuthorities().forEach(authority -> authorities.add(new SimpleGrantedAuthority(authority.getName())));
             });
 //            return a spring internal user object that contains authorities and roles
@@ -62,7 +62,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         List<GrantedAuthority> authorities
                 = new ArrayList<>();
         for (Role role: roles) {
-            authorities.add(new SimpleGrantedAuthority(role.getName()));
+            authorities.add(new SimpleGrantedAuthority(role.getRolename()));
             role.getAuthorities().stream()
                     .map(authority -> new SimpleGrantedAuthority(authority.getName()))
                     .forEach(authorities::add);
@@ -85,14 +85,14 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
         //Set default role of every new user to USER
         User user = userMapper.createUserDTOToUser(userDto);
-        user.setRoles(List.of(roleRepository.findByName("STUDENT")));
+        user.setRoles(List.of(roleRepository.findByRolename("STUDENT")));
         return userRepository.saveAndFlush(user);
     }
 
     @Override
     public void addRoleToUser(String username, String rolename) {
         User user = userRepository.findByUsername(username);
-        Role role = roleRepository.findByName(rolename);
+        Role role = roleRepository.findByRolename(rolename);
         user.getRoles().add(role);
     }
 
@@ -193,5 +193,29 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         } catch (Exception e){
             throw new InstanceNotFoundException("No user found with the given username");
         }
+    }
+
+    @Override
+    public List<User> findUsersBySubject(UUID id) throws InstanceNotFoundException {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (subjectRepository.existsById(id)){
+            List<UUID> users = userRepository.getStudentsBySubject(id);
+            List<UUID> students = new ArrayList<>();
+            for (UUID u: users){
+                if (userRepository.findAllStudents().contains(u)){
+                    students.add(u);
+                }
+            }
+            return convertIdToObject(students);
+        }else {
+            throw new InstanceNotFoundException();
+        }
+    }
+    private List<User> convertIdToObject(List<UUID> uuid){
+        List<User> obj = new ArrayList<>();
+        for (UUID u: uuid) {
+            obj.add(userRepository.findById(u).orElse(null));
+        }
+        return obj;
     }
 }

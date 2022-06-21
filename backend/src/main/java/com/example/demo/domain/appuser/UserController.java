@@ -18,6 +18,7 @@ import javax.management.InstanceAlreadyExistsException;
 import javax.management.InstanceNotFoundException;
 import javax.validation.Valid;
 import java.util.Collection;
+import java.util.List;
 import java.util.UUID;
 
 @CrossOrigin
@@ -54,6 +55,13 @@ public class UserController {
     @GetMapping("/{id}")
     public ResponseEntity<User> getUserById(@PathVariable UUID id) throws InstanceNotFoundException {
         return new ResponseEntity<>(userService.findById(id).orElse(null), HttpStatus.OK);
+    }
+
+    @PreAuthorize("hasRole('TEACHER')")
+    @Operation(summary = "Get students by user id.", description = "Receive a list of students that are attending the given subject")
+    @GetMapping("/subjects/byUser/{id}")
+    public ResponseEntity<List<User>> getUsersFromSubject(@PathVariable UUID id) throws InstanceNotFoundException {
+        return new ResponseEntity<>(userService.findUsersBySubject(id), HttpStatus.OK);
     }
 
     @PreAuthorize("hasRole('TEACHER')")
