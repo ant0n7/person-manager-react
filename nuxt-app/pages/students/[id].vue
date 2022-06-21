@@ -12,10 +12,13 @@ const { data: student } = await useFetch(`http://localhost:8080/api/users/${uuid
 
 <template>
   <div class="container">
-    <Heading>{{ student.username }}</Heading>
-    <h6 class="subtitle">{{ student.email }}</h6>
+    <Heading>{{ student.firstname + ' ' + student.lastname }}</Heading>
+    <h6 class="subtitle student-email">
+      <a class="link-primary link-unstyled" :href="'mailto:' + student.email">{{ student.email }}</a>
+    </h6>
 
-    <div class="row pt-3" v-if="student.subjects">
+    <div class="row pt-3" v-if="student.subjects.length > 0">
+      <Heading tag="h2">Subjects</Heading>
       <div
         class="col-md-3 col-12"
         v-for="subject in student.subjects"

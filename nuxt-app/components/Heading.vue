@@ -1,5 +1,5 @@
 <template>
-  <h1>
+  <component :is="tag" :class="customClass">
     <slot />
     <NuxtLink
       v-if="buttonText"
@@ -8,7 +8,7 @@
       :to="buttonLink"
       >{{ buttonText }}</NuxtLink
     >
-  </h1>
+  </component>
 </template>
 
 <script>
@@ -16,6 +16,11 @@ export default {
   props: {
     buttonText: String,
     buttonLink: String,
+    customClass: String,
+    tag: {
+      type: String,
+      default: "h1",
+    },
   },
 };
 </script>

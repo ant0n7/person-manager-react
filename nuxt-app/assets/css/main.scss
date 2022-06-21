@@ -3,6 +3,6 @@ a.router-link-exact-active {
 }
 
 .link-unstyled, .link-unstyled:link, .link-unstyled:hover {
-  color: inherit;
-  text-decoration: inherit;
+  color: inherit !important;
+  text-decoration: inherit !important;
 }

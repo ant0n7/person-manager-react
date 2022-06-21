@@ -16,7 +16,7 @@
         :key="student.id"
       >
         <Card
-          :title="student.username"
+          :title="student.firstname + ' ' + student.lastname"
           :subtitle="student.email"
           :link="`/students/${student.id}`"
           />
