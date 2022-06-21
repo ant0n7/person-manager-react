@@ -14,7 +14,7 @@ import Card1 from '~~/components/Card.vue';
 // Fetch data from external API
 const { data: subjects } = await useFetch("http://localhost:8080/api/subject/", {
   headers: {
-    Authorization: `Basic ${btoa("andrin:klarer")}`,
+    Authorization: `Basic ${btoa("andrinklarer:klarer")}`,
   },
 });
 </script>
