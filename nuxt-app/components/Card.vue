@@ -8,7 +8,8 @@
         >{{ title }}</h5>
         <h6
           v-if="subtitle"
-          class="card-subtitle mb-2 text-muted"
+          class="card-subtitle text-muted"
+          :class="buttonText && image ? 'mb-2' : 'mb-0'"
         >
           {{ subtitle }}
         </h6>
