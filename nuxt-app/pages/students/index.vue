@@ -36,7 +36,7 @@
 <script setup>
 const { pending, data: students } = await useAsyncData('students', () => $fetch('http://localhost:8080/api/user/', {
   headers: {
-    Authorization: `Basic ${btoa("andrin:klarer")}`,
+    Authorization: `Basic ${btoa("andrinklarer:klarer")}`,
   },
 }));
 </script>

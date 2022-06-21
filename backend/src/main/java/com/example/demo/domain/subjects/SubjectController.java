@@ -23,22 +23,26 @@ public class SubjectController {
     private final SubjectService subjectService;
 
     @PreAuthorize("hasRole('TEACHER')")
+    @Operation(summary = "Get all subjects.", description = "Retrieve a list of all subjects")
     @GetMapping("/")
     public ResponseEntity<Collection<Subject>> findAllSubjects() {
         return new ResponseEntity<>(subjectService.findAll(), HttpStatus.OK);
     }
     @PreAuthorize("hasRole('TEACHER')")
+    @Operation(summary = "Add a subject.", description = "Add a single subject.")
     @PostMapping("/")
     public ResponseEntity<Subject> addSubject(@Valid @RequestBody Subject subject) throws InstanceAlreadyExistsException {
         return new ResponseEntity<>(subjectService.saveSubject(subject), HttpStatus.CREATED);
     }
     @PreAuthorize("hasRole('TEACHER')")
+    @Operation(summary = "Update a subject by ID.", description = "Update a single subject by its ID.")
     @PutMapping("/{id}")
     public ResponseEntity<Subject> updateSubject(@Parameter @PathVariable UUID id, @Valid @RequestBody Subject subject) throws InstanceNotFoundException {
         return new ResponseEntity<>(subjectService.updateSubject(id, subject), HttpStatus.OK);
     }
 
     @PreAuthorize("hasRole('TEACHER')")
+    @Operation(summary = "Delete a subject by ID.", description = "Delete a single subject by its ID.")
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteSubject(@Parameter @PathVariable UUID id) throws InstanceNotFoundException {
         subjectService.deleteSubject(id);

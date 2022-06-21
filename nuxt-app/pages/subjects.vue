@@ -43,6 +43,4 @@ const { pending, data: subjects } = await useAsyncData("subjects", () => $fetch(
     Authorization: `Basic ${btoa("andrin:klarer")}`,
   },
 }));
-console.log("pending: ", pending);
-console.log("fetched: ", JSON.stringify(subjects))
 </script>

@@ -21,15 +21,10 @@ import java.util.Collection;
 import java.util.UUID;
 
 @CrossOrigin
-@RestController @RequestMapping("/api/user")
+@RestController @RequestMapping("/api/users")
 @RequiredArgsConstructor
 public class UserController {
     private final UserService userService;
-
-    @GetMapping("/test/")
-    public ResponseEntity<Collection<User>> test() {
-        return new ResponseEntity<>(userService.findAll(), HttpStatus.OK);
-    }
 
     @PreAuthorize("hasRole('TEACHER')")
     @Operation(summary = "List of all users.", description = "Get a list of all users with all their information.")
@@ -62,12 +57,14 @@ public class UserController {
     }
 
     @PreAuthorize("hasRole('TEACHER')")
+    @Operation(summary = "Get subjects by user id.", description = "Receive a list of subjects that the given user attends")
     @GetMapping("/subjects/{id}")
     public ResponseEntity<SubjectUserDTO> getSubjectsFromUser(@PathVariable UUID id) throws InstanceNotFoundException {
         return new ResponseEntity<>(userService.findSubjectsById(id), HttpStatus.OK);
     }
 
     @PreAuthorize("#username == authentication.principal.username || hasRole('TEACHER')")
+    @Operation(summary = "Get subjects by username.", description = "Receive a list of subjects that the given user attends")
     @GetMapping("/subjects/uname/{username}")
     public ResponseEntity<SubjectUserDTO> getSubjectsFromUsername(@PathVariable String username) throws InstanceNotFoundException {
         return new ResponseEntity<>(userService.findSubjectsByUsername(username), HttpStatus.OK);
@@ -75,6 +72,7 @@ public class UserController {
 
 
     @PreAuthorize("hasRole('TEACHER')")
+    @Operation(summary = "Assign user to subject.", description = "The given user will be assigned to the given subject")
     @PostMapping("/{subjectID}/{userID}")
     public ResponseEntity<String> addSubjectToUser( @PathVariable("userID") UUID userID, @PathVariable("subjectID") UUID subjectID) throws InstanceNotFoundException {
         userService.addSubjectToUser(userID, subjectID);
@@ -88,9 +86,7 @@ public class UserController {
         return new ResponseEntity<>( HttpStatus.NO_CONTENT);
     }
 
-    @PreAuthorize("hasRole('TEACHER')")
-    @Operation(summary = "Add a role to a user.", description = "Add a single role to a single user. There won't be any " +
-            "loss of roles as it just adds a role and replaces any roles.")
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/{username}/role/{rolename}")
     public ResponseEntity<String> addRoleToUser(@PathVariable("username") String username, @PathVariable("rolename") String rolename) {
         try {
@@ -103,8 +99,6 @@ public class UserController {
 
 
     @PreAuthorize("hasRole('TEACHER')")
-    @Operation(summary = "Update a user by ID.", description = "Update a single user by its ID. Pass the whole new user in the " +
-            "body and its ID in the path. If there's no user by that ID, nothing will change.")
     @PutMapping("/{id}")
     public ResponseEntity<User> updateUser(@Parameter(description = "UUID of the user to change.") @PathVariable UUID id, @Valid @RequestBody User user) throws InstanceNotFoundException, InstanceAlreadyExistsException, InvalidEmailException {
         return new ResponseEntity<>(userService.updateUser(id, user), HttpStatus.OK);

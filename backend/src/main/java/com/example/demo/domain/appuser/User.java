@@ -20,7 +20,11 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
-    @Size(min = 3, max = 16) @NotNull
+    @Size(min = 2, max = 25) @NotNull
+    private String firstname;
+    @Size(min = 2, max = 25) @NotNull
+    private String lastname;
+    @Size(min =3, max = 16) @NotNull
     private String username;
     @Email @NotNull
     private String email;

@@ -7,9 +7,9 @@ const uuid_pattern = '/^[0-9a-f]{8}-[0-9a-f]{4}-[0-5][0-9a-f]{3}-[089ab][0-9a-f]
 //   return;
 // }
 
-const { data: student } = await useFetch(`http://localhost:8080/api/user/${uuid}`, {
+const { data: student } = await useFetch(`http://localhost:8080/api/users/${uuid}`, {
   headers: {
-    Authorization: `Basic ${btoa("andrin:klarer")}`,
+    Authorization: `Basic ${btoa("andrinklarer:klarer")}`,
   },
 });
 </script>
