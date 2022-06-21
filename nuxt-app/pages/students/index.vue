@@ -5,7 +5,7 @@
 
     <div v-if="pending">
       <Alert type="info">
-        Loading...
+        Loading... {{ pending }}
       </Alert>
     </div>
 
@@ -34,26 +34,9 @@
 </template>
 
 <script setup>
-import Card1 from '~~/components/Card.vue';
-// const { data: students } = await useFetch(() => 'http://localhost:8080/api/user', {
-//   // baseURL: config.API_BASE_URL,
-//   // baseURL: 'http://localhost:8080',
-//   headers: {
-//     // 'Content-Type': 'application/json',
-//     // 'Accept': 'application/json',
-//     // 'Authorization': `Basic ${Buffer.from('andrin' + ":" + 'klarer', 'ascii').toString('base64')}`
-//     'Authorization': 'YW5kcmluOmtsYXJlcg==',
-//   },
-// })
-
-// Fetch data from external API
-const { pending, data: students } = await useLazyFetch("http://localhost:8080/api/user/", {
+const { pending, data: students } = await useAsyncData('students', () => $fetch('http://localhost:8080/api/user/', {
   headers: {
     Authorization: `Basic ${btoa("andrin:klarer")}`,
   },
-});
-watch(students, (newStudents) => {
-  console.log("Students Updated");
-  console.log(JSON.stringify(newStudents));
-})
+}));
 </script>
