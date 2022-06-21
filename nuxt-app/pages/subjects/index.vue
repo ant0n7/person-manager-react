@@ -40,7 +40,9 @@
 <script setup>
 const { pending, data: subjects } = await useAsyncData("subjects", () => $fetch("http://localhost:8080/api/subject/", {
   headers: {
-    Authorization: `Basic ${btoa("andrin:klarer")}`,
+    Authorization: `Basic ${btoa("andrinklarer:klarer")}`,
   },
 }));
+
+console.log("Subjects ", JSON.stringify(subjects));
 </script>

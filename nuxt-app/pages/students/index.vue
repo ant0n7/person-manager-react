@@ -34,7 +34,7 @@
 </template>
 
 <script setup>
-const { pending, data: students } = await useAsyncData('students', () => $fetch('http://localhost:8080/api/user/', {
+const { pending, data: students } = await useAsyncData('students', () => $fetch('http://localhost:8080/api/users/', {
   headers: {
     Authorization: `Basic ${btoa("andrinklarer:klarer")}`,
   },
