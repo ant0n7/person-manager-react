@@ -15,6 +15,7 @@ import javax.validation.Valid;
 import java.util.Collection;
 import java.util.UUID;
 
+@CrossOrigin
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/subject")

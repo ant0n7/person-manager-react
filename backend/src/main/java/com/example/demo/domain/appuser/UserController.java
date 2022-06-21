@@ -20,6 +20,7 @@ import javax.validation.Valid;
 import java.util.Collection;
 import java.util.UUID;
 
+@CrossOrigin
 @RestController @RequestMapping("/api/user")
 @RequiredArgsConstructor
 public class UserController {
