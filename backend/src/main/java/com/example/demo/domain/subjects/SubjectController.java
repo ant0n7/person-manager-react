@@ -38,6 +38,7 @@ public class SubjectController {
     }
 
     @PreAuthorize("hasRole('TEACHER')")
+    @Operation(summary = "Get all Subjects by user id.", description = "Receive a list of subjects that the given user attends")
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteSubject(@Parameter @PathVariable UUID id) throws InstanceNotFoundException {
         subjectService.deleteSubject(id);
