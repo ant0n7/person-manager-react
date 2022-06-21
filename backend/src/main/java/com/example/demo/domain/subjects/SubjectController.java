@@ -29,6 +29,13 @@ public class SubjectController {
         return new ResponseEntity<>(subjectService.findAll(), HttpStatus.OK);
     }
     @PreAuthorize("hasRole('TEACHER')")
+    @Operation(summary = "Get a subject by ID.", description = "Retrieve a the subject with the corresponding ID")
+    @GetMapping("/{id}")
+    public ResponseEntity<Subject> getSubjectById(@PathVariable UUID id) throws InstanceNotFoundException {
+        return new ResponseEntity<>(subjectService.findById(id).orElse(null), HttpStatus.OK);
+    }
+    
+    @PreAuthorize("hasRole('TEACHER')")
     @Operation(summary = "Add a subject.", description = "Add a single subject.")
     @PostMapping("/")
     public ResponseEntity<Subject> addSubject(@Valid @RequestBody Subject subject) throws InstanceAlreadyExistsException {

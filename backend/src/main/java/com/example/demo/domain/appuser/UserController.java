@@ -52,7 +52,7 @@ public class UserController {
     @PreAuthorize("hasRole('TEACHER')")
     @Operation(summary = "Get an user by ID.", description = "Receive a single user with all available Information by its UUID.")
     @GetMapping("/{id}")
-    public ResponseEntity<User> getById(@Parameter(description = "UUID of the user requested") @PathVariable UUID id) throws InstanceNotFoundException {
+    public ResponseEntity<User> getUserById(@PathVariable UUID id) throws InstanceNotFoundException {
         return new ResponseEntity<>(userService.findById(id).orElse(null), HttpStatus.OK);
     }
 
