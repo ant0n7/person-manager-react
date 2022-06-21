@@ -1,7 +1,5 @@
 package com.example.demo.domain.appuser;
 
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -15,11 +13,17 @@ public interface UserRepository extends JpaRepository<User, UUID> {
     User findByUsername (String username);
 
 
-    @Query(value = "select user_id from tbl_user_subjecs tus where tus.subject_id = :subjectUUID", nativeQuery = true)
-    List<UUID> getStudentsBySubject(@Param("subjectUUID") UUID subjectUUID);
+    @Query(value = "select cast(member_id AS varchar) from tbl_class_members tcm where class_id = (select class_id  from tbl_class_subjects tcs where tcs.subject_id = :subjectUUID)", nativeQuery = true)
+    List<String> getUsersBySubject(@Param("subjectUUID") UUID subjectUUID);
 
-    @Query(value = "select user_id from tbl_user_role tur join tbl_role tr on tur.role_id = tr.id where tr.rolename = 'STUDENT'", nativeQuery = true)
-    List<UUID> findAllStudents();
-    
+    @Query(value = "select cast(member_id AS varchar) from tbl_class_members tcm where tcm.class_id = :classUUID", nativeQuery = true)
+    List<String> getUsersByClass(@Param("classUUID") UUID classUUID);
+
+    @Query(value = "select cast(user_id AS varchar) from tbl_user_role tur join tbl_role tr on tur.role_id = tr.id where tr.rolename = 'STUDENT'", nativeQuery = true)
+    List<String> findAllStudents();
+
+    @Query(value = "select cast(user_id AS varchar) from tbl_user_role tur join tbl_role tr on tur.role_id = tr.id where tr.rolename = 'TEACHER'", nativeQuery = true)
+    List<String> findAllTeachers();
+
     User findByEmail(String email);
 }

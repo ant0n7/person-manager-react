@@ -30,8 +30,20 @@ INSERT INTO tbl_subject (id, subjectname) VALUES('17981505-b651-4172-8b24-90914a
 INSERT INTO tbl_subject (id, subjectname) VALUES('e3a37a26-ac91-4377-bcae-d7edd8bc34d8', 'Economy');
 INSERT INTO tbl_subject (id, subjectname) VALUES('51aea86c-239b-4b27-982e-816127be5b0b', 'History');
 
-INSERT INTO tbl_user_subject (user_id, subject_id) VALUES('2c61dac7-29fa-4baa-95e5-9053c7879d41', '7915ef79-e6ab-41d8-a510-2a7e75e503cf');
-INSERT INTO tbl_user_subject (user_id, subject_id) VALUES('2c61dac7-29fa-4baa-95e5-9053c7879d41', 'aa000dde-d9c8-40a1-b0c7-d62ab5a480d4');
-INSERT INTO tbl_user_subject (user_id, subject_id) VALUES('9da0c2ba-98c5-4504-821a-259942a298b2', '7915ef79-e6ab-41d8-a510-2a7e75e503cf');
-INSERT INTO tbl_user_subject (user_id, subject_id) VALUES('9da0c2ba-98c5-4504-821a-259942a298b2', 'aa000dde-d9c8-40a1-b0c7-d62ab5a480d4');
-INSERT INTO tbl_user_subject (user_id, subject_id) VALUES('9da0c2ba-98c5-4504-821a-259942a298b2', '51aea86c-239b-4b27-982e-816127be5b0b');
+
+INSERT INTO tbl_class (id,classname) VALUES ('1c1469b6-f18e-11ec-8ea0-0242ac120002','Class1');
+INSERT INTO tbl_class (id,classname) VALUES ('20e3d92c-f18e-11ec-8ea0-0242ac120002','Class2');
+
+INSERT INTO tbl_class_members (class_id,member_id) VALUES ('20e3d92c-f18e-11ec-8ea0-0242ac120002','2c61dac7-29fa-4baa-95e5-9053c7879d41');
+INSERT INTO tbl_class_members (class_id,member_id) VALUES ('20e3d92c-f18e-11ec-8ea0-0242ac120002','e74d2176-e7d7-4003-8543-369057a4279e');
+INSERT INTO tbl_class_members (class_id,member_id) VALUES ('1c1469b6-f18e-11ec-8ea0-0242ac120002','9da0c2ba-98c5-4504-821a-259942a298b2');
+
+
+INSERT INTO tbl_class_subjects (class_id,subject_id) VALUES ('1c1469b6-f18e-11ec-8ea0-0242ac120002','51aea86c-239b-4b27-982e-816127be5b0b');
+INSERT INTO tbl_class_subjects (class_id,subject_id) VALUES ('1c1469b6-f18e-11ec-8ea0-0242ac120002','e3a37a26-ac91-4377-bcae-d7edd8bc34d8');
+INSERT INTO tbl_class_subjects (class_id,subject_id) VALUES ('20e3d92c-f18e-11ec-8ea0-0242ac120002','7915ef79-e6ab-41d8-a510-2a7e75e503cf');
+INSERT INTO tbl_class_subjects (class_id,subject_id) VALUES ('20e3d92c-f18e-11ec-8ea0-0242ac120002','aa000dde-d9c8-40a1-b0c7-d62ab5a480d4');
+INSERT INTO tbl_class_subjects (class_id,subject_id) VALUES ('20e3d92c-f18e-11ec-8ea0-0242ac120002','95e9feb9-f320-45c6-8b92-f69115f18186');
+INSERT INTO tbl_class_subjects (class_id,subject_id) VALUES ('20e3d92c-f18e-11ec-8ea0-0242ac120002','17981505-b651-4172-8b24-90914a76d57c');
+
+

@@ -2,15 +2,12 @@ package com.example.demo.domain.appuser;
 
 
 import com.example.demo.domain.appuser.dto.CreateUserDTO;
-import com.example.demo.domain.appuser.dto.SubjectUserDTO;
 import com.example.demo.domain.exceptions.InvalidEmailException;
 import io.swagger.v3.oas.annotations.Parameter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import io.swagger.v3.oas.annotations.Operation;
 
@@ -58,41 +55,18 @@ public class UserController {
     }
 
     @PreAuthorize("hasRole('TEACHER')")
-    @Operation(summary = "Get students by user id.", description = "Receive a list of students that are attending the given subject")
-    @GetMapping("/subjects/byUser/{id}")
+    @Operation(summary = "Get students by subject id.", description = "Receive a list of students that are attending the given subject")
+    @GetMapping("/subject/{id}")
     public ResponseEntity<List<User>> getUsersFromSubject(@PathVariable UUID id) throws InstanceNotFoundException {
         return new ResponseEntity<>(userService.findUsersBySubject(id), HttpStatus.OK);
     }
-
     @PreAuthorize("hasRole('TEACHER')")
-    @Operation(summary = "Get subjects by user id.", description = "Receive a list of subjects that the given user attends")
-    @GetMapping("/subjects/{id}")
-    public ResponseEntity<SubjectUserDTO> getSubjectsFromUser(@PathVariable UUID id) throws InstanceNotFoundException {
-        return new ResponseEntity<>(userService.findSubjectsById(id), HttpStatus.OK);
+    @Operation(summary = "Get students by class id.", description = "Receive a list of students that are attending the given class")
+    @GetMapping("/class/{id}")
+    public ResponseEntity<List<User>> getUsersFromClass(@PathVariable UUID id) throws InstanceNotFoundException {
+        return new ResponseEntity<>(userService.findUsersByClass(id), HttpStatus.OK);
     }
 
-    @PreAuthorize("#username == authentication.principal.username || hasRole('TEACHER')")
-    @Operation(summary = "Get subjects by username.", description = "Receive a list of subjects that the given user attends")
-    @GetMapping("/subjects/uname/{username}")
-    public ResponseEntity<SubjectUserDTO> getSubjectsFromUsername(@PathVariable String username) throws InstanceNotFoundException {
-        return new ResponseEntity<>(userService.findSubjectsByUsername(username), HttpStatus.OK);
-    }
-
-
-    @PreAuthorize("hasRole('TEACHER')")
-    @Operation(summary = "Assign user to subject.", description = "The given user will be assigned to the given subject")
-    @PostMapping("/{subjectID}/{userID}")
-    public ResponseEntity<String> addSubjectToUser( @PathVariable("userID") UUID userID, @PathVariable("subjectID") UUID subjectID) throws InstanceNotFoundException {
-        userService.addSubjectToUser(userID, subjectID);
-        return new ResponseEntity<>( HttpStatus.OK);
-    }
-
-    @PreAuthorize("hasRole('TEACHER')")
-    @DeleteMapping("/{subjectID}/{userID}")
-    public ResponseEntity<String> deleteSubjectFromUser( @PathVariable("userID") UUID userID, @PathVariable("subjectID") UUID subjectID) throws InstanceNotFoundException {
-        userService.deleteSubjectFromUser(userID, subjectID);
-        return new ResponseEntity<>( HttpStatus.NO_CONTENT);
-    }
 
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/{username}/role/{rolename}")

@@ -3,7 +3,6 @@ package com.example.demo.domain.role;
 import com.example.demo.domain.authority.Authority;
 import com.example.demo.domain.authority.AuthorityRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.management.InstanceAlreadyExistsException;

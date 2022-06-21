@@ -1,18 +1,16 @@
 package com.example.demo.domain.appuser;
 
+import com.example.demo.domain.appclass.Class;
+import com.example.demo.domain.appclass.ClassRepository;
 import com.example.demo.domain.appuser.dto.CreateUserDTO;
-import com.example.demo.domain.appuser.dto.SubjectUserDTO;
 import com.example.demo.domain.exceptions.InvalidEmailException;
 import com.example.demo.domain.role.Role;
 import com.example.demo.domain.role.RoleRepository;
-import com.example.demo.domain.subjects.Subject;
 import com.example.demo.domain.subjects.SubjectRepository;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.validator.routines.EmailValidator;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -31,6 +29,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
     private final SubjectRepository subjectRepository;
+    private final ClassRepository classRepository;
     private final UserMapper userMapper;
     private final PasswordEncoder passwordEncoder;
     private final String[] errorMessages = new String[]
@@ -150,71 +149,43 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
-    public void addSubjectToUser(UUID userID, UUID subjectID) throws InstanceNotFoundException {
-        User user;
-        Subject subject;
-        try {
-            user = userRepository.findById(userID).get();
-            subject = subjectRepository.findById(subjectID).get();
-        } catch (Exception e){
-            throw new InstanceNotFoundException();
-        }
-        user.getSubjects().add(subject);
-    }
-    @Override
-    public void deleteSubjectFromUser(UUID userID, UUID subjectID) throws InstanceNotFoundException {
-        User user;
-        Subject subject;
-        try {
-            user = userRepository.findById(userID).get();
-            subject = subjectRepository.findById(subjectID).get();
-        } catch (Exception e){
-            throw new InstanceNotFoundException();
-        }
-
-        user.getSubjects().remove(subject);
-    }
-
-    @Override
-    public SubjectUserDTO findSubjectsById(UUID id) throws InstanceNotFoundException {
-        try {
-            User user = userRepository.findById(id).get();
-            return userMapper.userToSubjectUserDTO(user);
-        } catch (Exception e){
-            throw new InstanceNotFoundException("No user found with the given ID");
-        }
-    }
-    @Override
-    public SubjectUserDTO findSubjectsByUsername(String username) throws InstanceNotFoundException{
-        try {
-            User user = userRepository.findByUsername(username);
-            user.getId();
-            return userMapper.userToSubjectUserDTO(user);
-        } catch (Exception e){
-            throw new InstanceNotFoundException("No user found with the given username");
-        }
-    }
-
-    @Override
     public List<User> findUsersBySubject(UUID id) throws InstanceNotFoundException {
-        if (subjectRepository.existsById(id)){
-            List<UUID> users = userRepository.getStudentsBySubject(id);
+       if (subjectRepository.existsById(id)){
+            List<String> users = userRepository.getUsersBySubject(id);
             List<UUID> students = new ArrayList<>();
-            for (UUID u: users){
+            for (String u: users){
                 if (userRepository.findAllStudents().contains(u)){
-                    students.add(u);
+                    students.add(UUID.fromString(u));
                 }
             }
-            return convertIdToObject(students);
+            return convertIdToUser(students);
         }else {
             throw new InstanceNotFoundException();
         }
     }
-    private List<User> convertIdToObject(List<UUID> uuid){
+
+    @Override
+    public List<User> findUsersByClass(UUID id) throws InstanceNotFoundException {
+        if (classRepository.existsById(id)){
+            List<String> users = userRepository.getUsersByClass(id);
+            List<UUID> students = new ArrayList<>();
+            for (String u: users){
+                if (userRepository.findAllStudents().contains(u)){
+                    students.add(UUID.fromString(u));
+                }
+            }
+            return convertIdToUser(students);
+        }else {
+            throw new InstanceNotFoundException();
+        }
+    }
+
+    private List<User> convertIdToUser(List<UUID> uuid){
         List<User> obj = new ArrayList<>();
         for (UUID u: uuid) {
             obj.add(userRepository.findById(u).orElse(null));
         }
         return obj;
     }
+
 }

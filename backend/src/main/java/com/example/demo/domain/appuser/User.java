@@ -6,6 +6,7 @@ import com.example.demo.domain.subjects.Subject;
 import lombok.*;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
@@ -40,14 +41,5 @@ public class User {
             inverseJoinColumns = @JoinColumn(
                     name = "role_id", referencedColumnName = "id"))
     private List<Role> roles;
-
-    @ManyToMany
-    @JoinTable(
-            name = "tbl_user_subject",
-            joinColumns = @JoinColumn(
-                    name = "user_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(
-                    name = "subject_id", referencedColumnName = "id"))
-    private List<Subject> subjects;
 
 }
