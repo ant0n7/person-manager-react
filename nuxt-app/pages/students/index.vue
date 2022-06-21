@@ -47,9 +47,9 @@ import Card1 from '~~/components/Card.vue';
 // })
 
 // Fetch data from external API
-const { pending, data: students } = await useLazyFetch("http://localhost:8080/api/user/", {
+const { pending, data: students } = await useLazyFetch("http://localhost:8080/api/users/", {
   headers: {
-    Authorization: `Basic ${btoa("andrin:klarer")}`,
+    Authorization: `Basic ${btoa("andrinklarer:klarer")}`,
   },
 });
 watch(students, (newStudents) => {
