@@ -151,7 +151,12 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     @Override
     public List<User> findUsersBySubject(UUID id) throws InstanceNotFoundException {
        if (subjectRepository.existsById(id)){
-            List<String> users = userRepository.getUsersBySubject(id);
+            List<String> classes = userRepository.getClassesBySubject(id);
+           List<String> users = new ArrayList<>();
+           for (String c: classes) {
+               users.addAll(userRepository.getUsersByClass(UUID.fromString(c)));
+           }
+
             List<UUID> students = new ArrayList<>();
             for (String u: users){
                 if (userRepository.findAllStudents().contains(u)){

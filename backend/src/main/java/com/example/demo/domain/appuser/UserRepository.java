@@ -12,9 +12,8 @@ import java.util.UUID;
 public interface UserRepository extends JpaRepository<User, UUID> {
     User findByUsername (String username);
 
-
-    @Query(value = "select cast(member_id AS varchar) from tbl_class_members tcm where class_id = (select class_id  from tbl_class_subjects tcs where tcs.subject_id = :subjectUUID)", nativeQuery = true)
-    List<String> getUsersBySubject(@Param("subjectUUID") UUID subjectUUID);
+    @Query(value = "select class_id  from tbl_class_subjects tcs where tcs.subject_id = :subjectUUID", nativeQuery = true)
+    List<String> getClassesBySubject(@Param("subjectUUID") UUID subjectUUID);
 
     @Query(value = "select cast(member_id AS varchar) from tbl_class_members tcm where tcm.class_id = :classUUID", nativeQuery = true)
     List<String> getUsersByClass(@Param("classUUID") UUID classUUID);

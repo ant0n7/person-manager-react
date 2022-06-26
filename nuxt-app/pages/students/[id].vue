@@ -8,6 +8,16 @@ const { data: student } = await useFetch(`http://localhost:8080/api/users/${uuid
     Authorization: `Basic ${btoa("andrinklarer:klarer")}`,
   },
 });
+const { data: subjects } = await useFetch(`http://localhost:8080/api/subjects/user/${uuid}`, {
+  headers: {
+    Authorization: `Basic ${btoa("andrinklarer:klarer")}`,
+  },
+});
+const { data: classes } = await useFetch(`http://localhost:8080/api/classes/user/${uuid}`, {
+  headers: {
+    Authorization: `Basic ${btoa("andrinklarer:klarer")}`,
+  },
+});
 </script>
 
 <template>
@@ -17,11 +27,11 @@ const { data: student } = await useFetch(`http://localhost:8080/api/users/${uuid
       <a class="link-primary link-unstyled" :href="'mailto:' + student.email">{{ student.email }}</a>
     </h6>
 
-    <div class="row pt-3" v-if="student.subjects.length > 0">
+    <div class="row pt-3" v-if="subjects.length > 0">
       <Heading tag="h2">Subjects</Heading>
       <div
         class="col-md-3 col-12"
-        v-for="subject in student.subjects"
+        v-for="subject in subjects"
         :key="subject.id"  
       >
        <Card
@@ -31,16 +41,16 @@ const { data: student } = await useFetch(`http://localhost:8080/api/users/${uuid
       </div>
     </div>
 
-    <div class="row pt-3" v-if="student.classes.length > 0">
+    <div class="row pt-3" v-if="classes.length > 0">
       <Heading tag="h2">Classes</Heading>
       <div
         class="col-md-3 col-12"
-        v-for="subject in student.subjects"
-        :key="subject.id"  
+        v-for="appclass in classes"
+        :key="appclass.id"  
       >
        <Card
-        :title="subject.subjectname"
-        :link="`/subjects/${subject.id}`"
+        :title="appclass.classname"
+        :link="`/classes/${appclass.id}`"
         />
       </div>
     </div>

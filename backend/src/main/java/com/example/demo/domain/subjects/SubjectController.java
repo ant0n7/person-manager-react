@@ -13,6 +13,7 @@ import javax.management.InstanceAlreadyExistsException;
 import javax.management.InstanceNotFoundException;
 import javax.validation.Valid;
 import java.util.Collection;
+import java.util.List;
 import java.util.UUID;
 
 @CrossOrigin
@@ -54,6 +55,13 @@ public class SubjectController {
     public ResponseEntity<String> deleteSubject(@Parameter @PathVariable UUID id) throws InstanceNotFoundException {
         subjectService.deleteSubject(id);
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @PreAuthorize("hasRole('TEACHER')")
+    @Operation(summary = "Get a subject by username.", description = "Retrieve a the subject with the corresponding ID")
+    @GetMapping("/user/{id}")
+    public ResponseEntity<List<Subject>> getSubjectsByUserID(@PathVariable UUID id) throws InstanceNotFoundException {
+        return new ResponseEntity<>(subjectService.findByUserID(id), HttpStatus.OK);
     }
 
 }

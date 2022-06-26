@@ -6,7 +6,6 @@ import com.example.demo.domain.appuser.User;
 import com.example.demo.domain.appuser.UserRepository;
 import com.example.demo.domain.subjects.Subject;
 import com.example.demo.domain.subjects.SubjectRepository;
-import com.example.demo.domain.subjects.SubjectService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -98,6 +97,15 @@ public class ClassServiceImpl implements ClassService {
             return  convertIdToRestrictedClass(classRepository.findClassesByUser(userRepository.findByUsername(username).getId()));
         } catch (Exception e){
             throw new InstanceNotFoundException("User " + username + " does not exist");
+        }
+    }
+
+    @Override
+    public List<Class> findClassesByUserID(UUID id) throws InstanceNotFoundException {
+        try{
+            return  convertIdToClass(classRepository.findClassesByUser(id));
+        } catch (Exception e){
+            throw new InstanceNotFoundException("User  does not exist");
         }
     }
 

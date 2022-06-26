@@ -41,6 +41,7 @@ INSERT INTO tbl_class_members (class_id,member_id) VALUES ('1c1469b6-f18e-11ec-8
 
 INSERT INTO tbl_class_subjects (class_id,subject_id) VALUES ('1c1469b6-f18e-11ec-8ea0-0242ac120002','51aea86c-239b-4b27-982e-816127be5b0b');
 INSERT INTO tbl_class_subjects (class_id,subject_id) VALUES ('1c1469b6-f18e-11ec-8ea0-0242ac120002','e3a37a26-ac91-4377-bcae-d7edd8bc34d8');
+INSERT INTO tbl_class_subjects (class_id,subject_id) VALUES ('1c1469b6-f18e-11ec-8ea0-0242ac120002','7915ef79-e6ab-41d8-a510-2a7e75e503cf');
 INSERT INTO tbl_class_subjects (class_id,subject_id) VALUES ('20e3d92c-f18e-11ec-8ea0-0242ac120002','7915ef79-e6ab-41d8-a510-2a7e75e503cf');
 INSERT INTO tbl_class_subjects (class_id,subject_id) VALUES ('20e3d92c-f18e-11ec-8ea0-0242ac120002','aa000dde-d9c8-40a1-b0c7-d62ab5a480d4');
 INSERT INTO tbl_class_subjects (class_id,subject_id) VALUES ('20e3d92c-f18e-11ec-8ea0-0242ac120002','95e9feb9-f320-45c6-8b92-f69115f18186');

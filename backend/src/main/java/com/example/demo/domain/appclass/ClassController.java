@@ -76,11 +76,17 @@ public class ClassController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @PreAuthorize("#username == authentication.principal.username || hasRole('TEACHER')")
+//    @PreAuthorize("#username == authentication.principal.username || hasRole('TEACHER')")
+//    @Operation(summary = "Get classes by username.", description = "Receive a list of classes that the given user attends")
+//    @GetMapping("/user/{username}")
+//    public ResponseEntity<List<RestrictedClassInformationDTO>> getClassesFromUsername(@PathVariable String username) throws InstanceNotFoundException {
+//        return new ResponseEntity<>(classService.findClassesByUsername(username), HttpStatus.OK);
+//    }
+
     @Operation(summary = "Get classes by username.", description = "Receive a list of classes that the given user attends")
-    @GetMapping("/user/{username}")
-    public ResponseEntity<List<RestrictedClassInformationDTO>> getClassesFromUsername(@PathVariable String username) throws InstanceNotFoundException {
-        return new ResponseEntity<>(classService.findClassesByUsername(username), HttpStatus.OK);
+    @GetMapping("/user/{id}")
+    public ResponseEntity<List<Class>> getClassesFromUserID(@PathVariable UUID id) throws InstanceNotFoundException {
+        return new ResponseEntity<>(classService.findClassesByUserID(id), HttpStatus.OK);
     }
 
     @PreAuthorize("hasRole('TEACHER')")

@@ -21,6 +21,9 @@ public interface ClassService {
 
     void addSubjectToClass(UUID classID, UUID subjectID) throws InstanceNotFoundException;
     List<RestrictedClassInformationDTO> findClassesByUsername(String username) throws InstanceNotFoundException;
+
+    List<Class> findClassesByUserID(UUID id) throws InstanceNotFoundException;
+
     List<Class> findClassesBySubject(String subjectname) throws InstanceNotFoundException;
 
 }

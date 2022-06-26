@@ -20,4 +20,7 @@ public interface SubjectService {
 
     Subject updateSubject(UUID id, Subject subject) throws InstanceNotFoundException;
 
+    List<Subject> findByUsername(String username);
+
+    List<Subject> findByUserID(UUID id);
 }
