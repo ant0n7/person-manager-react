@@ -87,14 +87,12 @@ export default {
             Accept: "application/json",
           },
         })
-        .then(
-          (response) => {
-            this.isSuccess = response.data.success ? true : false;
-          },
-          (response) => {
-            console.log("response");
+        .then((response) => {
+          this.isSuccess = response.status == 200 ? true : false;
+          if (this.isSuccess) {
+            this.$router.back();
           }
-        );
+        });
     },
   },
 };

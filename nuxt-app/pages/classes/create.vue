@@ -17,26 +17,33 @@
         />
       </div>
       <div class="mb-3">
-        <label for="members" class="form-label" aria-describedby="membersHelp">Members</label>
+        <label for="members" class="form-label" aria-describedby="membersHelp"
+          >Members</label
+        >
         <input
           type="text"
           class="form-control"
           id="members"
           v-model="members"
         />
-        <div id="membersHelp" class="form-text">Enter username of class members seperated with comma</div>
+        <div id="membersHelp" class="form-text">
+          Enter username of class members seperated with comma
+        </div>
       </div>
-      
+
       <div class="mb-3">
-        <label for="subjects" class="form-label" aria-describedby="subjectHelp">Subjects</label>
+        <label for="subjects" class="form-label" aria-describedby="subjectHelp"
+          >Subjects</label
+        >
         <input
           type="text"
           class="form-control"
           id="subjects"
           v-model="subjects"
         />
-                <div id="subjectHelp" class="form-text">Enter names of subject seperated with comma</div>
-
+        <div id="subjectHelp" class="form-text">
+          Enter names of subject seperated with comma
+        </div>
       </div>
 
       <button type="submit" class="btn btn-primary">Submit</button>
@@ -65,8 +72,8 @@ export default {
     onSubmit() {
       let data = {
         classname: this.classname,
-        members: this.members.split(',').map(subject => subject.trim()),
-        subjects: this.subjects.split(',').map(subject => subject.trim()) ,
+        members: this.members.split(",").map((subject) => subject.trim()),
+        subjects: this.subjects.split(",").map((subject) => subject.trim()),
       };
       axios
         .post("http://localhost:8080/api/classes/", data, {
@@ -75,14 +82,12 @@ export default {
             Accept: "application/json",
           },
         })
-        .then(
-          (response) => {
-            this.isSuccess = response.data.success ? true : false;
-          },
-          (response) => {
-            console.log("response");
+        .then((response) => {
+          this.isSuccess = response.status == 200 ? true : false;
+          if (this.isSuccess) {
+            this.$router.back();
           }
-        );
+        });
     },
   },
 };

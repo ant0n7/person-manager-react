@@ -50,11 +50,11 @@ export default {
         })
         .then(
           (response) => {
-            this.isSuccess = response.data.success ? true : false;
+            this.isSuccess = response.status == 200 ? true : false;
+            if (this.isSuccess) {
+              this.$router.back();
+            }
           },
-          (response) => {
-            console.log("response");
-          }
         );
     },
   },

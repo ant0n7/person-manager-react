@@ -25,7 +25,6 @@ public class Subject {
     private UUID id;
 
     @NotNull
-    @UniqueElements
     @Size(min = 3, max = 255)
     private String subjectname;
 
