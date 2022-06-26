@@ -13,6 +13,7 @@
       <li><NuxtLink to="/" class="nav-link px-2 link-dark">Home</NuxtLink></li>
       <li><NuxtLink to="/students" class="nav-link px-2 link-dark">Students</NuxtLink></li>
       <li><NuxtLink to="/subjects" class="nav-link px-2 link-dark">Subjects</NuxtLink></li>
+      <li><NuxtLink to="/classes" class="nav-link px-2 link-dark">Classes</NuxtLink></li>
     </ul>
 
     <div class="col-md-4 text-end">

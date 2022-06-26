@@ -30,5 +30,19 @@ const { data: student } = await useFetch(`http://localhost:8080/api/users/${uuid
         />
       </div>
     </div>
+
+    <div class="row pt-3" v-if="student.classes.length > 0">
+      <Heading tag="h2">Classes</Heading>
+      <div
+        class="col-md-3 col-12"
+        v-for="subject in student.subjects"
+        :key="subject.id"  
+      >
+       <Card
+        :title="subject.subjectname"
+        :link="`/subjects/${subject.id}`"
+        />
+      </div>
+    </div>
   </div>
 </template>

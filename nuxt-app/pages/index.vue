@@ -21,6 +21,15 @@
           buttonText="View All"
         />
       </div>
+      <div class="col-md-3 col-12">
+        <Card
+          title="Classes"
+          subtitle="List of Classes"
+          image="/class.png"
+          link="/classes"
+          buttonText="View All"
+        />
+      </div>
     </div>
   </div>
 </template>
