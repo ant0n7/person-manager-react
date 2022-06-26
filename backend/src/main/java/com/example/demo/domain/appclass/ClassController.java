@@ -1,5 +1,6 @@
 package com.example.demo.domain.appclass;
 
+import com.example.demo.domain.appclass.dto.CreateClassDTO;
 import com.example.demo.domain.appclass.dto.RestrictedClassInformationDTO;
 import com.example.demo.domain.subjects.Subject;
 import com.example.demo.domain.subjects.SubjectService;
@@ -41,7 +42,7 @@ public class ClassController {
     @PreAuthorize("hasRole('TEACHER')")
     @Operation(summary = "Add a class.", description = "Add a single class.")
     @PostMapping("/")
-    public ResponseEntity<Class> addClass(@Valid @RequestBody Class appclass) throws InstanceAlreadyExistsException {
+    public ResponseEntity<Class> addClass(@Valid @RequestBody CreateClassDTO appclass) throws InstanceAlreadyExistsException {
         return new ResponseEntity<>(classService.saveClass(appclass), HttpStatus.CREATED);
     }
     @PreAuthorize("hasRole('TEACHER')")

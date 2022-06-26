@@ -1,5 +1,6 @@
 package com.example.demo.domain.appclass;
 
+import com.example.demo.domain.appclass.dto.CreateClassDTO;
 import com.example.demo.domain.appclass.dto.RestrictedClassInformationDTO;
 import com.example.demo.domain.subjects.Subject;
 
@@ -10,7 +11,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 public interface ClassService {
-    Class saveClass(Class appclass) throws InstanceAlreadyExistsException;
+    Class saveClass(CreateClassDTO appclass) throws InstanceAlreadyExistsException;
     Optional<Class> findById(UUID id) throws InstanceNotFoundException;
     List<Class> findAll();
     void deleteClass(UUID id) throws InstanceNotFoundException;

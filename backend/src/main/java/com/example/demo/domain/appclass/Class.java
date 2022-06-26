@@ -27,7 +27,7 @@ public class Class {
     @Size(min =3, max = 16) @NotNull
     private String classname;
 
-    @ManyToMany
+    @ManyToMany(cascade=CascadeType.ALL)
     @JoinTable(
             name = "tbl_class_members",
             joinColumns = @JoinColumn(
@@ -36,7 +36,7 @@ public class Class {
                     name = "member_id", referencedColumnName = "id"))
     private List<User> members;
 
-    @ManyToMany
+    @ManyToMany(cascade=CascadeType.ALL)
     @JoinTable(
             name = "tbl_class_subjects",
             joinColumns = @JoinColumn(

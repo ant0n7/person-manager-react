@@ -19,7 +19,7 @@
       </div>
     </div>
     
-    <div class="row pt-3" v-if="appClass.members.length > 0">
+    <div class="row pt-3" v-if="students.length > 0">
       <Heading tag="h2">Students</Heading>
       <div
         class="col-md-3 col-12"
@@ -29,6 +29,19 @@
        <Card
         :title="student.firstname + ' ' + student.lastname"
         :link="`/students/${student.id}`"
+        />
+      </div>
+    </div>
+    <div class="row pt-3" v-if="teachers.length > 0">
+      <Heading tag="h2">Teachers</Heading>
+      <div
+        class="col-md-3 col-12"
+        v-for="teacher in teachers"
+        :key="teacher.id"  
+      >
+       <Card
+        :title="teacher.firstname + ' ' + teacher.lastname"
+        :link="`/students/${teacher.id}`"
         />
       </div>
     </div>
@@ -53,6 +66,11 @@ export default {
     students() {
       return this.appClass.members.filter(member => {
         return member.roles.some(role => role.rolename === 'STUDENT');
+      });
+    },
+    teachers() {
+      return this.appClass.members.filter(member => {
+        return member.roles.some(role => role.rolename === 'TEACHER');
       });
     }
   }

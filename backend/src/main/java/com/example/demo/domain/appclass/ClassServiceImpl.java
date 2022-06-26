@@ -1,5 +1,6 @@
 package com.example.demo.domain.appclass;
 
+import com.example.demo.domain.appclass.dto.CreateClassDTO;
 import com.example.demo.domain.appclass.dto.RestrictedClassInformationDTO;
 import com.example.demo.domain.appuser.User;
 import com.example.demo.domain.appuser.UserRepository;
@@ -26,11 +27,15 @@ public class ClassServiceImpl implements ClassService {
     private final SubjectRepository subjectRepository;
     private final ClassMapper classMapper;
     @Override
-    public Class saveClass(Class appclass) throws InstanceAlreadyExistsException {
-        if (classRepository.findByClassname(appclass.getClassname()) != null){
-            throw new InstanceAlreadyExistsException("Subject already exists");
+    public Class saveClass(CreateClassDTO appclass) throws InstanceAlreadyExistsException {
+        Class newClass = new Class();
+        newClass.setClassname(appclass.getClassname());
+        newClass.setMembers(convertUsernameToUser(appclass.getMembers()));
+        newClass.setSubjects(convertSubjectnameToSubject(appclass.getSubjects()));
+        if (classRepository.findByClassname(newClass.getClassname()) != null){
+            throw new InstanceAlreadyExistsException("Class already exists");
         }
-        return classRepository.save(appclass);
+        return classRepository.save(newClass);
     }
 
     @Override
@@ -120,6 +125,23 @@ public class ClassServiceImpl implements ClassService {
         }
         return obj;
     }
+
+    private List<User> convertUsernameToUser(List<String> username){
+        List<User> obj = new ArrayList<>();
+        for (String u: username) {
+            obj.add(userRepository.findByUsername(u));
+        }
+        return obj;
+    }
+
+    private List<Subject> convertSubjectnameToSubject(List<String> subjectname){
+        List<Subject> obj = new ArrayList<>();
+        for (String s: subjectname) {
+            obj.add(subjectRepository.findBySubjectname(s));
+        }
+        return obj;
+    }
+
 
 
 }
