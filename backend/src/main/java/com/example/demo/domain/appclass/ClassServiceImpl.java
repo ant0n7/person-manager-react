@@ -90,19 +90,33 @@ public class ClassServiceImpl implements ClassService {
     @Override
     public List<RestrictedClassInformationDTO> findClassesByUsername(String username) throws InstanceNotFoundException {
         try{
-            return  convertIdToClass(classRepository.findClassesByUser(userRepository.findByUsername(username).getId()));
+            return  convertIdToRestrictedClass(classRepository.findClassesByUser(userRepository.findByUsername(username).getId()));
         } catch (Exception e){
-            //throw new InstanceNotFoundException("User " + username + " does not exist");
-            e.printStackTrace();
-            return null;
+            throw new InstanceNotFoundException("User " + username + " does not exist");
+        }
+    }
+
+    @Override
+    public List<Class> findClassesBySubject(String subjectname) throws InstanceNotFoundException {
+        try{
+            return  convertIdToClass(classRepository.findClassesByUser(subjectRepository.findBySubjectname(subjectname).getId()));
+        } catch (Exception e){
+            throw new InstanceNotFoundException("Subject " + subjectname + " does not exist");
         }
     }
 
 
-    private List<RestrictedClassInformationDTO> convertIdToClass(List<String> uuid){
+    private List<RestrictedClassInformationDTO> convertIdToRestrictedClass(List<String> uuid){
         List<RestrictedClassInformationDTO> obj = new ArrayList<>();
         for (String u: uuid) {
             obj.add(classMapper.classToRestrictedClassInformationDTO(classRepository.findById(UUID.fromString(u)).orElse(null)));
+        }
+        return obj;
+    }
+    private List<Class> convertIdToClass(List<String> uuid){
+        List<Class> obj = new ArrayList<>();
+        for (String u: uuid) {
+            obj.add(classRepository.findById(UUID.fromString(u)).orElse(null));
         }
         return obj;
     }

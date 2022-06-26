@@ -18,7 +18,7 @@ import java.util.UUID;
 @CrossOrigin
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/subject")
+@RequestMapping("/api/subjects")
 public class SubjectController {
     private final SubjectService subjectService;
 

@@ -15,4 +15,8 @@ public interface ClassRepository extends JpaRepository<Class, UUID> {
 
     @Query(value = "select CAST(class_id as varchar) from tbl_class_members tcm where member_id = :userUUID", nativeQuery = true)
     List<String> findClassesByUser (@Param("userUUID") UUID userUUID);
+
+    @Query(value = "select CAST(class_id as varchar) from tbl_class_subjects tcm where subject_id = :subjectID", nativeQuery = true)
+    List<String> findClassesBySubject (@Param("subjectID") UUID subjectID);
+
 }

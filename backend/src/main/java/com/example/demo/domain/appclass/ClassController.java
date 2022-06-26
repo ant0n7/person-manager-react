@@ -82,4 +82,13 @@ public class ClassController {
         return new ResponseEntity<>(classService.findClassesByUsername(username), HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('TEACHER')")
+    @Operation(summary = "Get classes by subjectname.", description = "Receive a list of classes that the given subject is part of")
+    @GetMapping("/subject/{subjectname}")
+    public ResponseEntity<List<Class>> getClassesFromSubjectName(@PathVariable String subjectname) throws InstanceNotFoundException {
+        return new ResponseEntity<>(classService.findClassesBySubject(subjectname), HttpStatus.OK);
+    }
+
+
+
 }
