@@ -1,7 +1,10 @@
 <script setup>
-const username = useState('username', () => useCookie('username').value);
-const password = useState('password', () => useCookie('password').value);
-const role = useState('role', () => useCookie('role').value);
+// const username = useState('username', () => useCookie('username').value);
+// const password = useState('password', () => useCookie('password').value);
+// const role = useState('role', () => useCookie('role').value);
+const username = useCookie('username').value;
+const password = useCookie('password').value;
+const role = useCookie('role').value;
 </script>
 
 <template>
