@@ -4,11 +4,10 @@ import com.example.demo.domain.grade.Grade;
 import com.example.demo.domain.role.Role;
 import com.example.demo.domain.subjects.Subject;
 import lombok.*;
-import org.hibernate.annotations.LazyCollection;
-import org.hibernate.annotations.LazyCollectionOption;
-import org.hibernate.annotations.Type;
+import org.hibernate.annotations.*;
 
 import javax.persistence.*;
+import javax.persistence.Entity;
 import javax.validation.constraints.*;
 import java.util.List;
 import java.util.UUID;
@@ -17,6 +16,7 @@ import java.util.UUID;
 //from lombok
 @Getter@Setter
 @NoArgsConstructor @AllArgsConstructor
+@OnDelete(action = OnDeleteAction.CASCADE)
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -35,6 +35,7 @@ public class User {
     private String password;
 
     @LazyCollection(LazyCollectionOption.FALSE)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     @ManyToMany()
     @JoinTable(
             name = "tbl_user_role",

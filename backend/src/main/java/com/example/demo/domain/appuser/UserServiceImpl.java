@@ -145,6 +145,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     @Override
     public void deleteUser(UUID id) throws InstanceNotFoundException {
         if (!userRepository.existsById(id)) throw new InstanceNotFoundException("User does not exist.");
+        userRepository.deleteFromClass(id);
         userRepository.deleteById(id);
     }
 
