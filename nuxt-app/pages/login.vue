@@ -14,6 +14,7 @@ const loggedInUsername = useUsername();
         <!-- <form action="/"> -->
           <!-- <form> -->
           <!-- Email input -->
+        <div v-if="!loggedInUserName && !loggedInPassword && !loggedInRole">
           <div class="form-outline mt-4 mb-2">
             <input
               type="text"
@@ -52,6 +53,11 @@ const loggedInUsername = useUsername();
             <p>Store user: {{ loggedInUsername }}</p>
           </div>
         <!-- </form> -->
+        </div>
+        <div v-else>
+          <Alert class="d-inline-flex align-items-center">You are already logged in! <button @click="logout" class="btn btn-danger ms-3 float-end center align-self-center
+">Logout?</button></Alert>
+        </div>
       </div>
     </div>
   </div>
@@ -82,6 +88,11 @@ export default {
     },
     setRole(role: string) {
       useCookie("role").value = role;
+    },
+    logout() {
+      useCookie("username").value = undefined;
+      useCookie("password").value = undefined;
+      useCookie("role").value = undefined;
     },
     async login() {
       const username = this.$refs.usernameInput.value;

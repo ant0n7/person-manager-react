@@ -1,3 +1,9 @@
+<script setup>
+const username = useState('username', () => useCookie('username').value);
+const password = useState('password', () => useCookie('password').value);
+const role = useState('role', () => useCookie('role').value);
+</script>
+
 <template>
   <header
     class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom"
@@ -17,15 +23,33 @@
     </ul>
 
     <div class="col-md-4 text-end">
-      <NuxtLink to="/login" type="button" class="btn btn-outline-primary">Login</NuxtLink>
+      <NuxtLink v-if="!username && !password && !role" to="/login" type="button" class="btn btn-outline-primary">Login</NuxtLink>
+      <button v-else @click="logout" type="button" class="btn btn-outline-danger">Logout</button>
     </div>
   </header>
 </template>
+
 <style scoped>
-  li{
-    font-size: 20px;
-  }
+  /* li{ */
+    /* font-size: 20px; */
+  /* } */
   .nav-link{
     color: #757575
   }
 </style>
+
+<script>
+export default {
+  methods: {
+    logout() {
+      useCookie("username").value = undefined;
+      useCookie("password").value = undefined;
+      useCookie("role").value = undefined;
+      // username = undefined;
+      // password = undefined;
+      // role = undefined;
+      // useState('username').value = undefined;
+    },
+  }
+}
+</script>

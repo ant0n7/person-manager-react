@@ -1,5 +1,6 @@
 <template>
   <div class="container">
+    <!-- TODO(andrin): Implement delete like in single student page. -->
     <Heading>{{ appClass.classname }}</Heading>
     <!-- <h6 class="subtitle student-email">
       {{ appClass.description }}
@@ -49,13 +50,19 @@
 </template>
 
 <script setup>
-const route = useRoute()
+const route = useRoute();
 const uuid = route.params.id;
 const uuid_pattern = '/^[0-9a-f]{8}-[0-9a-f]{4}-[0-5][0-9a-f]{3}-[089ab][0-9a-f]{3}-[0-9a-f]{12}$/i';
 
+const username = useCookie('username').value ?? 'default';
+const password = useCookie('password').value ?? 'default';
+const role = useCookie('role').value ?? 'default';
+
+const base64auth = btoa(`${username}:${password}`);
+
 const { data: appClass } = await useFetch(`http://localhost:8080/api/classes/${uuid}`, {
   headers: {
-    Authorization: `Basic ${btoa("andrinklarer:klarer")}`,
+    Authorization: `Basic ${base64auth}`,
   },
 });
 </script>

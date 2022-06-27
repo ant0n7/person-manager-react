@@ -86,7 +86,7 @@ export default {
           this.isSuccess = response.status == 200 || 201 ? true : false;
           console.log(this.isSuccess);
           if (this.isSuccess) {
-            // location.reload()
+            // location.reload();
             this.$router.back(/*() => {this.$router.afterEach(() => location.reload())}*/);
           }
         });
