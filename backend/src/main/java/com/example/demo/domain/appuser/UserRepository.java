@@ -24,5 +24,8 @@ public interface UserRepository extends JpaRepository<User, UUID> {
     @Query(value = "select cast(user_id AS varchar) from tbl_user_role tur join tbl_role tr on tur.role_id = tr.id where tr.rolename = 'TEACHER'", nativeQuery = true)
     List<String> findAllTeachers();
 
+    @Query(value = "select tr.rolename from tbl_role tr where id = (select role_id from tbl_user_role tur where user_id = (select id from tbl_user tu where username = :username))", nativeQuery = true)
+    String getRole(@Param("username") String username);
+
     User findByEmail(String email);
 }
