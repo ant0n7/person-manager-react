@@ -32,10 +32,12 @@ const { data: classes } = await useFetch(
 
 <template>
   <div class="container">
-    <Heading>{{
-      student.firstname + " " + student.lastname
-    }}</Heading>
-        <button @click="deleteUser(student.id)" type="button" class="btn btn-danger" >Delete</button>
+    <Heading
+      buttonType="btn-danger"
+      buttonText="Delete"
+      :buttonAction="deleteUser"
+      >{{ student.firstname + " " + student.lastname }}</Heading
+    >
 
     <h6 class="subtitle student-email">
       <a class="link-primary link-unstyled" :href="'mailto:' + student.email"
@@ -65,16 +67,17 @@ const { data: classes } = await useFetch(
         <Card :title="appclass.classname" :link="`/classes/${appclass.id}`" />
       </div>
     </div>
-
   </div>
 </template>
+
 <script>
 import axios from "axios";
+
 export default {
   methods: {
-    deleteUser(uuid) {
+    deleteUser() {
       axios
-        .delete(`http://localhost:8080/api/users/${uuid}`, {
+        .delete(`http://localhost:8080/api/users/${this.student.id}`, {
           headers: {
             Authorization: `Basic ${btoa("andrinklarer:klarer")}`,
           },
@@ -83,7 +86,8 @@ export default {
           this.isSuccess = response.status == 200 || 201 ? true : false;
           console.log(this.isSuccess);
           if (this.isSuccess) {
-            this.$router.back();
+            // location.reload()
+            this.$router.back(/*() => {this.$router.afterEach(() => location.reload())}*/);
           }
         });
     },
