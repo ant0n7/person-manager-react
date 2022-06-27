@@ -11,8 +11,8 @@ const loggedInUsername = useUsername();
 
         <!-- <Alert v-if="userValid !== undefined ? userValid : false">Wrong username or password.</Alert> -->
         <Alert v-if="false">Wrong username or password.</Alert>
-        <!-- <form action="/"> -->
-        <!-- <form> -->
+        <form action="/">
+          <!-- <form> -->
           <!-- Email input -->
           <div class="form-outline mt-4 mb-2">
             <input
@@ -51,7 +51,7 @@ const loggedInUsername = useUsername();
           <div>
             <p>Store user: {{ loggedInUsername }}</p>
           </div>
-        <!-- </form> -->
+        </form>
       </div>
     </div>
   </div>
@@ -63,19 +63,19 @@ import axios from "axios";
 export default {
   computed: {
     loggedInUsername() {
-      return useCookie('username').value;
+      return useCookie("username").value;
     },
     loggedInPassword() {
-      return useCookie('password').value;
+      return useCookie("password").value;
     },
   },
 
   methods: {
     setUsername(username: string) {
-      useCookie('username').value = username;
+      useCookie("username").value = username;
     },
     setPassword(password: string) {
-      useCookie('password').value = password;
+      useCookie("password").value = password;
     },
     async login() {
       const username = this.$refs.usernameInput.value;
@@ -84,52 +84,27 @@ export default {
       this.setUsername(username);
       this.setPassword(password);
 
-      // check if user is in backend
-      // const { data: valid } = await useAsyncData("valid", () => $fetch("http://localhost:8080/api/users/login", {
-      //   body: JSON.stringify({
-      //     username: username,
-      //     password: password,
-      //   }),
-      //})//, {
-        // body: {
-        //   "username": username,
-        //   "password": password,
-        // }
-        // body: JSON.stringify({
-        //   username: username,
-        //   password: password,
-        // }),
-      //}
-      // );
+      const { data: valid } = await axios.get(
+        `http://localhost:8080/api/users/login/${username}/${password}`
+      );
 
-      // send get request with axios with body
-      const body = {
-        username: username,
-        password: password,
-      };
-      const response = await axios.get(`http://localhost:8080/api/users/login/${username}/${password}`);
+      if (valid) {
+        console.log("correct");
+        // store users role from backend
+        // const { data: role } = await axios.get(
+        //   `http://localhost:8080/api/users/${username}/role`,
+        //   {
+        //     headers: {
+        //       Authorization: `Basic ${btoa(`${username}:${password}`)}`,
+        //     },
+        //   }
+        // );
 
-      // const response = axios({
-      //   method: 'get',
-      //   url: 'http://localhost:8080/api/users/login',
-      //   headers: {"Content-Type": "application/json"},
-      //   data: {
-      //     username: 'andrinklarer',
-      //     password: 'klarer',
-      //   }
-      // });
-
-
-      console.log("uservalid response: ", JSON.stringify(response));
-
-      // if (valid) {
-      //   console.log("correct");
-      // } else {
-      //   alert("Wrong username or password");
-      // }
-
-      // store users role from backend
-
+        // useCookie("role").value = role;
+        useCookie("role").value = "TEACHER";
+      } else {
+        alert("Wrong username or password");
+      }
     },
   },
 };
