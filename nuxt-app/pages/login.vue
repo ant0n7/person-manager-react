@@ -107,22 +107,17 @@ export default {
         username: username,
         password: password,
       };
-      // const response = await axios.get("http://localhost:8080/api/users/login", {
-      //   data: {
-      //     username: username,
-      //     password: password,
-      //   },
-      // });
+      const response = await axios.get(`http://localhost:8080/api/users/login/${username}/${password}`);
 
-      const response = axios({
-        method: 'get',
-        url: 'http://localhost:8080/api/users/login',
-        headers: {"Content-Type": "application/json"},
-        data: {
-          username: 'andrinklarer',
-          password: 'klarer',
-        }
-      });
+      // const response = axios({
+      //   method: 'get',
+      //   url: 'http://localhost:8080/api/users/login',
+      //   headers: {"Content-Type": "application/json"},
+      //   data: {
+      //     username: 'andrinklarer',
+      //     password: 'klarer',
+      //   }
+      // });
 
 
       console.log("uservalid response: ", JSON.stringify(response));
