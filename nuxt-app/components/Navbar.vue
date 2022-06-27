@@ -17,7 +17,7 @@
     </ul>
 
     <div class="col-md-4 text-end">
-      <button type="button" class="btn btn-outline-primary">Login</button>
+      <NuxtLink to="/login" type="button" class="btn btn-outline-primary">Login</NuxtLink>
     </div>
   </header>
 </template>
