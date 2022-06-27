@@ -11,7 +11,7 @@
 
     <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
       <li><NuxtLink to="/" class="nav-link px-3">Home</NuxtLink></li>
-      <li><NuxtLink to="/students" class="nav-link px-3">Students</NuxtLink></li>
+      <li><NuxtLink to="/students" class="nav-link px-3">People</NuxtLink></li>
       <li><NuxtLink to="/subjects" class="nav-link px-3" >Subjects</NuxtLink></li>
       <li><NuxtLink to="/classes" class="nav-link px-3">Classes</NuxtLink></li>
     </ul>
