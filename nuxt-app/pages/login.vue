@@ -8,6 +8,9 @@ const loggedInUsername = useUsername();
       <div class="col-md-4"></div>
       <div class="col-md-4 col-12">
         <Heading>Login</Heading>
+
+        <!-- <Alert v-if="userValid !== undefined ? userValid : false">Wrong username or password.</Alert> -->
+        <Alert v-if="false">Wrong username or password.</Alert>
         <!-- <form action="/"> -->
         <!-- <form> -->
           <!-- Email input -->
@@ -48,44 +51,88 @@ const loggedInUsername = useUsername();
           <div>
             <p>Store user: {{ loggedInUsername }}</p>
           </div>
-
-          <button @click="test" class="btn btn-primary btn-block mb-4">
-            test data
-          </button>
         <!-- </form> -->
       </div>
     </div>
   </div>
 </template>
 
-<script>
+<script lang="ts">
+import axios from "axios";
+
 export default {
   computed: {
-    storageAttr() {
-      // const { $storage } = useNuxtApp();
-      // return $storage;
-    },
     loggedInUsername() {
-      return $storage().getItem('username');
+      return useCookie('username').value;
+    },
+    loggedInPassword() {
+      return useCookie('password').value;
     },
   },
 
   methods: {
-    setUsername(username) {
-      $storage().setItem('username', username);
+    setUsername(username: string) {
+      useCookie('username').value = username;
     },
-    login() {
+    setPassword(password: string) {
+      useCookie('password').value = password;
+    },
+    async login() {
       const username = this.$refs.usernameInput.value;
       const password = this.$refs.passwordInput.value;
 
-      console.log("username: " + username);
-      console.log(this.loggedInUsername);
-
       this.setUsername(username);
+      this.setPassword(password);
 
-      console.log(this.loggedInUsername);
+      // check if user is in backend
+      // const { data: valid } = await useAsyncData("valid", () => $fetch("http://localhost:8080/api/users/login", {
+      //   body: JSON.stringify({
+      //     username: username,
+      //     password: password,
+      //   }),
+      //})//, {
+        // body: {
+        //   "username": username,
+        //   "password": password,
+        // }
+        // body: JSON.stringify({
+        //   username: username,
+        //   password: password,
+        // }),
+      //}
+      // );
 
-      // check if user is in backend  
+      // send get request with axios with body
+      const body = {
+        username: username,
+        password: password,
+      };
+      // const response = await axios.get("http://localhost:8080/api/users/login", {
+      //   data: {
+      //     username: username,
+      //     password: password,
+      //   },
+      // });
+
+      const response = axios({
+        method: 'get',
+        url: 'http://localhost:8080/api/users/login',
+        headers: {"Content-Type": "application/json"},
+        data: {
+          username: 'andrinklarer',
+          password: 'klarer',
+        }
+      });
+
+
+      console.log("uservalid response: ", JSON.stringify(response));
+
+      // if (valid) {
+      //   console.log("correct");
+      // } else {
+      //   alert("Wrong username or password");
+      // }
+
       // store users role from backend
 
     },
