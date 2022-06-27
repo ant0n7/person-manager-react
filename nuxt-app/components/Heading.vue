@@ -11,6 +11,7 @@
     <button
       v-if="buttonText && buttonAction"
       class="btn btn-primary btn-md mb-2 ms-auto float-end"
+      :class="buttonType"
       type="button"
       @click="buttonAction"
       >{{ buttonText }}</button
@@ -21,9 +22,10 @@
 <script>
 export default {
   props: {
+    buttonType: String,
     buttonText: String,
     buttonLink: String,
-    buttonAction: () => {},
+    buttonAction: Function,
     customClass: String,
     tag: {
       type: String,
