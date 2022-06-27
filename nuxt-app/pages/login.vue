@@ -11,7 +11,7 @@ const loggedInUsername = useUsername();
 
         <!-- <Alert v-if="userValid !== undefined ? userValid : false">Wrong username or password.</Alert> -->
         <Alert v-if="false">Wrong username or password.</Alert>
-        <form action="/">
+        <!-- <form action="/"> -->
           <!-- <form> -->
           <!-- Email input -->
           <div class="form-outline mt-4 mb-2">
@@ -51,7 +51,7 @@ const loggedInUsername = useUsername();
           <div>
             <p>Store user: {{ loggedInUsername }}</p>
           </div>
-        </form>
+        <!-- </form> -->
       </div>
     </div>
   </div>
@@ -68,6 +68,9 @@ export default {
     loggedInPassword() {
       return useCookie("password").value;
     },
+    loggedInRole() {
+      return useCookie("role").value;
+    },
   },
 
   methods: {
@@ -77,31 +80,38 @@ export default {
     setPassword(password: string) {
       useCookie("password").value = password;
     },
+    setRole(role: string) {
+      useCookie("role").value = role;
+    },
     async login() {
       const username = this.$refs.usernameInput.value;
       const password = this.$refs.passwordInput.value;
 
       this.setUsername(username);
       this.setPassword(password);
+      // this.setRole("TEACHER");
 
       const { data: valid } = await axios.get(
         `http://localhost:8080/api/users/login/${username}/${password}`
       );
 
+
       if (valid) {
         console.log("correct");
         // store users role from backend
-        // const { data: role } = await axios.get(
-        //   `http://localhost:8080/api/users/${username}/role`,
-        //   {
-        //     headers: {
-        //       Authorization: `Basic ${btoa(`${username}:${password}`)}`,
-        //     },
-        //   }
-        // );
+        const { data: role } = await axios.get(
+          `http://localhost:8080/api/users/${username}/role`,
+          {
+            headers: {
+              Authorization: `Basic ${btoa(`${username}:${password}`)}`,
+            },
+          }
+        );
 
-        // useCookie("role").value = role;
-        useCookie("role").value = "TEACHER";
+        useCookie("role").value = role;
+        // this.setRole("TEACHER");
+
+        this.$router.push("/");
       } else {
         alert("Wrong username or password");
       }
