@@ -1,9 +1,10 @@
 <template>
   <div class="container">
     <!-- <h1>Students <button class="btn btn-primary btn-md mb-2 ms-auto float-end" type="button">Create</button></h1> -->
-    <Heading buttonText="Create" buttonLink="/students/create"
+    <Heading v-if="role === 'TEACHER'" buttonText="Create" buttonLink="/students/create"
       >People</Heading
     >
+    <Heading v-else>People</Heading>
 
     <div v-if="pending">
       <Alert type="info"> Loading... {{ pending }} </Alert>
@@ -48,10 +49,16 @@
 </template>
 
 <script setup>
+const username = useCookie('username').value;
+const password = useCookie('password').value;
+const role = useCookie('role').value;
+
+const base64auth = btoa(`${username}:${password}`);
+
 const { pending, data: members } = await useAsyncData("students", () =>
   $fetch("http://localhost:8080/api/users/", {
     headers: {
-      Authorization: `Basic ${btoa("andrinklarer:klarer")}`,
+      Authorization: `Basic ${base64auth}`,
     },
   })
 );
@@ -69,6 +76,9 @@ export default {
         return member.roles.some((role) => role.rolename === "TEACHER");
       });
     },
+    // role() {
+    //   return useCookie('role').value;
+    // }
   },
 };
 </script>

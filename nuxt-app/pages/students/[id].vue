@@ -90,8 +90,3 @@ export default {
   },
 };
 </script>
-<style>
-.btn{
-  float: right;
-}
-</style>
