@@ -43,8 +43,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
                 .authorizeRequests()
                 // swagger
                 .antMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
-                .antMatchers("/api/users/login").permitAll()
                 .antMatchers("/api/**").hasRole("TEACHER")
+                .antMatchers("/api/users/login").permitAll()
                 .and()
                 // some more method calls
                 .formLogin();
