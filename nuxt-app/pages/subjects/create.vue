@@ -16,6 +16,7 @@
           v-model="subjectname"
         />
       </div>
+      <div class="success" v-if="isSuccess">We received your submission, thank you!</div>
       <button type="submit" class="btn btn-primary">Submit</button>
     </form>
   </div>

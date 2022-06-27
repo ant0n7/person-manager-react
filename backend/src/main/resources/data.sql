@@ -23,10 +23,10 @@ insert into tbl_user (id, firstname, lastname, username, email, password) values
 insert into tbl_user (id, firstname, lastname, username, email, password) values ('7b9318e2-3ce7-43c8-8e20-bf97ee66bd6c', 'Alaster', 'Carlesso', 'alastercarlesso', 'alaster@student.com', '$2a$12$wn7dWR2Ubxvj9RrBTYfP1eYzI7wTI8aJ82a2wyvKaf.O1juWUSSs6');
 insert into tbl_user (id, firstname, lastname, username, email, password) values ('b3689a1b-ea6c-43ce-a7f3-36b398cb5557', 'Douglas', 'Playhill', 'douglasplayhill', 'douglas@student.com', '$2a$12$RAPlIM6.MCdPySwr8GtBxue3FZkxw2FC4xNY4Gdnd8vlwccg0XGeW');
 insert into tbl_user (id, firstname, lastname, username, email, password) values ('d6682bc8-4e41-437f-9ac0-24230f5f904e', 'Klara', 'Mityushin', 'klaramityushin', 'klara@student.com', '$2a$12$ItGnGWDksbfcHw7Lg3bQgu290iP836Z8Q2ba1oujljKKMNa6rzBVS');
-insert into tbl_user (id, firstname, lastname, username, email, password) values ('d1c0502a-4fb5-4da4-aae9-d367af38772c', 'Happy', 'Orro', 'happyorro', 'happy@student.com@student.com', '$2a$12$p4ncSHUm19gqrOsAtZf4UuX3Ap476NgTF2ptrPyKdNrC3gogeNH4C');
-insert into tbl_user (id, firstname, lastname, username, email, password) values ('ee883683-e1ef-44f4-a3ee-45106686e060', 'Zack', 'Sturdey', 'zacksturdey', 'zack@student.com@student.com', '$2a$12$w3HQUInVZXPw7v5iJXn7G.W14m2El7ec6OqBGnwzbZFLp1S63rFb.');
-insert into tbl_user (id, firstname, lastname, username, email, password) values ('c8b37eed-b152-426d-a4dd-b56895eca322', 'Jolee', 'Eberdt', 'joleeeberdt', 'jolee@student.com@student.com', '$2a$12$oGaoQN9ANYgMPZPIFYjxx.ukeunghKJjPZBjf56rBIN3gOXASzFmy');
-insert into tbl_user (id, firstname, lastname, username, email, password) values ('4c6e2546-31d0-465e-99cb-58acc9bc5b3b', 'Cassi', 'Moggle', 'cassimoggle', 'cassi@student.com@student.com', '$2a$12$W4XWOXi3vqUj0BDtdv18juXj3MOytS2MrMOk2ArE57efIxydsJhEO');
+insert into tbl_user (id, firstname, lastname, username, email, password) values ('d1c0502a-4fb5-4da4-aae9-d367af38772c', 'Happy', 'Orro', 'happyorro', 'happy@student.com', '$2a$12$p4ncSHUm19gqrOsAtZf4UuX3Ap476NgTF2ptrPyKdNrC3gogeNH4C');
+insert into tbl_user (id, firstname, lastname, username, email, password) values ('ee883683-e1ef-44f4-a3ee-45106686e060', 'Zack', 'Sturdey', 'zacksturdey', 'zack@student.com', '$2a$12$w3HQUInVZXPw7v5iJXn7G.W14m2El7ec6OqBGnwzbZFLp1S63rFb.');
+insert into tbl_user (id, firstname, lastname, username, email, password) values ('c8b37eed-b152-426d-a4dd-b56895eca322', 'Jolee', 'Eberdt', 'joleeeberdt', 'jolee@student.com', '$2a$12$oGaoQN9ANYgMPZPIFYjxx.ukeunghKJjPZBjf56rBIN3gOXASzFmy');
+insert into tbl_user (id, firstname, lastname, username, email, password) values ('4c6e2546-31d0-465e-99cb-58acc9bc5b3b', 'Cassi', 'Moggle', 'cassimoggle', 'cassi@student.com', '$2a$12$W4XWOXi3vqUj0BDtdv18juXj3MOytS2MrMOk2ArE57efIxydsJhEO');
 
 
 insert into tbl_user_role (user_id, role_id) values ('498422fa-f130-11ec-8ea0-0242ac120002', '2895695a-f130-11ec-8ea0-0242ac120002');

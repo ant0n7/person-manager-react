@@ -1,30 +1,47 @@
 <script setup>
-const route = useRoute()
+const route = useRoute();
 const uuid = route.params.id;
-const uuid_pattern = '/^[0-9a-f]{8}-[0-9a-f]{4}-[0-5][0-9a-f]{3}-[089ab][0-9a-f]{3}-[0-9a-f]{12}$/i';
+const uuid_pattern =
+  "/^[0-9a-f]{8}-[0-9a-f]{4}-[0-5][0-9a-f]{3}-[089ab][0-9a-f]{3}-[0-9a-f]{12}$/i";
 
-const { data: student } = await useFetch(`http://localhost:8080/api/users/${uuid}`, {
-  headers: {
-    Authorization: `Basic ${btoa("andrinklarer:klarer")}`,
-  },
-});
-const { data: subjects } = await useFetch(`http://localhost:8080/api/subjects/user/${uuid}`, {
-  headers: {
-    Authorization: `Basic ${btoa("andrinklarer:klarer")}`,
-  },
-});
-const { data: classes } = await useFetch(`http://localhost:8080/api/classes/user/${uuid}`, {
-  headers: {
-    Authorization: `Basic ${btoa("andrinklarer:klarer")}`,
-  },
-});
+const { data: student } = await useFetch(
+  `http://localhost:8080/api/users/${uuid}`,
+  {
+    headers: {
+      Authorization: `Basic ${btoa("andrinklarer:klarer")}`,
+    },
+  }
+);
+const { data: subjects } = await useFetch(
+  `http://localhost:8080/api/subjects/user/${uuid}`,
+  {
+    headers: {
+      Authorization: `Basic ${btoa("andrinklarer:klarer")}`,
+    },
+  }
+);
+const { data: classes } = await useFetch(
+  `http://localhost:8080/api/classes/user/${uuid}`,
+  {
+    headers: {
+      Authorization: `Basic ${btoa("andrinklarer:klarer")}`,
+    },
+  }
+);
 </script>
 
 <template>
   <div class="container">
-    <Heading>{{ student.firstname + ' ' + student.lastname }}</Heading>
+    <Heading>{{
+      student.firstname + " " + student.lastname
+    }}</Heading>
+        <button @click="deleteUser(student.id)" type="button" class="btn btn-danger" >Delete</button>
+
     <h6 class="subtitle student-email">
-      <a class="link-primary link-unstyled" :href="'mailto:' + student.email">{{ student.email }}</a>
+      <a class="link-primary link-unstyled" :href="'mailto:' + student.email"
+        >E-Mail: {{ student.email }}</a
+      >
+      <p>Username: {{ student.username }}</p>
     </h6>
 
     <div class="row pt-3" v-if="subjects.length > 0">
@@ -32,12 +49,9 @@ const { data: classes } = await useFetch(`http://localhost:8080/api/classes/user
       <div
         class="col-md-3 col-12"
         v-for="subject in subjects"
-        :key="subject.id"  
+        :key="subject.id"
       >
-       <Card
-        :title="subject.subjectname"
-        :link="`/subjects/${subject.id}`"
-        />
+        <Card :title="subject.subjectname" :link="`/subjects/${subject.id}`" />
       </div>
     </div>
 
@@ -46,13 +60,38 @@ const { data: classes } = await useFetch(`http://localhost:8080/api/classes/user
       <div
         class="col-md-3 col-12 p-2"
         v-for="appclass in classes"
-        :key="appclass.id"  
+        :key="appclass.id"
       >
-       <Card
-        :title="appclass.classname"
-        :link="`/classes/${appclass.id}`"
-        />
+        <Card :title="appclass.classname" :link="`/classes/${appclass.id}`" />
       </div>
     </div>
+
   </div>
 </template>
+<script>
+import axios from "axios";
+export default {
+  methods: {
+    deleteUser(uuid) {
+      axios
+        .delete(`http://localhost:8080/api/users/${uuid}`, {
+          headers: {
+            Authorization: `Basic ${btoa("andrinklarer:klarer")}`,
+          },
+        })
+        .then((response) => {
+          this.isSuccess = response.status == 200 || 201 ? true : false;
+          console.log(this.isSuccess);
+          if (this.isSuccess) {
+            this.$router.back();
+          }
+        });
+    },
+  },
+};
+</script>
+<style>
+.btn{
+  float: right;
+}
+</style>

@@ -1,9 +1,11 @@
 package com.example.demo.domain.appuser;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.UUID;
@@ -26,6 +28,14 @@ public interface UserRepository extends JpaRepository<User, UUID> {
 
     @Query(value = "select tr.rolename from tbl_role tr where id = (select role_id from tbl_user_role tur where user_id = (select id from tbl_user tu where username = :username))", nativeQuery = true)
     String getRole(@Param("username") String username);
+
+    @Modifying
+    @Transactional
+    @Query(value = "delete from tbl_class_members where member_id = :user", nativeQuery = true)
+    int deleteFromClass(@Param("user") UUID user);
+
+    @Query("delete from tbl_user where id ='2c61dac7-29fa-4baa-95e5-9053c7879d41'")
+    Integer deleteUser(UUID user);
 
     User findByEmail(String email);
 }
