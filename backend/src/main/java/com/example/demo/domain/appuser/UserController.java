@@ -96,9 +96,9 @@ public class UserController {
     }
 
     @Operation(summary = "Verify Login.")
-    @PostMapping("/login")
-    public ResponseEntity<Boolean> verifyLogin(@Valid @RequestBody LoginDTO loginDTO) throws InstanceNotFoundException {
-        return new ResponseEntity<>(userService.verifyLogin(loginDTO), HttpStatus.OK);
+    @GetMapping("/login/{username}/{pw}")
+    public ResponseEntity<Boolean> verifyLogin(@PathVariable String username, @PathVariable String pw) throws InstanceNotFoundException {
+        return new ResponseEntity<>(userService.verifyLogin(new LoginDTO(username, pw)), HttpStatus.OK);
     }
 
 

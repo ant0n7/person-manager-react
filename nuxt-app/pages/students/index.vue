@@ -1,15 +1,16 @@
 <template>
   <div class="container">
     <!-- <h1>Students <button class="btn btn-primary btn-md mb-2 ms-auto float-end" type="button">Create</button></h1> -->
-    <Heading buttonText="Create" buttonLink="/students/create">Students</Heading>
+    <Heading buttonText="Create" buttonLink="/students/create"
+      >People</Heading
+    >
 
     <div v-if="pending">
-      <Alert type="info">
-        Loading... {{ pending }}
-      </Alert>
+      <Alert type="info"> Loading... {{ pending }} </Alert>
     </div>
 
-    <div class="row" v-else>
+    <div class="row pt-3" v-if="students.length > 0">
+      <Heading tag="h2">Students</Heading>
       <div
         class="col-md-3 col-12 p-2"
         v-for="student in students"
@@ -19,24 +20,55 @@
           :title="student.firstname + ' ' + student.lastname"
           :subtitle="student.email"
           :link="`/students/${student.id}`"
-          />
+        />
       </div>
     </div>
 
-    <div class="row" v-if="!students">
+    <div class="row" v-if="teachers.length > 0">
+      <Heading tag="h2">Teachers</Heading>
+      <div
+        class="col-md-3 col-12 p-2"
+        v-for="teacher in teachers"
+        :key="teacher.id"
+      >
+        <Card
+          :title="teacher.firstname + ' ' + teacher.lastname"
+          :subtitle="teacher.email"
+          :link="`/students/${teacher.id}`"
+        />
+      </div>
+    </div>
+
+    <div class="row" v-if="!members">
       <div class="col-12">
-        <Alert type="warning" warning-icon>
-          No students found.
-        </Alert>
+        <Alert type="warning" warning-icon> No students found. </Alert>
       </div>
     </div>
   </div>
 </template>
 
 <script setup>
-const { pending, data: students } = await useAsyncData('students', () => $fetch('http://localhost:8080/api/users/', {
-  headers: {
-    Authorization: `Basic ${btoa("andrinklarer:klarer")}`,
+const { pending, data: members } = await useAsyncData("students", () =>
+  $fetch("http://localhost:8080/api/users/", {
+    headers: {
+      Authorization: `Basic ${btoa("andrinklarer:klarer")}`,
+    },
+  })
+);
+</script>
+<script>
+export default {
+  computed: {
+    students() {
+      return this.members.filter((member) => {
+        return member.roles.some((role) => role.rolename === "STUDENT");
+      });
+    },
+    teachers() {
+      return this.members.filter((member) => {
+        return member.roles.some((role) => role.rolename === "TEACHER");
+      });
+    },
   },
-}));
+};
 </script>
