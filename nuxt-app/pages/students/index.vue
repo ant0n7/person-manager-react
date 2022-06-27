@@ -49,11 +49,12 @@
 </template>
 
 <script setup>
-const username = useCookie('username').value;
-const password = useCookie('password').value;
-const role = useCookie('role').value;
+const username = useCookie('username').value ?? 'default';
+const password = useCookie('password').value ?? 'default';
+const role = useCookie('role').value ?? 'default';
 
 const base64auth = btoa(`${username}:${password}`);
+// const base64auth = btoa(`andrinklarer:klarer`);
 
 const { pending, data: members } = await useAsyncData("students", () =>
   $fetch("http://localhost:8080/api/users/", {
@@ -76,9 +77,10 @@ export default {
         return member.roles.some((role) => role.rolename === "TEACHER");
       });
     },
-    // role() {
-    //   return useCookie('role').value;
-    // }
+    role() {
+      return useCookie('role').value;
+      // return 'TEACHER';
+    }
   },
 };
 </script>
