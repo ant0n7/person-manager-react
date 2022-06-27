@@ -118,6 +118,15 @@ public class ClassServiceImpl implements ClassService {
         }
     }
 
+    @Override
+    public List<Class> findClassesBySubjectID(UUID id) throws InstanceNotFoundException {
+        try{
+            return  convertIdToClass(classRepository.findClassesBySubject(id));
+        } catch (Exception e){
+            throw new InstanceNotFoundException("Subject does not exist");
+        }
+    }
+
 
     private List<RestrictedClassInformationDTO> convertIdToRestrictedClass(List<String> uuid){
         List<RestrictedClassInformationDTO> obj = new ArrayList<>();

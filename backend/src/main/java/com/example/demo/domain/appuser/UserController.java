@@ -2,6 +2,7 @@ package com.example.demo.domain.appuser;
 
 
 import com.example.demo.domain.appuser.dto.CreateUserDTO;
+import com.example.demo.domain.appuser.dto.LoginDTO;
 import com.example.demo.domain.exceptions.InvalidEmailException;
 import io.swagger.v3.oas.annotations.Parameter;
 import lombok.RequiredArgsConstructor;
@@ -93,6 +94,13 @@ public class UserController {
         userService.deleteUser(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
+    @Operation(summary = "Verify Login.")
+    @PostMapping("/login")
+    public ResponseEntity<Boolean> verifyLogin(@Valid @RequestBody LoginDTO loginDTO) throws InstanceNotFoundException {
+        return new ResponseEntity<>(userService.verifyLogin(loginDTO), HttpStatus.OK);
+    }
+
 
     @ExceptionHandler(InstanceNotFoundException.class)
     public ResponseEntity<String> handleInstanceNotFoundException(InstanceNotFoundException e) {

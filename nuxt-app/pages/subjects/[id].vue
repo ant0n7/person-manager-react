@@ -8,25 +8,29 @@ const { data: subject } = await useFetch(`http://localhost:8080/api/subjects/${u
     Authorization: `Basic ${btoa("andrinklarer:klarer")}`,
   },
 });
+const { data: classes } = await useFetch(`http://localhost:8080/api/classes/subject/${uuid}`, {
+  headers: {
+    Authorization: `Basic ${btoa("andrinklarer:klarer")}`,
+  },
+});
 </script>
 
 <template>
   <div class="container">
-    <!-- <Heading>{{ subject.subjectname }}</Heading> -->
-    <!-- <h6 class="subtitle">{{ subject.users }}</h6> -->
-    <p>{{ JSON.stringify(subject) }}</p>
+    <Heading>{{ subject.subjectname }}</Heading>
 
-    <!-- <div class="row pt-3" v-if="student.subjects">
+    <div class="row pt-3" v-if="classes.length > 0">
+      <Heading tag="h2">Classes</Heading>
       <div
-        class="col-md-3 col-12"
-        v-for="subject in student.subjects"
-        :key="subject.id"
+        class="col-md-3 col-12 p-2"
+        v-for="appclass in classes"
+        :key="appclass.id"  
       >
        <Card
-        :title="subject.subjectname"
-        :link="`/subjects/${subject.id}`"
+        :title="appclass.classname"
+        :link="`/classes/${appclass.id}`"
         />
       </div>
-    </div> -->
+    </div>
   </div>
 </template>

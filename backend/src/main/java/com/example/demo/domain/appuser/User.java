@@ -26,8 +26,10 @@ public class User {
     @Size(min = 2, max = 25) @NotNull
     private String lastname;
     @Size(min =3, max = 16) @NotNull
+    @Column(unique = true)
     private String username;
     @Email @NotNull
+    @Column(unique = true)
     private String email;
     @Size(min = 8, max = 128) @NotNull
     private String password;

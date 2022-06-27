@@ -83,7 +83,7 @@ public class ClassController {
 //        return new ResponseEntity<>(classService.findClassesByUsername(username), HttpStatus.OK);
 //    }
 
-    @Operation(summary = "Get classes by username.", description = "Receive a list of classes that the given user attends")
+    @Operation(summary = "Get classes by user.", description = "Receive a list of classes that the given user attends")
     @GetMapping("/user/{id}")
     public ResponseEntity<List<Class>> getClassesFromUserID(@PathVariable UUID id) throws InstanceNotFoundException {
         return new ResponseEntity<>(classService.findClassesByUserID(id), HttpStatus.OK);
@@ -91,9 +91,9 @@ public class ClassController {
 
     @PreAuthorize("hasRole('TEACHER')")
     @Operation(summary = "Get classes by subjectname.", description = "Receive a list of classes that the given subject is part of")
-    @GetMapping("/subject/{subjectname}")
-    public ResponseEntity<List<Class>> getClassesFromSubjectName(@PathVariable String subjectname) throws InstanceNotFoundException {
-        return new ResponseEntity<>(classService.findClassesBySubject(subjectname), HttpStatus.OK);
+    @GetMapping("/subject/{id}")
+    public ResponseEntity<List<Class>> getClassesFromSubjectID(@PathVariable UUID id) throws InstanceNotFoundException {
+        return new ResponseEntity<>(classService.findClassesBySubjectID(id), HttpStatus.OK);
     }
 
 
