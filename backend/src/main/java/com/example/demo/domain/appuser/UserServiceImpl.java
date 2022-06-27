@@ -1,6 +1,5 @@
 package com.example.demo.domain.appuser;
 
-import com.example.demo.domain.appclass.Class;
 import com.example.demo.domain.appclass.ClassRepository;
 import com.example.demo.domain.appuser.dto.CreateUserDTO;
 import com.example.demo.domain.appuser.dto.LoginDTO;
@@ -197,6 +196,11 @@ public class UserServiceImpl implements UserService, UserDetailsService {
             return false;
         }
         return false;
+    }
+
+    @Override
+    public String getRoleByUsername(String username) {
+        return userRepository.getRole(username);
     }
 
     private List<User> convertIdToUser(List<UUID> uuid){

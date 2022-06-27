@@ -101,6 +101,13 @@ public class UserController {
         return new ResponseEntity<>(userService.verifyLogin(new LoginDTO(username, pw)), HttpStatus.OK);
     }
 
+    @Operation(summary = "Get Role of user.")
+    @GetMapping("/{username}/role")
+    @PreAuthorize("#username == authentication.principal.username || hasRole('TEACHER')")
+    public ResponseEntity<String> getRole(@PathVariable String username) throws InstanceNotFoundException {
+        return new ResponseEntity<>(userService.getRoleByUsername(username), HttpStatus.OK);
+    }
+
 
     @ExceptionHandler(InstanceNotFoundException.class)
     public ResponseEntity<String> handleInstanceNotFoundException(InstanceNotFoundException e) {

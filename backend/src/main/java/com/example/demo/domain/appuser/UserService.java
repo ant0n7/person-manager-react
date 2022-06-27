@@ -26,5 +26,7 @@ public interface UserService {
     List<User> findUsersByClass(UUID id) throws InstanceNotFoundException;
 
     boolean verifyLogin(LoginDTO loginDTO);
+
+    String getRoleByUsername(String username);
 }
 
