@@ -3,6 +3,7 @@ package com.example.demo.domain.appuser;
 import com.example.demo.domain.appclass.Class;
 import com.example.demo.domain.appclass.ClassRepository;
 import com.example.demo.domain.appuser.dto.CreateUserDTO;
+import com.example.demo.domain.appuser.dto.LoginDTO;
 import com.example.demo.domain.exceptions.InvalidEmailException;
 import com.example.demo.domain.role.Role;
 import com.example.demo.domain.role.RoleRepository;
@@ -183,6 +184,19 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         }else {
             throw new InstanceNotFoundException();
         }
+    }
+
+    @Override
+    public boolean verifyLogin(LoginDTO loginDTO) {
+        try {
+            User user = userRepository.findByUsername(loginDTO.getUsername());
+            if (passwordEncoder.matches(loginDTO.getPassword(), user.getPassword())){
+                return true;
+            }
+        } catch (Exception e){
+            return false;
+        }
+        return false;
     }
 
     private List<User> convertIdToUser(List<UUID> uuid){

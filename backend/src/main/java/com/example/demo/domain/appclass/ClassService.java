@@ -26,4 +26,5 @@ public interface ClassService {
 
     List<Class> findClassesBySubject(String subjectname) throws InstanceNotFoundException;
 
+    List<Class> findClassesBySubjectID(UUID id) throws InstanceNotFoundException;
 }

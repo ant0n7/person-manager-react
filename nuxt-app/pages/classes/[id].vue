@@ -8,7 +8,7 @@
     <div class="row pt-3" v-if="appClass.subjects.length > 0">
       <Heading tag="h2">Subjects</Heading>
       <div
-        class="col-md-3 col-12"
+        class="col-md-3 col-12 p-2"
         v-for="subject in appClass.subjects"
         :key="subject.id"  
       >
@@ -22,7 +22,7 @@
     <div class="row pt-3" v-if="students.length > 0">
       <Heading tag="h2">Students</Heading>
       <div
-        class="col-md-3 col-12"
+        class="col-md-3 col-12 p-2"
         v-for="student in students"
         :key="student.id"  
       >
@@ -35,7 +35,7 @@
     <div class="row pt-3" v-if="teachers.length > 0">
       <Heading tag="h2">Teachers</Heading>
       <div
-        class="col-md-3 col-12"
+        class="col-md-3 col-12 p-2"
         v-for="teacher in teachers"
         :key="teacher.id"  
       >
