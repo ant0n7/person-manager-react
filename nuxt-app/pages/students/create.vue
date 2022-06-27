@@ -88,7 +88,7 @@ export default {
           },
         })
         .then((response) => {
-          this.isSuccess = response.status == 200 ? true : false;
+          this.isSuccess = response.status == 200 || 201 ? true : false;
           if (this.isSuccess) {
             this.$router.back();
           }

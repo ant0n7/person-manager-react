@@ -10,10 +10,10 @@
     </NuxtLink>
 
     <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
-      <li><NuxtLink to="/" class="nav-link px-2 link-dark">Home</NuxtLink></li>
-      <li><NuxtLink to="/students" class="nav-link px-2 link-dark">Students</NuxtLink></li>
-      <li><NuxtLink to="/subjects" class="nav-link px-2 link-dark">Subjects</NuxtLink></li>
-      <li><NuxtLink to="/classes" class="nav-link px-2 link-dark">Classes</NuxtLink></li>
+      <li><NuxtLink to="/" class="nav-link px-3">Home</NuxtLink></li>
+      <li><NuxtLink to="/students" class="nav-link px-3">Students</NuxtLink></li>
+      <li><NuxtLink to="/subjects" class="nav-link px-3" >Subjects</NuxtLink></li>
+      <li><NuxtLink to="/classes" class="nav-link px-3">Classes</NuxtLink></li>
     </ul>
 
     <div class="col-md-4 text-end">
@@ -21,3 +21,11 @@
     </div>
   </header>
 </template>
+<style scoped>
+  li{
+    font-size: 20px;
+  }
+  .nav-link{
+    color: #757575
+  }
+</style>
