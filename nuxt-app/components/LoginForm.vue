@@ -13,6 +13,7 @@
     <div v-if="!loggedInUserName && !loggedInPassword && !loggedInRole">
       <!-- <form action="/"> -->
       <div class="form-outline mt-4 mb-2">
+        <label class="form-label" for="username"> Username </label>
         <input
           type="text"
           id="username"
@@ -21,11 +22,11 @@
           required
           autofocus
         />
-        <label class="form-label" for="username">Username</label>
       </div>
 
       <!-- Password input -->
       <div class="form-outline mb-2">
+        <label class="form-label" for="password">Password</label>
         <input
           type="password"
           id="password"
@@ -33,21 +34,16 @@
           ref="passwordInput"
           required
         />
-        <label class="form-label" for="password">Password</label>
       </div>
 
       <!-- Submit button set type=submit -->
-      <button @click="login" class="btn btn-primary btn-block mb-4">
+      <button @click="login" class="btn btn-primary btn-block mb-4 w-100">
         Sign in
       </button>
 
       <!-- Register buttons -->
       <div class="text-center">
-        <p>Not a member? <a href="#!">Register</a></p>
-      </div>
-
-      <div>
-        <p>Store user: {{ loggedInUsername }}</p>
+        <p>To create an account for you contact an administrator or teacher.</p>
       </div>
       <!-- </form> -->
     </div>

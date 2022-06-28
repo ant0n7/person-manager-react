@@ -1,25 +1,9 @@
-<script lang="ts" setup>
-const counter = useState("counter", () => useCookie("username").value);
-const changeCookie = (value: string) => {
-  useCookie("username").value = value;
-  counter.value = value;
-};
-</script>
-
 <template>
   <div class="container">
     <div class="row">
       <div class="col-md-4"></div>
       <div class="col-md-4 col-12">
         <Heading>Login</Heading>
-
-        <div>
-          counter: {{ counter }}
-          <button @click="counter = 'Plus'">+</button>
-          <button @click="counter = 'Minnus'">-</button>
-          <button @click="() => changeCookie('PlusPlus')">++</button>
-          <button @click="() => changeCookie('MinnusMinus')">--</button>
-        </div>
 
         <!-- <Alert v-if="userValid !== undefined ? userValid : false">Wrong username or password.</Alert> -->
         <Alert v-if="false">Wrong username or password.</Alert>
