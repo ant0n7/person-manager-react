@@ -2,14 +2,20 @@ package com.example.demo.domain.subjects;
 
 import com.example.demo.domain.appuser.User;
 import com.example.demo.domain.appuser.UserRepository;
+import com.example.demo.domain.appuser.UserServiceImpl;
 import com.example.demo.domain.role.Role;
 import lombok.RequiredArgsConstructor;
+import org.apache.logging.log4j.Level;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import javax.management.InstanceAlreadyExistsException;
 import javax.management.InstanceNotFoundException;
 import javax.transaction.Transactional;
+import java.nio.file.AccessDeniedException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -21,6 +27,7 @@ import java.util.UUID;
 public class SubjectServiceImpl implements SubjectService {
     private final SubjectRepository subjectRepository;
     private final UserRepository userRepository;
+    private final UserServiceImpl userService;
 
     @Override
     public Subject saveSubject(Subject subject) throws InstanceAlreadyExistsException {
@@ -46,6 +53,10 @@ public class SubjectServiceImpl implements SubjectService {
 
     @Override
     public List<Subject> findAll() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (userService.getRoleByUsername(auth.getName()).equals("STUDENT")){
+            return findByUsername(auth.getName());
+        }
         return subjectRepository.findAll();
     }
 
@@ -76,14 +87,17 @@ public class SubjectServiceImpl implements SubjectService {
     }
 
     @Override
-    public List<Subject> findByUserID(UUID id) {
-        List<String> classes = subjectRepository.getClassesByUser(id);
-        List<String> subjects = new ArrayList<>();
-        for (String c : classes) {
-            subjects.addAll(subjectRepository.getSubjectsByClass(UUID.fromString(c)));
-        }
+    public List<Subject> findByUserID(UUID id) throws AccessDeniedException {
+        if (hasAccess(id)){
+            List<String> classes = subjectRepository.getClassesByUser(id);
+            List<String> subjects = new ArrayList<>();
+            for (String c : classes) {
+                subjects.addAll(subjectRepository.getSubjectsByClass(UUID.fromString(c)));
+            }
 
-        return convertIdToSubject(subjects);
+            return convertIdToSubject(subjects);
+        }
+        throw new AccessDeniedException("No access");
     }
 
 
@@ -93,6 +107,18 @@ public class SubjectServiceImpl implements SubjectService {
             obj.add(subjectRepository.findById(UUID.fromString(s)).orElse(null));
         }
         return obj;
+    }
+    private boolean hasAccess(UUID id) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        try {
+            // if user is requesting his own profile return true
+            return id.equals(userRepository.findByUsername(auth.getName()).getId()) ||
+                    auth.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_TEACHER"));
+        } catch (Exception e) {
+            // do not grant access if user couldn't be found/verified to prevent giving a potential attacker
+            // information
+            return false;
+        }
     }
 }
 

@@ -1,7 +1,20 @@
+<script setup>
+const username = useCookie('username').value ?? 'default';
+const password = useCookie('password').value ?? 'default';
+const role = useCookie('role').value ?? 'default';
+
+const base64auth = btoa(`${username}:${password}`);
+const { pending, data: classes } = await useAsyncData('classes', () => $fetch('http://localhost:8080/api/classes/', {
+  headers: {
+    Authorization: `Basic ${base64auth}`,
+  },
+}));
+</script>
+
 <template>
   <div class="container">
     <!-- <h1>Students <button class="btn btn-primary btn-md mb-2 ms-auto float-end" type="button">Create</button></h1> -->
-    <Heading buttonText="Create" buttonLink="/classes/create">Classes</Heading>
+    <Heading buttonText="Create" buttonLink="/classes/create" :role="role">Classes</Heading>
 
     <div v-if="pending">
       <Alert type="info">
@@ -32,10 +45,3 @@
   </div>
 </template>
 
-<script setup>
-const { pending, data: classes } = await useAsyncData('classes', () => $fetch('http://localhost:8080/api/classes/', {
-  headers: {
-    Authorization: `Basic ${btoa("andrinklarer:klarer")}`,
-  },
-}));
-</script>

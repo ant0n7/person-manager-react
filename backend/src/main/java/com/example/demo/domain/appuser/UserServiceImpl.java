@@ -9,8 +9,11 @@ import com.example.demo.domain.role.RoleRepository;
 import com.example.demo.domain.subjects.SubjectRepository;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.validator.routines.EmailValidator;
+import org.apache.logging.log4j.Level;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -101,6 +104,9 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
     @Override
     public Optional<User> findById(UUID id) throws InstanceNotFoundException{
+        if(hasAccess(id)){
+
+        }
         if (userRepository.existsById(id)){
             return userRepository.findById(id);
         }
@@ -112,7 +118,26 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     @Override
     public List<User> findAll() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (getRoleByUsername(auth.getName()).equals("STUDENT")){
+            return List.of(userRepository.findByUsername(auth.getName()));
+        }
         return userRepository.findAll();
+    }
+
+
+    private boolean hasAccess(UUID id) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        try {
+            // if user is requesting his own profile return true
+            return id.equals(userRepository.findByUsername(auth.getName()).getId()) ||
+                    auth.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_TEACHER"));
+        } catch (Exception e) {
+            // do not grant access if user couldn't be found/verified to prevent giving a potential attacker
+            // information
+
+            return false;
+        }
     }
 
     @Override

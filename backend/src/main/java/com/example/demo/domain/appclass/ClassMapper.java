@@ -12,6 +12,7 @@ import org.mapstruct.Named;
 public interface ClassMapper {
 
     RestrictedClassInformationDTO classToRestrictedClassInformationDTO(Class appclass);
+    Class restrictedClassInformationDTOToClass(RestrictedClassInformationDTO appclass);
 
 
 }

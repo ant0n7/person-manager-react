@@ -6,6 +6,7 @@ import com.example.demo.domain.subjects.Subject;
 
 import javax.management.InstanceAlreadyExistsException;
 import javax.management.InstanceNotFoundException;
+import java.nio.file.AccessDeniedException;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -20,9 +21,12 @@ public interface ClassService {
     void addUserToClass(UUID classid, UUID userid) throws InstanceNotFoundException;
 
     void addSubjectToClass(UUID classID, UUID subjectID) throws InstanceNotFoundException;
-    List<RestrictedClassInformationDTO> findClassesByUsername(String username) throws InstanceNotFoundException;
+    List<RestrictedClassInformationDTO> findRestrictedClassesByUsername(String username) throws InstanceNotFoundException;
 
-    List<Class> findClassesByUserID(UUID id) throws InstanceNotFoundException;
+    List<Class> findClassesByUsername(String username) throws InstanceNotFoundException;
+
+
+    List<Class> findClassesByUserID(UUID id) throws InstanceNotFoundException, AccessDeniedException;
 
     List<Class> findClassesBySubject(String subjectname) throws InstanceNotFoundException;
 

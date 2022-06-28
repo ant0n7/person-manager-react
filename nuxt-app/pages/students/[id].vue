@@ -3,12 +3,17 @@ const route = useRoute();
 const uuid = route.params.id;
 const uuid_pattern =
   "/^[0-9a-f]{8}-[0-9a-f]{4}-[0-5][0-9a-f]{3}-[089ab][0-9a-f]{3}-[0-9a-f]{12}$/i";
+const username = useCookie('username').value ?? 'default';
+const password = useCookie('password').value ?? 'default';
+const role = useCookie('role').value ?? 'default';
+
+const base64auth = btoa(`${username}:${password}`);
 
 const { data: student } = await useFetch(
   `http://localhost:8080/api/users/${uuid}`,
   {
     headers: {
-      Authorization: `Basic ${btoa("andrinklarer:klarer")}`,
+      Authorization: `Basic ${base64auth}`,
     },
   }
 );
@@ -16,7 +21,7 @@ const { data: subjects } = await useFetch(
   `http://localhost:8080/api/subjects/user/${uuid}`,
   {
     headers: {
-      Authorization: `Basic ${btoa("andrinklarer:klarer")}`,
+      Authorization: `Basic ${base64auth}`,
     },
   }
 );
@@ -24,7 +29,7 @@ const { data: classes } = await useFetch(
   `http://localhost:8080/api/classes/user/${uuid}`,
   {
     headers: {
-      Authorization: `Basic ${btoa("andrinklarer:klarer")}`,
+      Authorization: `Basic ${base64auth}`,
     },
   }
 );
@@ -36,6 +41,7 @@ const { data: classes } = await useFetch(
       buttonType="btn-danger"
       buttonText="Delete"
       :buttonAction="deleteUser"
+      :role="role"
       >{{ student.firstname + " " + student.lastname }}</Heading
     >
 

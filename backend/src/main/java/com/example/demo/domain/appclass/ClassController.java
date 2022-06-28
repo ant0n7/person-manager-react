@@ -10,11 +10,15 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.management.InstanceAlreadyExistsException;
 import javax.management.InstanceNotFoundException;
 import javax.validation.Valid;
+import java.nio.file.AccessDeniedException;
+import java.security.Principal;
 import java.util.Collection;
 import java.util.List;
 import java.util.UUID;
@@ -26,12 +30,21 @@ import java.util.UUID;
 public class ClassController {
     private final ClassService classService;
 
-    @PreAuthorize("hasRole('TEACHER')")
+    @PreAuthorize("hasRole('TEACHER') || hasRole('ADMIN') || hasRole('STUDENT')")
     @Operation(summary = "Get all classes.", description = "Retrieve a list of all classes")
     @GetMapping("/")
     public ResponseEntity<Collection<Class>> findAllClasses() {
         return new ResponseEntity<>(classService.findAll(), HttpStatus.OK);
     }
+
+//    @PreAuthorize("hasRole('STUDENT')")
+//    @Operation(summary = "Get all classes from User.", description = "Retrieve a list of classes")
+//    @GetMapping("/")
+//    public ResponseEntity<Collection<RestrictedClassInformationDTO>> findAllClassesFromUser() throws InstanceNotFoundException {
+//        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+//        return new ResponseEntity<>(classService.findClassesByUsername(auth.getName()), HttpStatus.OK);
+//    }
+
     @PreAuthorize("hasRole('TEACHER')")
     @Operation(summary = "Get a class by ID.", description = "Retrieve a the class with the corresponding ID")
     @GetMapping("/{id}")
@@ -85,7 +98,7 @@ public class ClassController {
 
     @Operation(summary = "Get classes by user.", description = "Receive a list of classes that the given user attends")
     @GetMapping("/user/{id}")
-    public ResponseEntity<List<Class>> getClassesFromUserID(@PathVariable UUID id) throws InstanceNotFoundException {
+    public ResponseEntity<List<Class>> getClassesFromUserID(@PathVariable UUID id) throws InstanceNotFoundException, AccessDeniedException {
         return new ResponseEntity<>(classService.findClassesByUserID(id), HttpStatus.OK);
     }
 

@@ -13,19 +13,19 @@ const role = useCookie('role').value;
   >
     <NuxtLink
       href="/"
-      class="d-flex align-items-center col-md-3 mb-2 mb-md-0 text-dark text-decoration-none"
+      class="d-flex align-items-center col-md-2 mb-2 mb-md-0 text-dark text-decoration-none"
     >
       <img src="/logo_books.png" height="32" alt="Logo">
     </NuxtLink>
 
-    <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
+    <ul class="nav col-md-8 col-md-auto mb-2 justify-content-center mb-md-0">
       <li><NuxtLink to="/" class="nav-link px-3">Home</NuxtLink></li>
       <li><NuxtLink to="/students" class="nav-link px-3">People</NuxtLink></li>
       <li><NuxtLink to="/subjects" class="nav-link px-3">Subjects</NuxtLink></li>
       <li><NuxtLink to="/classes" class="nav-link px-3">Classes</NuxtLink></li>
     </ul>
 
-    <div class="col-md-4 text-end">
+    <div class="col-md-2 text-end">
       <NuxtLink v-if="!username && !password && !role" to="/login" type="button" class="btn btn-outline-primary">Login</NuxtLink>
       <button v-else @click="logout" type="button" class="btn btn-outline-danger">Logout</button>
     </div>

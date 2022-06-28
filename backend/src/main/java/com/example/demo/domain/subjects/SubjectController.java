@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.management.InstanceAlreadyExistsException;
 import javax.management.InstanceNotFoundException;
 import javax.validation.Valid;
+import java.nio.file.AccessDeniedException;
 import java.util.Collection;
 import java.util.List;
 import java.util.UUID;
@@ -23,7 +24,7 @@ import java.util.UUID;
 public class SubjectController {
     private final SubjectService subjectService;
 
-    @PreAuthorize("hasRole('TEACHER')")
+    @PreAuthorize("hasRole('TEACHER') || hasRole('STUDENT') || hasRole('ADMIN')")
     @Operation(summary = "Get all subjects.", description = "Retrieve a list of all subjects")
     @GetMapping("/")
     public ResponseEntity<Collection<Subject>> findAllSubjects() {
@@ -57,11 +58,12 @@ public class SubjectController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @PreAuthorize("hasRole('TEACHER')")
-    @Operation(summary = "Get a subject by username.", description = "Retrieve a the subject with the corresponding ID")
+    @PreAuthorize("hasRole('TEACHER') || hasRole('STUDENT')")
+    @Operation(summary = "Get a subject by userID.", description = "Retrieve a the subject that the given user attends")
     @GetMapping("/user/{id}")
-    public ResponseEntity<List<Subject>> getSubjectsByUserID(@PathVariable UUID id) throws InstanceNotFoundException {
+    public ResponseEntity<List<Subject>> getSubjectsByUserID(@PathVariable UUID id) throws AccessDeniedException {
         return new ResponseEntity<>(subjectService.findByUserID(id), HttpStatus.OK);
     }
+
 
 }

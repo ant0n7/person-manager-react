@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <Heading buttonText="Create" buttonLink="/subjects/create">Subjects</Heading>
+    <Heading buttonText="Create" buttonLink="/subjects/create" :role="role">Subjects</Heading>
 
     <div class="row">
       <div class="col-md-3 col-12">
@@ -38,9 +38,15 @@
 </template>
 
 <script setup>
+const username = useCookie('username').value ?? 'default';
+const password = useCookie('password').value ?? 'default';
+const role = useCookie('role').value ?? 'default';
+
+const base64auth = btoa(`${username}:${password}`);
 const { pending, data: subjects } = await useAsyncData("subjects", () => $fetch("http://localhost:8080/api/subjects/", {
   headers: {
-    Authorization: `Basic ${btoa("andrinklarer:klarer")}`,
+    Authorization: `Basic ${base64auth}`,
   },
 }));
 </script>
+

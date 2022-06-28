@@ -4,14 +4,19 @@ import com.example.demo.domain.appclass.dto.CreateClassDTO;
 import com.example.demo.domain.appclass.dto.RestrictedClassInformationDTO;
 import com.example.demo.domain.appuser.User;
 import com.example.demo.domain.appuser.UserRepository;
+import com.example.demo.domain.appuser.UserServiceImpl;
 import com.example.demo.domain.subjects.Subject;
 import com.example.demo.domain.subjects.SubjectRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import javax.management.InstanceAlreadyExistsException;
 import javax.management.InstanceNotFoundException;
 import javax.transaction.Transactional;
+import java.nio.file.AccessDeniedException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -25,6 +30,8 @@ public class ClassServiceImpl implements ClassService {
     private final UserRepository userRepository;
     private final SubjectRepository subjectRepository;
     private final ClassMapper classMapper;
+    private final UserServiceImpl userService;
+
     @Override
     public Class saveClass(CreateClassDTO appclass) throws InstanceAlreadyExistsException {
         Class newClass = new Class();
@@ -49,6 +56,10 @@ public class ClassServiceImpl implements ClassService {
 
     @Override
     public List<Class> findAll() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (userService.getRoleByUsername(auth.getName()).equals("STUDENT")){
+            return  (findClassesByUsername(auth.getName()));
+        }
         return classRepository.findAll();
     }
 
@@ -92,21 +103,28 @@ public class ClassServiceImpl implements ClassService {
     }
 
     @Override
-    public List<RestrictedClassInformationDTO> findClassesByUsername(String username) throws InstanceNotFoundException {
-        try{
-            return  convertIdToRestrictedClass(classRepository.findClassesByUser(userRepository.findByUsername(username).getId()));
-        } catch (Exception e){
-            throw new InstanceNotFoundException("User " + username + " does not exist");
-        }
+    public List<RestrictedClassInformationDTO> findRestrictedClassesByUsername(String username){
+        return  convertIdToRestrictedClass(classRepository.findClassesByUser(userRepository.findByUsername(username).getId()));
     }
 
     @Override
-    public List<Class> findClassesByUserID(UUID id) throws InstanceNotFoundException {
-        try{
-            return  convertIdToClass(classRepository.findClassesByUser(id));
-        } catch (Exception e){
-            throw new InstanceNotFoundException("User  does not exist");
+    public List<Class> findClassesByUsername(String username){
+        return  convertIdToClass(classRepository.findClassesByUser(userRepository.findByUsername(username).getId()));
+    }
+
+
+
+    @Override
+    public List<Class> findClassesByUserID(UUID id) throws InstanceNotFoundException, AccessDeniedException {
+        if (hasAccess(id)){
+            try{
+                return  convertIdToClass(classRepository.findClassesByUser(id));
+            } catch (Exception e){
+                throw new InstanceNotFoundException("User  does not exist");
+            }
         }
+        throw new AccessDeniedException("You don't have access");
+
     }
 
     @Override
@@ -157,6 +175,19 @@ public class ClassServiceImpl implements ClassService {
             obj.add(subjectRepository.findBySubjectname(s));
         }
         return obj;
+    }
+
+    private boolean hasAccess(UUID id) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        try {
+            // if user is requesting his own profile return true
+            return id.equals(userRepository.findByUsername(auth.getName()).getId()) ||
+                    auth.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_TEACHER"));
+        } catch (Exception e) {
+            // do not grant access if user couldn't be found/verified to prevent giving a potential attacker
+            // information
+            return false;
+        }
     }
 
 
