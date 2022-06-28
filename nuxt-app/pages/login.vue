@@ -43,15 +43,6 @@ const loggedInUsername = useUsername();
           <button @click="login" class="btn btn-primary btn-block mb-4">
             Sign in
           </button>
-
-          <!-- Register buttons -->
-          <div class="text-center">
-            <p>Not a member? <a href="#!">Register</a></p>
-          </div>
-
-          <div>
-            <p>Store user: {{ loggedInUsername }}</p>
-          </div>
         <!-- </form> -->
         </div>
         <div v-else>

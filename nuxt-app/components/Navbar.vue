@@ -33,9 +33,6 @@ const role = useCookie('role').value;
 </template>
 
 <style scoped>
-  /* li{ */
-    /* font-size: 20px; */
-  /* } */
   .nav-link{
     color: #757575
   }
@@ -48,10 +45,7 @@ export default {
       useCookie("username").value = undefined;
       useCookie("password").value = undefined;
       useCookie("role").value = undefined;
-      // username = undefined;
-      // password = undefined;
-      // role = undefined;
-      // useState('username').value = undefined;
+      this.$router.push("/")
     },
   }
 }
