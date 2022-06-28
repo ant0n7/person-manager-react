@@ -10,6 +10,7 @@
       <div class="mb-3">
         <label for="classname" class="form-label">Class Name</label>
         <input
+        required
           type="text"
           class="form-control"
           id="classname"

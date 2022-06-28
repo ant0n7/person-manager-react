@@ -10,6 +10,7 @@
       <div class="mb-3">
         <label for="firstname" class="form-label">First Name</label>
         <input
+          required
           type="text"
           class="form-control"
           id="firstname"
@@ -19,6 +20,7 @@
       <div class="mb-3">
         <label for="lastname" class="form-label">Last Name</label>
         <input
+          required
           type="text"
           class="form-control"
           id="lastname"
@@ -28,6 +30,7 @@
       <div class="mb-3">
         <label for="username" class="form-label">Username</label>
         <input
+          required
           type="text"
           class="form-control"
           id="username"
@@ -36,11 +39,18 @@
       </div>
       <div class="mb-3">
         <label for="email" class="form-label">Email</label>
-        <input type="email" class="form-control" id="email" v-model="email" />
+        <input
+          required
+          type="email"
+          class="form-control"
+          id="email"
+          v-model="email"
+        />
       </div>
       <div class="mb-3">
         <label for="password" class="form-label">Password</label>
         <input
+          required
           type="password"
           class="form-control"
           id="password"

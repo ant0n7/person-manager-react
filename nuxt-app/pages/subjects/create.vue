@@ -10,6 +10,7 @@
       <div class="mb-3">
         <label for="subjectname" class="form-label">Subject Name</label>
         <input
+        required
           type="text"
           class="form-control"
           id="subjectname"
