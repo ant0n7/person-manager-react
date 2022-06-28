@@ -27,9 +27,12 @@
         v-for="student in students"
         :key="student.id"  
       >
-       <Card
+       <Card v-if="role == 'TEACHER' || username == student.username"
         :title="student.firstname + ' ' + student.lastname"
         :link="`/students/${student.id}`"
+        />
+        <Card v-else
+        :title="student.firstname + ' ' + student.lastname"
         />
       </div>
     </div>
@@ -40,10 +43,12 @@
         v-for="teacher in teachers"
         :key="teacher.id"  
       >
-       <Card
+       <Card v-if="role == 'TEACHER'"
         :title="teacher.firstname + ' ' + teacher.lastname"
         :link="`/students/${teacher.id}`"
         />
+        <Card v-else
+        :title="teacher.firstname + ' ' + teacher.lastname"        />
       </div>
     </div>
   </div>

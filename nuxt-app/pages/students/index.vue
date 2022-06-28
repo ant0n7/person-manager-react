@@ -7,7 +7,7 @@
       <Alert type="info"> Loading... {{ pending }} </Alert>
     </div>
 
-    <div class="row pt-3" v-if="students.length > 0">
+    <div class="row pt-3" v-if="members && students.length > 0">
       <Heading tag="h2">Students</Heading>
       <div
         class="col-md-3 col-12 p-2"
@@ -22,7 +22,7 @@
       </div>
     </div>
 
-    <div class="row" v-if="teachers.length > 0">
+    <div class="row" v-if="members && teachers.length > 0">
       <Heading tag="h2">Teachers</Heading>
       <div
         class="col-md-3 col-12 p-2"
@@ -39,7 +39,7 @@
 
     <div class="row" v-if="!members">
       <div class="col-12">
-        <Alert type="warning" warning-icon> No students found. </Alert>
+        <Alert type="warning" warning-icon> No students found. Make sure you are logged in!</Alert>
       </div>
     </div>
   </div>

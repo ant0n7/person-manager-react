@@ -45,7 +45,7 @@ public class ClassController {
 //        return new ResponseEntity<>(classService.findClassesByUsername(auth.getName()), HttpStatus.OK);
 //    }
 
-    @PreAuthorize("hasRole('TEACHER')")
+    @PreAuthorize("hasRole('TEACHER') || hasRole('STUDENT') ")
     @Operation(summary = "Get a class by ID.", description = "Retrieve a the class with the corresponding ID")
     @GetMapping("/{id}")
     public ResponseEntity<Class> getClassByID(@PathVariable UUID id) throws InstanceNotFoundException {
@@ -58,7 +58,7 @@ public class ClassController {
     public ResponseEntity<Class> addClass(@Valid @RequestBody CreateClassDTO appclass) throws InstanceAlreadyExistsException {
         return new ResponseEntity<>(classService.saveClass(appclass), HttpStatus.CREATED);
     }
-    @PreAuthorize("hasRole('TEACHER')")
+    @PreAuthorize("hasRole('ADMIN')")
     @Operation(summary = "Update a subject by ID.", description = "Update a single subject by its ID.")
     @PutMapping("/{id}")
     public ResponseEntity<Class> updateClass(@PathVariable UUID id, @Valid @RequestBody Class appclass) throws InstanceNotFoundException {

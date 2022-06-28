@@ -36,9 +36,6 @@ const role = useRole();
 </template>
 
 <style scoped>
-  /* li{ */
-    /* font-size: 20px; */
-  /* } */
   .nav-link{
     color: #757575
   }

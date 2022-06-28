@@ -10,6 +10,8 @@
       <div class="mb-3">
         <label for="firstname" class="form-label">First Name</label>
         <input
+          placeholder="John"
+          required
           type="text"
           class="form-control"
           id="firstname"
@@ -19,6 +21,8 @@
       <div class="mb-3">
         <label for="lastname" class="form-label">Last Name</label>
         <input
+          placeholder="Doe"
+          required
           type="text"
           class="form-control"
           id="lastname"
@@ -28,6 +32,8 @@
       <div class="mb-3">
         <label for="username" class="form-label">Username</label>
         <input
+          placeholder="johndoe"
+          required
           type="text"
           class="form-control"
           id="username"
@@ -36,16 +42,28 @@
       </div>
       <div class="mb-3">
         <label for="email" class="form-label">Email</label>
-        <input type="email" class="form-control" id="email" v-model="email" />
+        <input
+          placeholder="john@student.com"
+          required
+          type="email"
+          class="form-control"
+          id="email"
+          v-model="email"
+        />
       </div>
       <div class="mb-3">
-        <label for="password" class="form-label">Password</label>
+        <label for="password" class="form-label" aria-describedby="passwordHelp"
+          >Password</label
+        >
         <input
+          placeholder="Choose a safe password"
+          required
           type="password"
           class="form-control"
           id="password"
           v-model="password"
         />
+        <div id="passwordHelp" class="form-text">At least four characters</div>
       </div>
       <button type="submit" class="btn btn-primary">Submit</button>
     </form>
