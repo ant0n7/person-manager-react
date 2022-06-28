@@ -10,7 +10,7 @@
     <Alert v-if="false">Wrong username or password.</Alert>
     <!-- <form> -->
     <!-- Email input -->
-    <div v-if="!loggedInUserName && !loggedInPassword && !loggedInRole">
+    <div v-if="!loggedInUsername && !loggedInPassword && !loggedInRole">
       <!-- <form action="/"> -->
       <div class="form-outline mt-4 mb-2">
         <label class="form-label" for="username"> Username </label>
