@@ -10,6 +10,7 @@
       <div class="mb-3">
         <label for="classname" class="form-label">Class Name</label>
         <input
+        placeholder="BIN40d"
           required
           type="text"
           class="form-control"
@@ -22,6 +23,7 @@
           >Members</label
         >
         <input
+        placeholder="johndoe, annefrank"
           type="text"
           class="form-control"
           id="members"
@@ -31,12 +33,14 @@
           Enter username of class members seperated with comma
         </div>
       </div>
+    
 
       <div class="mb-3">
         <label for="subjects" class="form-label" aria-describedby="subjectHelp"
           >Subjects</label
         >
         <input
+      placeholder="Math, German"
           type="text"
           class="form-control"
           id="subjects"

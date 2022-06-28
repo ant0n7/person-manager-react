@@ -30,7 +30,7 @@
     <div class="row" v-if="!subjects">
       <div class="col-12">
         <Alert type="warning" warning-icon>
-          No subjects found.
+          No subjects found.  Make sure you are logged in!
         </Alert>
       </div>
     </div>

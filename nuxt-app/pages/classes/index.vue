@@ -38,7 +38,7 @@ const { pending, data: classes } = await useAsyncData('classes', () => $fetch('h
     <div class="row" v-if="!classes">
       <div class="col-12">
         <Alert type="warning" warning-icon>
-          No classes found.
+          No classes found.  Make sure you are logged in!
         </Alert>
       </div>
     </div>

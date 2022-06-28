@@ -11,6 +11,7 @@
         <label for="subjectname" class="form-label">Subject Name</label>
         <input
         required
+        placeholder="e.g. Math"
           type="text"
           class="form-control"
           id="subjectname"

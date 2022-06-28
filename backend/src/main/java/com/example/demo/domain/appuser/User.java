@@ -31,7 +31,7 @@ public class User {
     @Email @NotNull
     @Column(unique = true)
     private String email;
-    @Size(min = 8, max = 128) @NotNull
+    @Size(min = 4, max = 128) @NotNull
     private String password;
 
     @LazyCollection(LazyCollectionOption.FALSE)
