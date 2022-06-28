@@ -2,9 +2,12 @@ package com.example.demo.domain.subjects;
 
 import com.example.demo.domain.appuser.User;
 import com.example.demo.domain.appuser.UserRepository;
+import com.example.demo.domain.appuser.UserServiceImpl;
 import com.example.demo.domain.role.Role;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import javax.management.InstanceAlreadyExistsException;
@@ -21,6 +24,7 @@ import java.util.UUID;
 public class SubjectServiceImpl implements SubjectService {
     private final SubjectRepository subjectRepository;
     private final UserRepository userRepository;
+    private final UserServiceImpl userService;
 
     @Override
     public Subject saveSubject(Subject subject) throws InstanceAlreadyExistsException {
@@ -46,6 +50,10 @@ public class SubjectServiceImpl implements SubjectService {
 
     @Override
     public List<Subject> findAll() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (userService.getRoleByUsername(auth.getName()).equals("STUDENT")){
+            return findByUsername(auth.getName());
+        }
         return subjectRepository.findAll();
     }
 

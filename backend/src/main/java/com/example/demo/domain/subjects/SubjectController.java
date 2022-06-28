@@ -23,7 +23,7 @@ import java.util.UUID;
 public class SubjectController {
     private final SubjectService subjectService;
 
-    @PreAuthorize("hasRole('TEACHER')")
+    @PreAuthorize("hasRole('TEACHER') || hasRole('STUDENT') || hasRole('ADMIN')")
     @Operation(summary = "Get all subjects.", description = "Retrieve a list of all subjects")
     @GetMapping("/")
     public ResponseEntity<Collection<Subject>> findAllSubjects() {

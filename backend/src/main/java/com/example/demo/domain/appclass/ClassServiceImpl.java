@@ -4,9 +4,12 @@ import com.example.demo.domain.appclass.dto.CreateClassDTO;
 import com.example.demo.domain.appclass.dto.RestrictedClassInformationDTO;
 import com.example.demo.domain.appuser.User;
 import com.example.demo.domain.appuser.UserRepository;
+import com.example.demo.domain.appuser.UserServiceImpl;
 import com.example.demo.domain.subjects.Subject;
 import com.example.demo.domain.subjects.SubjectRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import javax.management.InstanceAlreadyExistsException;
@@ -25,6 +28,8 @@ public class ClassServiceImpl implements ClassService {
     private final UserRepository userRepository;
     private final SubjectRepository subjectRepository;
     private final ClassMapper classMapper;
+    private final UserServiceImpl userService;
+
     @Override
     public Class saveClass(CreateClassDTO appclass) throws InstanceAlreadyExistsException {
         Class newClass = new Class();
@@ -49,6 +54,10 @@ public class ClassServiceImpl implements ClassService {
 
     @Override
     public List<Class> findAll() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (userService.getRoleByUsername(auth.getName()).equals("STUDENT")){
+            return  (findClassesByUsername(auth.getName()));
+        }
         return classRepository.findAll();
     }
 
@@ -92,13 +101,16 @@ public class ClassServiceImpl implements ClassService {
     }
 
     @Override
-    public List<RestrictedClassInformationDTO> findClassesByUsername(String username) throws InstanceNotFoundException {
-        try{
-            return  convertIdToRestrictedClass(classRepository.findClassesByUser(userRepository.findByUsername(username).getId()));
-        } catch (Exception e){
-            throw new InstanceNotFoundException("User " + username + " does not exist");
-        }
+    public List<RestrictedClassInformationDTO> findRestrictedClassesByUsername(String username){
+        return  convertIdToRestrictedClass(classRepository.findClassesByUser(userRepository.findByUsername(username).getId()));
     }
+
+    @Override
+    public List<Class> findClassesByUsername(String username){
+        return  convertIdToClass(classRepository.findClassesByUser(userRepository.findByUsername(username).getId()));
+    }
+
+
 
     @Override
     public List<Class> findClassesByUserID(UUID id) throws InstanceNotFoundException {
