@@ -1,8 +1,7 @@
 package com.example.demo.domain.appuser;
 
-import com.example.demo.domain.grade.Grade;
+
 import com.example.demo.domain.role.Role;
-import com.example.demo.domain.subjects.Subject;
 import lombok.*;
 import org.hibernate.annotations.*;
 
