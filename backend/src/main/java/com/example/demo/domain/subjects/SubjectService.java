@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import javax.management.InstanceAlreadyExistsException;
 import javax.management.InstanceNotFoundException;
+import java.nio.file.AccessDeniedException;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -22,5 +23,5 @@ public interface SubjectService {
 
     List<Subject> findByUsername(String username);
 
-    List<Subject> findByUserID(UUID id);
+    List<Subject> findByUserID(UUID id) throws AccessDeniedException;
 }

@@ -104,6 +104,9 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
     @Override
     public Optional<User> findById(UUID id) throws InstanceNotFoundException{
+        if(hasAccess(id)){
+
+        }
         if (userRepository.existsById(id)){
             return userRepository.findById(id);
         }
@@ -128,7 +131,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         try {
             // if user is requesting his own profile return true
             return id.equals(userRepository.findByUsername(auth.getName()).getId()) ||
-                    auth.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_ADMIN"));
+                    auth.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_TEACHER"));
         } catch (Exception e) {
             // do not grant access if user couldn't be found/verified to prevent giving a potential attacker
             // information

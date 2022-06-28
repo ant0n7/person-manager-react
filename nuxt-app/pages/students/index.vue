@@ -1,10 +1,7 @@
 <template>
   <div class="container">
     <!-- <h1>Students <button class="btn btn-primary btn-md mb-2 ms-auto float-end" type="button">Create</button></h1> -->
-    <Heading v-if="role === 'TEACHER'" buttonText="Create" buttonLink="/students/create"
-      >People</Heading
-    >
-    <Heading v-else>People</Heading>
+    <Heading buttonText="Create" buttonLink="/students/create" :role="role">People</Heading>
 
     <div v-if="pending">
       <Alert type="info"> Loading... {{ pending }} </Alert>

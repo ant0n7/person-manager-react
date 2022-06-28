@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.management.InstanceAlreadyExistsException;
 import javax.management.InstanceNotFoundException;
 import javax.validation.Valid;
+import java.nio.file.AccessDeniedException;
 import java.security.Principal;
 import java.util.Collection;
 import java.util.List;
@@ -97,7 +98,7 @@ public class ClassController {
 
     @Operation(summary = "Get classes by user.", description = "Receive a list of classes that the given user attends")
     @GetMapping("/user/{id}")
-    public ResponseEntity<List<Class>> getClassesFromUserID(@PathVariable UUID id) throws InstanceNotFoundException {
+    public ResponseEntity<List<Class>> getClassesFromUserID(@PathVariable UUID id) throws InstanceNotFoundException, AccessDeniedException {
         return new ResponseEntity<>(classService.findClassesByUserID(id), HttpStatus.OK);
     }
 

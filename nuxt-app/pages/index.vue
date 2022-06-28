@@ -3,7 +3,7 @@
     <h1>Welcome</h1>
 
     <div class="row">
-      <div class="col-md-3 col-12">
+      <div class="col-md-4 col-12">
         <Card
           title="Students"
           subtitle="List of Students"
@@ -12,7 +12,7 @@
           buttonText="View All"
         />
       </div>
-      <div class="col-md-3 col-12">
+      <div class="col-md-4 col-12">
         <Card
           title="Subjects"
           subtitle="List of Subjects"
@@ -21,7 +21,7 @@
           buttonText="View All"
         />
       </div>
-      <div class="col-md-3 col-12">
+      <div class="col-md-4 col-12">
         <Card
           title="Classes"
           subtitle="List of Classes"
