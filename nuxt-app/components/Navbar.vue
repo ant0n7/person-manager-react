@@ -2,9 +2,12 @@
 // const username = useState('username', () => useCookie('username').value);
 // const password = useState('password', () => useCookie('password').value);
 // const role = useState('role', () => useCookie('role').value);
-const username = useCookie('username').value;
-const password = useCookie('password').value;
-const role = useCookie('role').value;
+// const username = useCookie('username').value;
+// const password = useCookie('password').value;
+// const role = useCookie('role').value;
+const username = useUsername();
+const password = usePassword();
+const role = useRole();
 </script>
 
 <template>
@@ -43,9 +46,11 @@ export default {
   methods: {
     logout() {
       useCookie("username").value = undefined;
+      useUsername().value = undefined;
       useCookie("password").value = undefined;
+      usePassword().value = undefined;
       useCookie("role").value = undefined;
-      this.$router.push("/")
+      useRole().value = undefined;
     },
   }
 }

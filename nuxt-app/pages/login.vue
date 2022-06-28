@@ -1,7 +1,3 @@
-<!-- <script setup>
-const loggedInUsername = useUsername();
-</script> -->
-
 <template>
   <div class="container">
     <div class="row">
@@ -12,9 +8,9 @@ const loggedInUsername = useUsername();
         <!-- <Alert v-if="userValid !== undefined ? userValid : false">Wrong username or password.</Alert> -->
         <Alert v-if="false">Wrong username or password.</Alert>
         <!-- <form action="/"> -->
-          <!-- <form> -->
-          <!-- Email input -->
-        <div v-if="!loggedInUserName && !loggedInPassword && !loggedInRole">
+        <!-- <form> -->
+        <!-- Email input -->
+        <div v-if="!loggedInUsername && !loggedInPassword && !loggedInRole">
           <div class="form-outline mt-4 mb-2">
             <input
               type="text"
@@ -43,11 +39,27 @@ const loggedInUsername = useUsername();
           <button @click="login" class="btn btn-primary btn-block mb-4">
             Sign in
           </button>
-        <!-- </form> -->
+
+          <!-- Register buttons -->
+          <div class="text-center">
+            <p>Not a member? <a href="#!">Register</a></p>
+          </div>
+
+          <div>
+            <p>Store user: {{ loggedInUsername }}</p>
+          </div>
+          <!-- </form> -->
         </div>
         <div v-else>
-          <Alert class="d-inline-flex align-items-center">You are already logged in! <button @click="logout" class="btn btn-danger ms-3 float-end center align-self-center
-">Logout?</button></Alert>
+          <Alert class="d-inline-flex align-items-center"
+            >You are already logged in!
+            <button
+              @click="logout"
+              class="btn btn-danger ms-3 float-end center align-self-center"
+            >
+              Logout?
+            </button></Alert
+          >
         </div>
       </div>
     </div>
@@ -96,7 +108,6 @@ export default {
       const { data: valid } = await axios.get(
         `http://localhost:8080/api/users/login/${username}/${password}`
       );
-
 
       if (valid) {
         console.log("correct");
