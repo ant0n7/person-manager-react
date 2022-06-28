@@ -1,6 +1,10 @@
-<!-- <script setup>
-const loggedInUsername = useUsername();
-</script> -->
+<script lang="ts" setup>
+const counter = useState("counter", () => useCookie("username").value);
+const changeCookie = (value: string) => {
+  useCookie("username").value = value;
+  counter.value = value;
+};
+</script>
 
 <template>
   <div class="container">
@@ -9,12 +13,20 @@ const loggedInUsername = useUsername();
       <div class="col-md-4 col-12">
         <Heading>Login</Heading>
 
+        <div>
+          counter: {{ counter }}
+          <button @click="counter = 'Plus'">+</button>
+          <button @click="counter = 'Minnus'">-</button>
+          <button @click="() => changeCookie('PlusPlus')">++</button>
+          <button @click="() => changeCookie('MinnusMinus')">--</button>
+        </div>
+
         <!-- <Alert v-if="userValid !== undefined ? userValid : false">Wrong username or password.</Alert> -->
         <Alert v-if="false">Wrong username or password.</Alert>
         <!-- <form action="/"> -->
-          <!-- <form> -->
-          <!-- Email input -->
-        <div v-if="!loggedInUserName && !loggedInPassword && !loggedInRole">
+        <!-- <form> -->
+        <!-- Email input -->
+        <div v-if="!loggedInUsername && !loggedInPassword && !loggedInRole">
           <div class="form-outline mt-4 mb-2">
             <input
               type="text"
@@ -52,11 +64,18 @@ const loggedInUsername = useUsername();
           <div>
             <p>Store user: {{ loggedInUsername }}</p>
           </div>
-        <!-- </form> -->
+          <!-- </form> -->
         </div>
         <div v-else>
-          <Alert class="d-inline-flex align-items-center">You are already logged in! <button @click="logout" class="btn btn-danger ms-3 float-end center align-self-center
-">Logout?</button></Alert>
+          <Alert class="d-inline-flex align-items-center"
+            >You are already logged in!
+            <button
+              @click="logout"
+              class="btn btn-danger ms-3 float-end center align-self-center"
+            >
+              Logout?
+            </button></Alert
+          >
         </div>
       </div>
     </div>
@@ -105,7 +124,6 @@ export default {
       const { data: valid } = await axios.get(
         `http://localhost:8080/api/users/login/${username}/${password}`
       );
-
 
       if (valid) {
         console.log("correct");
