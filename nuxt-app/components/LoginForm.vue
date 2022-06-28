@@ -37,7 +37,7 @@
       </div>
 
       <!-- Submit button set type=submit -->
-      <button @click="login" class="btn btn-primary btn-block mb-4 w-100">
+      <button @click="login" class="btn btn-primary btn-block mb-4 mt-2 w-100">
         Sign in
       </button>
 
