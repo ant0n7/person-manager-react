@@ -7,9 +7,12 @@
     <Heading>Login</Heading>
 
     <!-- <Alert v-if="userValid !== undefined ? userValid : false">Wrong username or password.</Alert> -->
-    <Alert v-if="false">Wrong username or password.</Alert>
     <!-- <form> -->
     <!-- Email input -->
+
+    <Alert type="danger" warning-icon v-if="!successful">
+      Wrong username or password
+    </Alert>
     <div v-if="!loggedInUsername && !loggedInPassword && !loggedInRole">
       <!-- <form action="/"> -->
       <div class="form-outline mt-4 mb-2">
@@ -38,7 +41,7 @@
 
       <!-- Submit button set type=submit -->
       <button @click="login" class="btn btn-primary btn-block mb-4 mt-2 w-100">
-        Sign in
+        Login
       </button>
 
       <!-- Register buttons -->
@@ -68,6 +71,11 @@
 import axios from "axios";
 
 export default {
+  data() {
+    return {
+      successful: true,
+    };
+  },
   computed: {
     loggedInUsername() {
       return useCookie("username").value;
@@ -102,8 +110,7 @@ export default {
       const username = this.$refs.usernameInput.value;
       const password = this.$refs.passwordInput.value;
 
-      this.setUsername(username);
-      this.setPassword(password);
+
       // this.setRole("TEACHER");
 
       const { data: valid } = await axios.get(
@@ -122,12 +129,14 @@ export default {
           }
         );
 
+        this.setUsername(username);
+        this.setPassword(password);
         useCookie("role").value = role;
         useRole().value = role;
 
         this.$router.push("/");
       } else {
-        alert("Wrong username or password");
+        this.successful = false;
       }
     },
   },
