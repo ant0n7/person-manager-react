@@ -56,6 +56,9 @@ INSERT INTO tbl_class (id,classname) VALUES ('5148b858-f5fd-11ec-b939-0242ac1200
 INSERT INTO tbl_class (id,classname) VALUES ('1c1469b6-f18e-11ec-8ea0-0242ac120002','BIN20b');
 INSERT INTO tbl_class (id,classname) VALUES ('20e3d92c-f18e-11ec-8ea0-0242ac120002','BIN30c');
 
+INSERT INTO tbl_class_members (class_id,member_id) VALUES ('1c1469b6-f18e-11ec-8ea0-0242ac120002','2c61dac7-29fa-4baa-95e5-9053c7879d41');
+
+
 INSERT INTO tbl_class_members (class_id,member_id) VALUES ('5148b858-f5fd-11ec-b939-0242ac120002','2c61dac7-29fa-4baa-95e5-9053c7879d41');
 INSERT INTO tbl_class_members (class_id,member_id) VALUES ('5148b858-f5fd-11ec-b939-0242ac120002','e74d2176-e7d7-4003-8543-369057a4279e');
 INSERT INTO tbl_class_members (class_id,member_id) VALUES ('5148b858-f5fd-11ec-b939-0242ac120002','1a238bcf-a3c2-4d0c-98fc-3e0ed1078b08');

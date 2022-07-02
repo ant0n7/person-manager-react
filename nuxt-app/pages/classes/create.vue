@@ -1,6 +1,7 @@
 <template>
   <div class="container">
     <Heading>New Class</Heading>
+
     <form
       class="mt-4"
       accept-charset="UTF-8"
@@ -15,6 +16,13 @@
           type="text"
           class="form-control"
           id="classname"
+          :class="
+            errors.length > 0
+              ? errors[0].field == 'classname'
+                ? 'error'
+                : ''
+              : ''
+          "
           v-model="classname"
         />
       </div>
@@ -23,7 +31,7 @@
           >Members</label
         >
         <input
-          placeholder="johndoe, annefrank"
+          placeholder="johndoe, annedekten"
           type="text"
           class="form-control"
           id="members"
@@ -49,14 +57,20 @@
           Enter names of subject seperated with comma
         </div>
       </div>
-
+      <div class="row" v-if="errors && errors.length">
+        <div class="mb3">
+          <Alert
+            type="danger"
+            warning-icon
+            v-for="error in errors"
+            :key="errors.indexOf(error)"
+          >
+            {{ error.defaultMessage }}
+          </Alert>
+        </div>
+      </div>
       <button type="submit" class="btn btn-primary">Submit</button>
     </form>
-    <ul v-if="error && error.length">
-      {{
-        error[0]
-      }}
-    </ul>
   </div>
 </template>
 
@@ -75,7 +89,7 @@ export default {
       members: "",
       subjects: "",
       isSuccess: false,
-      error: [],
+      errors: [],
     };
   },
   methods: {
@@ -100,11 +114,9 @@ export default {
             console.log("error");
           }
         })
-        .catch((error) =>
-          this.error.push(error.response.data.errors)
-          
-        );
-        console.log(this.error)
+        .catch((error) => {
+          this.errors = error.response.data.errors;
+        });
     },
   },
 };

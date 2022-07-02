@@ -9,16 +9,32 @@
     >
       <div class="mb-3">
         <label for="subjectname" class="form-label">Subject Name</label>
+        <Alert
+          type="danger"
+          warning-icon
+          v-if="errors.some((x) => x.field == 'subjectname')"
+        >
+          {{ errors.find((x) => x.field == "subjectname").defaultMessage }}
+        </Alert>
         <input
-        required
-        placeholder="e.g. Math"
+          required
+          placeholder="e.g. Math"
           type="text"
           class="form-control"
           id="subjectname"
+          :class="
+            errors.length > 0
+              ? errors.some((x) => x.field == 'subjectname')
+                ? 'error'
+                : ''
+              : ''
+          "
           v-model="subjectname"
         />
       </div>
-      <div class="success" v-if="isSuccess">We received your submission, thank you!</div>
+      <div class="success" v-if="isSuccess">
+        We received your submission, thank you!
+      </div>
       <button type="submit" class="btn btn-primary">Submit</button>
     </form>
   </div>
@@ -37,6 +53,7 @@ export default {
       loading: true,
       subjectname: "",
       isSuccess: false,
+      errors: [],
     };
   },
   methods: {
@@ -51,14 +68,15 @@ export default {
             Accept: "application/json",
           },
         })
-        .then(
-          (response) => {
-            this.isSuccess = response.status == 200 || 201 ? true : false;
-            if (this.isSuccess) {
-              this.$router.back();
-            }
-          },
-        );
+        .then((response) => {
+          this.isSuccess = response.status == 200 || 201 ? true : false;
+          if (this.isSuccess) {
+            this.$router.back();
+          }
+        })
+        .catch((error) => {
+          this.errors = error.response.data.errors;
+        });
     },
   },
 };

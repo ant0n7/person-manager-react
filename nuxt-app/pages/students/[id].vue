@@ -53,9 +53,9 @@ const { data: classes } = await useFetch(
     </h6>
 
     <div class="row pt-3" v-if="subjects.length > 0">
-      <Heading tag="h2">Subjects</Heading>
+      <Heading class="mt-3" tag="h2">Subjects</Heading>
       <div
-        class="col-md-3 col-12"
+        class="col-md-3 col-12 p-2"
         v-for="subject in subjects"
         :key="subject.id"
       >
@@ -64,7 +64,7 @@ const { data: classes } = await useFetch(
     </div>
 
     <div class="row pt-3" v-if="classes.length > 0">
-      <Heading tag="h2">Classes</Heading>
+      <Heading class="mt-3" tag="h2">Classes</Heading>
       <div
         class="col-md-3 col-12 p-2"
         v-for="appclass in classes"
@@ -85,15 +85,14 @@ export default {
       axios
         .delete(`http://localhost:8080/api/users/${this.student.id}`, {
           headers: {
-            Authorization: `Basic ${btoa("andrinklarer:klarer")}`,
+            Authorization: `Basic ${base64auth}`,
           },
         })
         .then((response) => {
           this.isSuccess = response.status == 200 || 201 ? true : false;
           console.log(this.isSuccess);
           if (this.isSuccess) {
-            // location.reload();
-            this.$router.back(/*() => {this.$router.afterEach(() => location.reload())}*/);
+            this.$router.back();
           }
         });
     },

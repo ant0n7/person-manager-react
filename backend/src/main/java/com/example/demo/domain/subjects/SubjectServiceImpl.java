@@ -16,10 +16,7 @@ import javax.management.InstanceAlreadyExistsException;
 import javax.management.InstanceNotFoundException;
 import javax.transaction.Transactional;
 import java.nio.file.AccessDeniedException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -91,11 +88,13 @@ public class SubjectServiceImpl implements SubjectService {
         if (hasAccess(id)){
             List<String> classes = subjectRepository.getClassesByUser(id);
             List<String> subjects = new ArrayList<>();
+
             for (String c : classes) {
                 subjects.addAll(subjectRepository.getSubjectsByClass(UUID.fromString(c)));
             }
+            List<String> subjectsWithoutDuplicates = new ArrayList<>(new HashSet<>(subjects));
 
-            return convertIdToSubject(subjects);
+            return convertIdToSubject(subjectsWithoutDuplicates);
         }
         throw new AccessDeniedException("No access");
     }

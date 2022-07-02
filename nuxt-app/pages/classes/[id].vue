@@ -7,7 +7,7 @@
     </h6> -->
 
     <div class="row pt-3" v-if="appClass.subjects.length > 0">
-      <Heading tag="h2">Subjects</Heading>
+      <Heading tag="h2" class="mt-3">Subjects</Heading>
       <div
         class="col-md-3 col-12 p-2"
         v-for="subject in appClass.subjects"
@@ -21,7 +21,7 @@
     </div>
     
     <div class="row pt-3" v-if="students.length > 0">
-      <Heading tag="h2">Students</Heading>
+      <Heading tag="h2" class="mt-3">Students</Heading>
       <div
         class="col-md-3 col-12 p-2"
         v-for="student in students"
@@ -37,7 +37,7 @@
       </div>
     </div>
     <div class="row pt-3" v-if="teachers.length > 0">
-      <Heading tag="h2">Teachers</Heading>
+      <Heading tag="h2" class="mt-3">Teachers</Heading>
       <div
         class="col-md-3 col-12 p-2"
         v-for="teacher in teachers"

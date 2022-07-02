@@ -12,7 +12,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 public interface ClassService {
-    Class saveClass(CreateClassDTO appclass) throws InstanceAlreadyExistsException;
+    Class saveClass(CreateClassDTO appclass) throws InstanceAlreadyExistsException, InstanceNotFoundException;
     Optional<Class> findById(UUID id) throws InstanceNotFoundException;
     List<Class> findAll();
     void deleteClass(UUID id) throws InstanceNotFoundException;

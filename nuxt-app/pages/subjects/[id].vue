@@ -25,7 +25,7 @@ const { data: classes } = await useFetch(`http://localhost:8080/api/classes/subj
     <Heading>{{ subject.subjectname }}</Heading>
 
     <div class="row pt-3" v-if="role != 'STUDENT' && classes.length > 0">
-      <Heading tag="h2">Classes</Heading>
+      <Heading class="mt-3" tag="h2">Classes</Heading>
       <div
         class="col-md-3 col-12 p-2"
         v-for="appclass in classes"
