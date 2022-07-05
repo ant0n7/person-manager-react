@@ -1,13 +1,6 @@
 <template>
   <div class="container">
     <Heading buttonText="Create" buttonLink="/subjects/create" :role="role">Subjects</Heading>
-
-    <div class="row">
-      <div class="col-md-3 col-12">
-        
-      </div>
-    </div>
-
     <div v-if="pending">
       <Alert type="info">
         Loading... {{ pending }}
@@ -16,7 +9,7 @@
 
     <div class="row" v-else>
       <div
-        class="col-md-3 col-12 p-2"
+        class="col-lg-3 col-md-4 col-sm-6 col-12 p-2"
         v-for="subject in subjects"
         :key="subject.id"
       >

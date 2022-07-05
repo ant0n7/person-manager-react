@@ -1,17 +1,10 @@
 <template>
-  <!-- <div class="container">
-    <div class="row">
-      <div class="col-md-4"></div>
-      <div class="col-md-4 col-12"> -->
   <div>
     <Heading>Login</Heading>
-
-    <!-- <Alert v-if="userValid !== undefined ? userValid : false">Wrong username or password.</Alert> -->
-    <Alert v-if="false">Wrong username or password.</Alert>
-    <!-- <form> -->
-    <!-- Email input -->
+    <Alert type="danger" warning-icon v-if="!successful">
+      Wrong username or password
+    </Alert>
     <div v-if="!loggedInUsername && !loggedInPassword && !loggedInRole">
-      <!-- <form action="/"> -->
       <div class="form-outline mt-4 mb-2">
         <label class="form-label" for="username"> Username </label>
         <input
@@ -38,7 +31,7 @@
 
       <!-- Submit button set type=submit -->
       <button @click="login" class="btn btn-primary btn-block mb-4 mt-2 w-100">
-        Sign in
+        Login
       </button>
 
       <!-- Register buttons -->
@@ -48,7 +41,7 @@
       <!-- </form> -->
     </div>
     <div v-else>
-      <Alert class="d-inline-flex align-items-center"
+      <Alert class="d-flex align-items-center justify-content-between"
         >You are already logged in!
         <button
           @click="logout"
@@ -59,15 +52,17 @@
       </Alert>
     </div>
   </div>
-  <!-- </div>
-    </div>
-  </div> -->
 </template>
 
 <script lang="ts">
 import axios from "axios";
 
 export default {
+  data() {
+    return {
+      successful: true,
+    };
+  },
   computed: {
     loggedInUsername() {
       return useCookie("username").value;
@@ -102,10 +97,6 @@ export default {
       const username = this.$refs.usernameInput.value;
       const password = this.$refs.passwordInput.value;
 
-      this.setUsername(username);
-      this.setPassword(password);
-      // this.setRole("TEACHER");
-
       const { data: valid } = await axios.get(
         `http://localhost:8080/api/users/login/${username}/${password}`
       );
@@ -122,12 +113,13 @@ export default {
           }
         );
 
-        useCookie("role").value = role;
-        useRole().value = role;
+        this.setUsername(username);
+        this.setPassword(password);
+        this.setRole(role)
 
         this.$router.push("/");
       } else {
-        alert("Wrong username or password");
+        this.successful = false;
       }
     },
   },

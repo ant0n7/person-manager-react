@@ -7,27 +7,27 @@
         <Card
           title="Students"
           subtitle="List of Students"
-          image="/student.png"
+          image="/student_new.png"
           link="/students"
-          buttonText="View All"
+          buttonText="Manage"
         />
       </div>
       <div class="col-md-4 col-12">
         <Card
           title="Subjects"
           subtitle="List of Subjects"
-          image="/calendar.png"
+          image="/subjects_new.jpg"
           link="/subjects"
-          buttonText="View All"
+          buttonText="Manage"
         />
       </div>
       <div class="col-md-4 col-12">
         <Card
           title="Classes"
           subtitle="List of Classes"
-          image="/class.png"
+          image="/school_new.png"
           link="/classes"
-          buttonText="View All"
+          buttonText="Manage"
         />
       </div>
     </div>

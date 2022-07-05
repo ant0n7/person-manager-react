@@ -33,7 +33,7 @@ public class ClassServiceImpl implements ClassService {
     private final UserServiceImpl userService;
 
     @Override
-    public Class saveClass(CreateClassDTO appclass) throws InstanceAlreadyExistsException {
+    public Class saveClass(CreateClassDTO appclass) throws InstanceAlreadyExistsException, InstanceNotFoundException {
         Class newClass = new Class();
         newClass.setClassname(appclass.getClassname());
         newClass.setMembers(convertUsernameToUser(appclass.getMembers()));
@@ -161,11 +161,17 @@ public class ClassServiceImpl implements ClassService {
         return obj;
     }
 
-    private List<User> convertUsernameToUser(List<String> username){
+    private List<User> convertUsernameToUser(List<String> username) throws InstanceNotFoundException {
         List<User> obj = new ArrayList<>();
-        for (String u: username) {
-            obj.add(userRepository.findByUsername(u));
-        }
+                for (String u : username) {
+                try {
+                    userRepository.findByUsername(u).getUsername();
+                    obj.add(userRepository.findByUsername(u));
+                }catch (RuntimeException e){
+                    throw new InstanceNotFoundException(u + " is no valid user");
+                }
+
+            }
         return obj;
     }
 

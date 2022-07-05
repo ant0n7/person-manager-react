@@ -8,9 +8,9 @@
     </div>
 
     <div class="row pt-3" v-if="useMembers().value && students.length > 0">
-      <Heading tag="h2">Students</Heading>
+      <Heading class="mt-3" tag="h3">Students</Heading>
       <div
-        class="col-md-3 col-12 p-2"
+        class="col-lg-3 col-md-4 col-sm-6 col-12 p-2"
         v-for="student in students"
         :key="student.id"
       >
@@ -22,10 +22,10 @@
       </div>
     </div>
 
-    <div class="row" v-if="useMembers().value && teachers.length > 0">
-      <Heading tag="h2">Teachers</Heading>
+    <div class="row pt-3" v-if="useMembers().value && teachers.length > 0">
+      <Heading class="mt-3" tag="h3">Teachers</Heading>
       <div
-        class="col-md-3 col-12 p-2"
+        class="col-lg-3 col-md-4 col-sm-6 col-12 p-2"
         v-for="teacher in teachers"
         :key="teacher.id"
       >
@@ -51,7 +51,6 @@ const password = useCookie('password').value ?? 'default';
 const role = useCookie('role').value ?? 'default';
 
 const base64auth = btoa(`${username}:${password}`);
-// const base64auth = btoa(`andrinklarer:klarer`);
 
 const { pending, data: members } = await useAsyncData("students", () =>
   $fetch("http://localhost:8080/api/users/", {

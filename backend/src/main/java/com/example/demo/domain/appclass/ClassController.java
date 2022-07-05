@@ -55,7 +55,7 @@ public class ClassController {
     @PreAuthorize("hasRole('TEACHER')")
     @Operation(summary = "Add a class.", description = "Add a single class.")
     @PostMapping("/")
-    public ResponseEntity<Class> addClass(@Valid @RequestBody CreateClassDTO appclass) throws InstanceAlreadyExistsException {
+    public ResponseEntity<Class> addClass(@Valid @RequestBody CreateClassDTO appclass) throws InstanceAlreadyExistsException, InstanceNotFoundException {
         return new ResponseEntity<>(classService.saveClass(appclass), HttpStatus.CREATED);
     }
     @PreAuthorize("hasRole('ADMIN')")

@@ -16,7 +16,7 @@ insert into tbl_role_authorities (role_id, authority_id) values ('2f1e573f-6290-
 insert into tbl_user (id, firstname, lastname, username, email, password) values ('498422fa-f130-11ec-8ea0-0242ac120002', 'Admin', 'Admin', 'administrator', 'admin@admin.com', '$2a$12$DiOin3ZyHX2aPFXdZiwLk.iEM0ZaLAfwACqNR3uqJLAl5kZeNdzsW');
 insert into tbl_user (id, firstname, lastname, username, email, password) values ('e74d2176-e7d7-4003-8543-369057a4279e', 'Andrin', 'Klarer', 'andrinklarer', 'andrin@teacher.com', '$2a$12$v9oHZkO7Sck8bQCtxn9s0OhqOxGS8d5ltc0J/mEzYXUQAey/qHeQO');
 insert into tbl_user (id, firstname, lastname, username, email, password) values ('2c61dac7-29fa-4baa-95e5-9053c7879d41', 'Anton', 'Detken', 'antondetken', 'anton@student.com', '$2a$12$Dz0YdddwYhFC9YSwWNEyI.wGbgI.8ZgIPz20OCThxqZQFOXvw3Cu6');
-insert into tbl_user (id, firstname, lastname, username, email, password) values ('9da0c2ba-98c5-4504-821a-259942a298b2', 'Bob', 'Bobber', 'bobby', 'bob@student.com', '$2a$12$zP9Pmnx1C5gqqGUcc.WnmeDbeJcJUsBZtj1BXSutyNuhKhVqrCrFO');
+insert into tbl_user (id, firstname, lastname, username, email, password) values ('9da0c2ba-98c5-4504-821a-259942a298b2', 'Bob', 'Bobber', 'bob', 'bob@student.com', '$2a$12$zP9Pmnx1C5gqqGUcc.WnmeDbeJcJUsBZtj1BXSutyNuhKhVqrCrFO');
 insert into tbl_user (id, firstname, lastname, username, email, password) values ('857fa2d5-3642-4d40-9465-c580a83c516e', 'Wandie', 'Iddens', 'wandieiddens', 'wandie@student.com', '$2a$12$4dGL.cYcLxxMl0wLkr3pGuUqFDqOG77HYS/L//AFAUNmQOdAJ0qTa');
 insert into tbl_user (id, firstname, lastname, username, email, password) values ('93057c93-6983-4744-be26-938f0bfb6c99', 'Blair', 'Von Welldun', 'blairvonwelldun', 'blair@student.com', '$2a$12$v7p2jzXhxUfc4a/l19kYeu1rGYVkbKGFNWM3Av/HqmUvnNEYBlqeK');
 insert into tbl_user (id, firstname, lastname, username, email, password) values ('1a238bcf-a3c2-4d0c-98fc-3e0ed1078b08', 'Averell', 'Sweetland', 'averellsweetland', 'averell@student.com', '$2a$12$7Bz2orl9p/7M.Y0CyouX7uGzhu7v7zOMh6kHnNzZNkph2yHkt9cUO');
@@ -55,6 +55,9 @@ INSERT INTO tbl_subject (id, subjectname) VALUES('51aea86c-239b-4b27-982e-816127
 INSERT INTO tbl_class (id,classname) VALUES ('5148b858-f5fd-11ec-b939-0242ac120002','BIN10a');
 INSERT INTO tbl_class (id,classname) VALUES ('1c1469b6-f18e-11ec-8ea0-0242ac120002','BIN20b');
 INSERT INTO tbl_class (id,classname) VALUES ('20e3d92c-f18e-11ec-8ea0-0242ac120002','BIN30c');
+
+INSERT INTO tbl_class_members (class_id,member_id) VALUES ('1c1469b6-f18e-11ec-8ea0-0242ac120002','2c61dac7-29fa-4baa-95e5-9053c7879d41');
+
 
 INSERT INTO tbl_class_members (class_id,member_id) VALUES ('5148b858-f5fd-11ec-b939-0242ac120002','2c61dac7-29fa-4baa-95e5-9053c7879d41');
 INSERT INTO tbl_class_members (class_id,member_id) VALUES ('5148b858-f5fd-11ec-b939-0242ac120002','e74d2176-e7d7-4003-8543-369057a4279e');
