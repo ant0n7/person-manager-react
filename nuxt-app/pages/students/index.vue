@@ -1,6 +1,5 @@
 <template>
   <div class="container">
-    <!-- <h1>Students <button class="btn btn-primary btn-md mb-2 ms-auto float-end" type="button">Create</button></h1> -->
     <Heading buttonText="Create" buttonLink="/students/create" :role="role">People</Heading>
 
     <div v-if="pending">
@@ -77,7 +76,6 @@ export default {
     },
     role() {
       return useCookie('role').value;
-      // return 'TEACHER';
     }
   },
 };

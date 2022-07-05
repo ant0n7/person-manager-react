@@ -61,10 +61,13 @@ export default {
       let data = {
         subjectname: this.subjectname,
       };
+
+      const base64auth = btoa(`${useUsername.value}:${usePassword.value}`);
+
       axios
         .post("http://localhost:8080/api/subjects/", data, {
           headers: {
-            Authorization: `Basic ${btoa("andrinklarer:klarer")}`,
+            Authorization: `Basic ${base64auth}`,
             Accept: "application/json",
           },
         })

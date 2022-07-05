@@ -47,9 +47,9 @@ const { data: classes } = await useFetch(
 
     <h6 class="subtitle student-email">
       <a class="link-primary link-unstyled" :href="'mailto:' + student.email"
-        >E-Mail: {{ student.email }}</a
+        ><i class="fa fa-envelope pe-2"></i>{{ student.email }}</a
       >
-      <p>Username: {{ student.username }}</p>
+      <p><i class="fa fa-user pe-2" aria-hidden="true"></i>{{ student.username }}</p>
     </h6>
 
     <div class="row pt-3" v-if="subjects.length > 0">

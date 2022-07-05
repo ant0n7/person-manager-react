@@ -13,7 +13,6 @@ const { pending, data: classes } = await useAsyncData('classes', () => $fetch('h
 
 <template>
   <div class="container">
-    <!-- <h1>Students <button class="btn btn-primary btn-md mb-2 ms-auto float-end" type="button">Create</button></h1> -->
     <Heading buttonText="Create" buttonLink="/classes/create" :role="role">Classes</Heading>
 
     <div v-if="pending">
