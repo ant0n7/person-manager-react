@@ -1,4 +1,5 @@
 import { defineNuxtConfig } from 'nuxt'
+import { Body } from 'nuxt/dist/head/runtime/components'
 
 // https://v3.nuxtjs.org/api/configuration/nuxt.config
 export default defineNuxtConfig({
@@ -17,6 +18,12 @@ export default defineNuxtConfig({
         { 
           src: 'https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js',
           body: true 
+        },
+        {
+          src: 'https://kit.fontawesome.com/fbe6e773c9.js', 
+          crossorigin: 'anonymous',
+          body: true
+
         },
       ]
     }

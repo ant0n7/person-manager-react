@@ -53,9 +53,9 @@ const { data: classes } = await useFetch(
     </h6>
 
     <div class="row pt-3" v-if="subjects.length > 0">
-      <Heading class="mt-3" tag="h2">Subjects</Heading>
+      <Heading class="mt-3" tag="h3">Subjects</Heading>
       <div
-        class="col-md-3 col-12 p-2"
+        class="col-lg-3 col-md-4 col-sm-6 col-12 p-2"
         v-for="subject in subjects"
         :key="subject.id"
       >
@@ -64,9 +64,9 @@ const { data: classes } = await useFetch(
     </div>
 
     <div class="row pt-3" v-if="classes.length > 0">
-      <Heading class="mt-3" tag="h2">Classes</Heading>
+      <Heading class="mt-3" tag="h3">Classes</Heading>
       <div
-        class="col-md-3 col-12 p-2"
+        class="col-lg-3 col-md-4 col-sm-6 col-12 p-2"
         v-for="appclass in classes"
         :key="appclass.id"
       >

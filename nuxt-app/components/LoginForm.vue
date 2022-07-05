@@ -1,20 +1,10 @@
 <template>
-  <!-- <div class="container">
-    <div class="row">
-      <div class="col-md-4"></div>
-      <div class="col-md-4 col-12"> -->
   <div>
     <Heading>Login</Heading>
-
-    <!-- <Alert v-if="userValid !== undefined ? userValid : false">Wrong username or password.</Alert> -->
-    <!-- <form> -->
-    <!-- Email input -->
-
     <Alert type="danger" warning-icon v-if="!successful">
       Wrong username or password
     </Alert>
     <div v-if="!loggedInUsername && !loggedInPassword && !loggedInRole">
-      <!-- <form action="/"> -->
       <div class="form-outline mt-4 mb-2">
         <label class="form-label" for="username"> Username </label>
         <input
@@ -51,7 +41,7 @@
       <!-- </form> -->
     </div>
     <div v-else>
-      <Alert class="d-inline-flex align-items-center"
+      <Alert class="d-flex align-items-center justify-content-between"
         >You are already logged in!
         <button
           @click="logout"
@@ -62,9 +52,6 @@
       </Alert>
     </div>
   </div>
-  <!-- </div>
-    </div>
-  </div> -->
 </template>
 
 <script lang="ts">
@@ -110,9 +97,6 @@ export default {
       const username = this.$refs.usernameInput.value;
       const password = this.$refs.passwordInput.value;
 
-
-      // this.setRole("TEACHER");
-
       const { data: valid } = await axios.get(
         `http://localhost:8080/api/users/login/${username}/${password}`
       );
@@ -131,8 +115,7 @@ export default {
 
         this.setUsername(username);
         this.setPassword(password);
-        useCookie("role").value = role;
-        useRole().value = role;
+        this.setRole(role)
 
         this.$router.push("/");
       } else {

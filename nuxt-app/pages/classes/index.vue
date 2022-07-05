@@ -24,7 +24,7 @@ const { pending, data: classes } = await useAsyncData('classes', () => $fetch('h
 
     <div class="row" v-else>
       <div
-        class="col-md-3 col-12 p-2"
+        class="col-lg-3 col-md-4 col-sm-6 col-12 p-2"
         v-for="appClass in classes"
         :key="appClass.id"
       >

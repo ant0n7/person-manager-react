@@ -8,9 +8,9 @@
     </div>
 
     <div class="row pt-3" v-if="members && students.length > 0">
-      <Heading class="mt-3" tag="h2">Students</Heading>
+      <Heading class="mt-3" tag="h3">Students</Heading>
       <div
-        class="col-md-3 col-12 p-2"
+        class="col-lg-3 col-md-4 col-sm-6 col-12 p-2"
         v-for="student in students"
         :key="student.id"
       >
@@ -23,9 +23,9 @@
     </div>
 
     <div class="row pt-3" v-if="members && teachers.length > 0">
-      <Heading class="mt-3" tag="h2">Teachers</Heading>
+      <Heading class="mt-3" tag="h3">Teachers</Heading>
       <div
-        class="col-md-3 col-12 p-2"
+        class="col-lg-3 col-md-4 col-sm-6 col-12 p-2"
         v-for="teacher in teachers"
         :key="teacher.id"
       >
