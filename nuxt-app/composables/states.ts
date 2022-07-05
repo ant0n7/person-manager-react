@@ -5,21 +5,6 @@ export const usePassword = () =>
 export const useRole = () =>
   useState<string>("role", () => useCookie("role").value);
 
-// export const useMembers = () =>
-//   useState<unknown[]>("members", () => {
-//     const base64auth = btoa(`${useUsername().value}:${usePassword().value}`);
-//     useAsyncData("students", () =>
-//       $fetch("http://localhost:8080/api/users/", {
-//         headers: {
-//           Authorization: `Basic ${base64auth}`,
-//         },
-//       })
-//     ).then((x) => {
-//       return x;
-//     });
-//     return undefined;
-//   });
-
 export const useMembers = () => useState<any[]>("members");
 
 export const changeUsername = (username: string) => {

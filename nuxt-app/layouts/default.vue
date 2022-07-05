@@ -1,7 +1,4 @@
 <script setup>
-// const username = useCookie("username").value;
-// const password = useCookie("password").value;
-// const role = useCookie("role").value;
 const username = useUsername();
 const password = usePassword();
 const role = useRole();

@@ -32,8 +32,4 @@ export default defineNuxtConfig({
     'bootstrap/dist/css/bootstrap.min.css',
     '@/assets/css/main.scss',
   ],
-  // modules: [
-  //   '@nuxtjs/axios',
-  //   '@nuxtjs/auth-next',
-  // ]
 })
