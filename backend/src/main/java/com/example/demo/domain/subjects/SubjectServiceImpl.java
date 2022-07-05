@@ -1,12 +1,8 @@
 package com.example.demo.domain.subjects;
 
-import com.example.demo.domain.appuser.User;
 import com.example.demo.domain.appuser.UserRepository;
 import com.example.demo.domain.appuser.UserServiceImpl;
-import com.example.demo.domain.role.Role;
 import lombok.RequiredArgsConstructor;
-import org.apache.logging.log4j.Level;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;

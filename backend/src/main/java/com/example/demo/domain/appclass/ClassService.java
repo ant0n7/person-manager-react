@@ -2,7 +2,6 @@ package com.example.demo.domain.appclass;
 
 import com.example.demo.domain.appclass.dto.CreateClassDTO;
 import com.example.demo.domain.appclass.dto.RestrictedClassInformationDTO;
-import com.example.demo.domain.subjects.Subject;
 
 import javax.management.InstanceAlreadyExistsException;
 import javax.management.InstanceNotFoundException;
