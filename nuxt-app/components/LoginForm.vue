@@ -38,7 +38,6 @@
       <div class="text-center">
         <p>To create an account for you contact an administrator or teacher.</p>
       </div>
-      <!-- </form> -->
     </div>
     <div v-else>
       <Alert class="d-flex align-items-center justify-content-between"

@@ -1,10 +1,4 @@
 <script setup>
-// const username = useState('username', () => useCookie('username').value);
-// const password = useState('password', () => useCookie('password').value);
-// const role = useState('role', () => useCookie('role').value);
-// const username = useCookie('username').value;
-// const password = useCookie('password').value;
-// const role = useCookie('role').value;
 const username = useUsername();
 const password = usePassword();
 const role = useRole();
@@ -19,7 +13,6 @@ const role = useRole();
       class="d-flex align-items-center col-md-2 mb-2 mb-md-0 text-dark text-decoration-none"
     >
     <i class="fa fa-users fa-xl" aria-hidden="true"></i>
-      <!-- <img src="/good_logo.png" height="64" alt="Logo"> -->
     </NuxtLink>
 
     <ul class="nav col-md-8 col-md-auto mb-2 justify-content-center mb-md-0">

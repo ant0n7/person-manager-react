@@ -47,9 +47,9 @@ const { data: classes } = await useFetch(
 
     <h6 class="subtitle student-email">
       <a class="link-primary link-unstyled" :href="'mailto:' + student.email"
-        >E-Mail: {{ student.email }}</a
+        ><i class="fa fa-envelope pe-2"></i>{{ student.email }}</a
       >
-      <p>Username: {{ student.username }}</p>
+      <p><i class="fa fa-user pe-2" aria-hidden="true"></i>{{ student.username }}</p>
     </h6>
 
     <div class="row pt-3" v-if="subjects.length > 0">
@@ -102,8 +102,6 @@ export default {
           this.isSuccess = response.status == 200 || 201 ? true : false;
           console.log(this.isSuccess);
           if (this.isSuccess) {
-            // useMembers().value.splice(useMembers().value.indexOf(this.student));
-            // useMembers().value.splice(find(this.student, useMembers().value));
             useMembers().value.pop();
             this.$router.back();
           }

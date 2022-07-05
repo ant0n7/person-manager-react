@@ -10,7 +10,7 @@ const base64auth = btoa(`${username}:${password}`);
 
 const { data: subject } = await useFetch(`http://localhost:8080/api/subjects/${uuid}`, {
   headers: {
-    Authorization: `Basic ${btoa("andrinklarer:klarer")}`,
+    Authorization: `Basic ${base64auth}`,
   },
 });
 const { data: classes } = await useFetch(`http://localhost:8080/api/classes/subject/${uuid}`, {

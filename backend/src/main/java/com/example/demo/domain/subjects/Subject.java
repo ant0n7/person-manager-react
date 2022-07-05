@@ -1,6 +1,5 @@
 package com.example.demo.domain.subjects;
 
-import com.example.demo.domain.grade.Grade;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

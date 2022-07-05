@@ -2,9 +2,6 @@
   <div class="container">
     <!-- TODO(andrin): Implement delete like in single student page. -->
     <Heading>{{ appClass.classname }}</Heading>
-    <!-- <h6 class="subtitle student-email">
-      {{ appClass.description }}
-    </h6> -->
 
     <div class="row pt-3" v-if="appClass.subjects.length > 0">
       <Heading tag="h3" class="mt-3">Subjects</Heading>
