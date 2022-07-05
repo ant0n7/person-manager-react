@@ -79,6 +79,16 @@ const { data: classes } = await useFetch(
 <script>
 import axios from "axios";
 
+function find(needle, haystack) {
+    var results = [];
+    var idx = haystack.indexOf(needle);
+    while (idx != -1) {
+        results.push(idx);
+        idx = haystack.indexOf(needle, idx + 1);
+    }
+    return results;
+}
+
 export default {
   methods: {
     deleteUser() {
@@ -92,6 +102,9 @@ export default {
           this.isSuccess = response.status == 200 || 201 ? true : false;
           console.log(this.isSuccess);
           if (this.isSuccess) {
+            // useMembers().value.splice(useMembers().value.indexOf(this.student));
+            // useMembers().value.splice(find(this.student, useMembers().value));
+            useMembers().value.pop();
             // location.reload();
             this.$router.back(/*() => {this.$router.afterEach(() => location.reload())}*/);
           }

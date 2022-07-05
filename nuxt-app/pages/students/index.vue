@@ -7,7 +7,7 @@
       <Alert type="info"> Loading... {{ pending }} </Alert>
     </div>
 
-    <div class="row pt-3" v-if="members && students.length > 0">
+    <div class="row pt-3" v-if="useMembers().value && students.length > 0">
       <Heading tag="h2">Students</Heading>
       <div
         class="col-md-3 col-12 p-2"
@@ -22,7 +22,7 @@
       </div>
     </div>
 
-    <div class="row" v-if="members && teachers.length > 0">
+    <div class="row" v-if="useMembers().value && teachers.length > 0">
       <Heading tag="h2">Teachers</Heading>
       <div
         class="col-md-3 col-12 p-2"
@@ -37,7 +37,7 @@
       </div>
     </div>
 
-    <div class="row" v-if="!members">
+    <div class="row" v-if="!useMembers().value">
       <div class="col-12">
         <Alert type="warning" warning-icon> No students found. Make sure you are logged in!</Alert>
       </div>
@@ -60,17 +60,19 @@ const { pending, data: members } = await useAsyncData("students", () =>
     },
   })
 );
+useMembers().value = members;
+const members2 = useMembers();
 </script>
 <script>
 export default {
   computed: {
     students() {
-      return this.members.filter((member) => {
+      return useMembers().value?.filter((member) => {
         return member.roles.some((role) => role.rolename === "STUDENT");
       });
     },
     teachers() {
-      return this.members.filter((member) => {
+      return useMembers().value?.filter((member) => {
         return member.roles.some((role) => role.rolename === "TEACHER");
       });
     },
